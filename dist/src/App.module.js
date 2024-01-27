@@ -18,7 +18,7 @@ let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateToken_middleware_1.ValidateToken)
-            .forRoutes({ path: "/check-user-jwt-token", method: common_1.RequestMethod.POST }, { path: "/logout", method: common_1.RequestMethod.POST }, { path: "/profile", method: common_1.RequestMethod.PUT }, { path: "/stripe/create-checkout-session", method: common_1.RequestMethod.POST }, { path: "/stripe/create-portal-session", method: common_1.RequestMethod.POST }, { path: "/games/random", method: common_1.RequestMethod.GET }, { path: "/games/id/:game_id", method: common_1.RequestMethod.GET }, { path: "/games/title/:game_title", method: common_1.RequestMethod.GET });
+            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/user/check-user-jwt-token", method: common_1.RequestMethod.POST }, { path: "/user/logout", method: common_1.RequestMethod.POST });
     }
 };
 exports.AppModule = AppModule;
@@ -26,7 +26,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             HealthCheck_module_1.HealthCheckModule,
-            Auth_module_1.AuthModule,
+            Auth_module_1.UserModule,
             Kart_module_1.KartModule,
             Pista_module_1.PistaModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),

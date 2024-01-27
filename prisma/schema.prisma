@@ -6,21 +6,19 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-model Users {
+model User {
   id                              String         @id @default(auto()) @map("_id") @db.ObjectId
   role                            UserRole
-  username                        String
+  role_token 					  String		 @unique
+  username                        String		 
   email                           String         @unique
-  jwt_token                       String?        @unique
+  jwt_token                       String         @unique
   password                        String
-  reset_password_token            String?        @unique
-  reset_password_token_expires_at String?
-  corridas                        Corridas[]
-  agendamendos                    Agendamentos[]
-  created_at                      DateTime
+  corridas                        Corrida[]
+  agendamendos                    Agendamento[]
+  created_at                      DateTime @default(now())
   updated_at                      DateTime?
 
-  @@unique(fields: [email, reset_password_token], name: "resetPasswordTokenIsValid")
   @@map("users")
 }
 
@@ -30,23 +28,23 @@ enum UserRole {
   COMUM
 }
 
-model Pistas {
+model Pista {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   name               String
   km                 Int
   quantidade_boxes   Int
   quantidade_lugares Int
   endereco           String
-  created_at         DateTime
+  created_at         DateTime @default(now())
   updated_at         DateTime?
 
-  corridas     Corridas[]
-  agendamentos Agendamentos[]
+  corridas     Corrida[]
+  agendamentos Agendamento[]
 
   @@map("pistas")
 }
 
-model Karts {
+model Kart {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   status      KartStatus
   name        String
@@ -54,12 +52,12 @@ model Karts {
   modelo      String
   potencia    Int
   marca_pneus String
-  created_at  DateTime
+  created_at  DateTime @default(now())
   updated_at  DateTime?
 
-  manutencoes  Manutencoes[]
-  corridas     Corridas[]
-  agendamentos Agendamentos[]
+  manutencoes  Manutencao[]
+  corridas     Corrida[]
+  agendamentos Agendamento[]
 
   @@map("karts")
 }
@@ -70,7 +68,7 @@ enum KartStatus {
   LIVRE
 }
 
-model Agendamentos {
+model Agendamento {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   user_id     String     @db.ObjectId
   kart_id     String     @db.ObjectId
@@ -78,44 +76,44 @@ model Agendamentos {
   pista_id    String     @db.ObjectId
   starts_at   DateTime
   ends_at     DateTime
-  created_at  DateTime
+  created_at  DateTime @default(now())
   updated_at  DateTime?
 
-  user  Users  @relation(fields: [user_id], references: [id])
-  kart  Karts  @relation(fields: [kart_id], references: [id])
-  pista Pistas @relation(fields: [pista_id], references: [id])
+  user  User  @relation(fields: [user_id], references: [id])
+  kart  Kart  @relation(fields: [kart_id], references: [id])
+  pista Pista @relation(fields: [pista_id], references: [id])
 
   @@map("agendamentos")
 }
 
-model Corridas {
+model Corrida {
   id                             String    @id @default(auto()) @map("_id") @db.ObjectId
   user_id                        String    @db.ObjectId
   kart_id                        String    @db.ObjectId
   pista_id                       String    @db.ObjectId
   starts_at                      DateTime
   has_agendamento_in_this_period Boolean
-  created_at                     DateTime
+  created_at                     DateTime @default(now())
   updated_at                     DateTime?
 
-  user  Users  @relation(fields: [user_id], references: [id])
-  kart  Karts  @relation(fields: [kart_id], references: [id])
-  pista Pistas @relation(fields: [pista_id], references: [id])
+  user  User  @relation(fields: [user_id], references: [id])
+  kart  Kart  @relation(fields: [kart_id], references: [id])
+  pista Pista @relation(fields: [pista_id], references: [id])
 
   @@map("corridas")
 }
 
-model Manutencoes {
+model Manutencao {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   kart_id    String    @db.ObjectId
   motivo     String
   starts_at  DateTime
   ends_at    DateTime
   finished   Boolean
-  created_at DateTime
+  created_at DateTime @default(now())
   updated_at DateTime?
 
-  kart Karts @relation(fields: [kart_id], references: [id])
+  kart Kart @relation(fields: [kart_id], references: [id])
 
   @@map("manutencoes")
 }

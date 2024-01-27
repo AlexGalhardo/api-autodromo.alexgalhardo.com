@@ -6,24 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthModule = void 0;
+exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const User_controller_1 = require("../Controllers/User.controller");
 const Users_repository_1 = require("../Repositories/Users.repository");
-const AuthCheckResetPasswordToken_useCase_1 = require("../UseCases/AuthCheckResetPasswordToken.useCase");
-const AuthForgetPassword_useCase_1 = require("../UseCases/AuthForgetPassword.useCase");
 const AuthLogin_useCase_1 = require("../UseCases/AuthLogin.useCase");
 const AuthLogout_useCase_1 = require("../UseCases/AuthLogout.useCase");
 const AuthRegister_useCase_1 = require("../UseCases/AuthRegister.useCase");
-const AuthResetPassword_useCase_1 = require("../UseCases/AuthResetPassword.useCase");
 const Database_1 = require("../Utils/Database");
 const AuthCheckUserJWTToken_useCase_1 = require("../UseCases/AuthCheckUserJWTToken.useCase");
-let AuthModule = class AuthModule {
+let UserModule = class UserModule {
 };
-exports.AuthModule = AuthModule;
-exports.AuthModule = AuthModule = __decorate([
+exports.UserModule = UserModule;
+exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        controllers: [User_controller_1.AuthController],
+        controllers: [User_controller_1.UserController],
         providers: [
             Database_1.Database,
             {
@@ -60,29 +57,8 @@ exports.AuthModule = AuthModule = __decorate([
                 useFactory: (usersRepository) => {
                     return new AuthCheckUserJWTToken_useCase_1.default(usersRepository);
                 },
-            },
-            {
-                provide: "AuthForgetPasswordUseCasePort",
-                inject: ["UsersRepositoryPort"],
-                useFactory: (usersRepository) => {
-                    return new AuthForgetPassword_useCase_1.default(usersRepository);
-                },
-            },
-            {
-                provide: "AuthResetPasswordUseCasePort",
-                inject: ["UsersRepositoryPort"],
-                useFactory: (usersRepository) => {
-                    return new AuthResetPassword_useCase_1.default(usersRepository);
-                },
-            },
-            {
-                provide: "AuthCheckResetPasswordTokenUseCasePort",
-                inject: ["UsersRepositoryPort"],
-                useFactory: (usersRepository) => {
-                    return new AuthCheckResetPasswordToken_useCase_1.default(usersRepository);
-                },
-            },
+            }
         ],
     })
-], AuthModule);
+], UserModule);
 //# sourceMappingURL=Auth.module.js.map

@@ -2,7 +2,7 @@ import * as request from "supertest";
 import { Test } from "@nestjs/testing";
 import { AppModule } from "../../src/App.module";
 import { HttpStatus, INestApplication } from "@nestjs/common";
-import { AuthController } from "../../src/Controllers/User.controller";
+import { UserController } from "../../src/Controllers/User.controller";
 import UsersRepository, { UsersRepositoryPort } from "../../src/Repositories/Users.repository";
 import AuthLoginUseCase from "../../src/UseCases/AuthLogin.useCase";
 import AuthRegisterUseCase from "../../src/UseCases/AuthRegister.useCase";
@@ -21,7 +21,7 @@ describe("AppController (e2e)", () => {
 
     beforeAll(async () => {
         const moduleFixture = await Test.createTestingModule({
-            controllers: [AuthController],
+            controllers: [UserController],
             imports: [AppModule],
             providers: [
                 Database,

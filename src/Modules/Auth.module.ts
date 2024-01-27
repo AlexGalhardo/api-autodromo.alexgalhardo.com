@@ -1,17 +1,14 @@
 import { Module } from "@nestjs/common";
-import { AuthController } from "src/Controllers/User.controller";
+import { UserController } from "src/Controllers/User.controller";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
-import AuthCheckResetPasswordTokenUseCase from "src/UseCases/AuthCheckResetPasswordToken.useCase";
-import AuthForgetPasswordUseCase from "src/UseCases/AuthForgetPassword.useCase";
 import AuthLoginUseCase from "src/UseCases/AuthLogin.useCase";
 import AuthLogoutUseCase from "src/UseCases/AuthLogout.useCase";
 import AuthRegisterUseCase from "src/UseCases/AuthRegister.useCase";
-import AuthResetPasswordUseCase from "src/UseCases/AuthResetPassword.useCase";
 import { Database } from "src/Utils/Database";
 import AuthCheckUserJWTTokenUseCase from "src/UseCases/AuthCheckUserJWTToken.useCase";
 
 @Module({
-    controllers: [AuthController],
+    controllers: [UserController],
     providers: [
         Database,
         {
@@ -48,28 +45,7 @@ import AuthCheckUserJWTTokenUseCase from "src/UseCases/AuthCheckUserJWTToken.use
             useFactory: (usersRepository: UsersRepositoryPort) => {
                 return new AuthCheckUserJWTTokenUseCase(usersRepository);
             },
-        },
-        {
-            provide: "AuthForgetPasswordUseCasePort",
-            inject: ["UsersRepositoryPort"],
-            useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthForgetPasswordUseCase(usersRepository);
-            },
-        },
-        {
-            provide: "AuthResetPasswordUseCasePort",
-            inject: ["UsersRepositoryPort"],
-            useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthResetPasswordUseCase(usersRepository);
-            },
-        },
-        {
-            provide: "AuthCheckResetPasswordTokenUseCasePort",
-            inject: ["UsersRepositoryPort"],
-            useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthCheckResetPasswordTokenUseCase(usersRepository);
-            },
-        },
+        }
     ],
 })
-export class AuthModule {}
+export class UserModule {}

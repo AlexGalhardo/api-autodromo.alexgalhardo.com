@@ -8,6 +8,7 @@ const Name_1 = require("./DataTypes/Name");
 const Password_1 = require("./DataTypes/Password");
 const DateTime_1 = require("./DataTypes/DateTime");
 const Phone_1 = require("./DataTypes/Phone");
+const Role_1 = require("./DataTypes/Role");
 class Validator {
     static get username() {
         return this.NAME;
@@ -33,6 +34,9 @@ class Validator {
     static get password() {
         return this.PASSWORD;
     }
+    static get role() {
+        return this.ROLE;
+    }
     static get methods() {
         return {
             ...this.NAME.methods,
@@ -53,5 +57,6 @@ Validator.PRIMITIVES = new Primitives_1.default();
 Validator.OBJECTS = new Objects_1.default();
 Validator.STRINGS = new Strings_1.default();
 Validator.DATE_TIME = new DateTime_1.default();
+Validator.ROLE = new Role_1.default();
 exports.default = Validator;
 //# sourceMappingURL=Validator.js.map

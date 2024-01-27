@@ -1,14 +1,8 @@
-import { Controller, Post, Res, Body, Inject, HttpStatus, Req, Get } from "@nestjs/common";
-import { Request, Response } from "express";
-import {
-    AuthCheckResetPasswordTokenUseCasePort,
-    CheckResetPasswordTokenDTO,
-} from "src/UseCases/AuthCheckResetPasswordToken.useCase";
-import { AuthForgetPasswordDTO, AuthForgetPasswordUseCasePort } from "src/UseCases/AuthForgetPassword.useCase";
+import { Controller, Post, Res, Body, Inject, HttpStatus } from "@nestjs/common";
+import { Response } from "express";
 import { AuthLoginDTO, AuthLoginUseCasePort } from "src/UseCases/AuthLogin.useCase";
 import { AuthLogoutUseCasePort } from "src/UseCases/AuthLogout.useCase";
 import { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
-import { AuthResetPasswordDTO, AuthResetPasswordUseCasePort } from "src/UseCases/AuthResetPassword.useCase";
 import { AuthCheckUserJWTTokenUseCasePort } from "src/UseCases/AuthCheckUserJWTToken.useCase";
 
 interface AuthUseCaseResponse {
@@ -18,35 +12,21 @@ interface AuthUseCaseResponse {
     redirect?: string;
 }
 
-interface AuthControllerPort {
+interface UserControllerPort {
     login(authLoginDTO: AuthLoginDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
     register(UserCreateDTO: UserCreateDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
     logout(response: Response): Promise<Response<AuthUseCaseResponse>>;
     tokenUser(response: Response): Promise<Response<AuthUseCaseResponse>>;
-    forgetPassword(
-        authForgetPasswordDTO: AuthForgetPasswordDTO,
-        response: Response,
-    ): Promise<Response<AuthUseCaseResponse>>;
-    resetPassword(
-        authResetPasswordDTO: AuthResetPasswordDTO,
-        request: Request,
-        response: Response,
-    ): Promise<Response<AuthUseCaseResponse>>;
 }
 
-@Controller()
-export class AuthController implements AuthControllerPort {
+@Controller("user")
+export class UserController implements UserControllerPort {
     constructor(
         @Inject("AuthLoginUseCasePort") private readonly authLoginUseCase: AuthLoginUseCasePort,
         @Inject("AuthRegisterUseCasePort") private readonly authRegisterUseCase: AuthRegisterUseCasePort,
         @Inject("AuthLogoutUseCasePort") private readonly authLogoutUseCase: AuthLogoutUseCasePort,
         @Inject("AuthCheckUserJWTTokenUseCasePort")
         private readonly authCheckUserJWTTokenUseCase: AuthCheckUserJWTTokenUseCasePort,
-        @Inject("AuthForgetPasswordUseCasePort")
-        private readonly authForgetPasswordUseCase: AuthForgetPasswordUseCasePort,
-        @Inject("AuthResetPasswordUseCasePort") private readonly authResetPasswordUseCase: AuthResetPasswordUseCasePort,
-        @Inject("AuthCheckResetPasswordTokenUseCasePort")
-        private readonly authCheckResetPasswordTokenUseCase: AuthCheckResetPasswordTokenUseCasePort,
     ) {}
 
     @Post("/login")
@@ -63,13 +43,14 @@ export class AuthController implements AuthControllerPort {
         }
     }
 
-    @Post("/register")
+    @Post("/")
     async register(
         @Body() authRegisterPayload: UserCreateDTO,
         @Res() response: Response,
     ): Promise<Response<AuthUseCaseResponse>> {
         try {
-            const { success, jwt_token } = await this.authRegisterUseCase.execute(authRegisterPayload);
+			const userJWTToken = response.locals.token;
+            const { success, jwt_token } = await this.authRegisterUseCase.execute(userJWTToken, authRegisterPayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, jwt_token });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -93,50 +74,6 @@ export class AuthController implements AuthControllerPort {
             const userJWTToken = response.locals.token;
             const { success, data } = await this.authCheckUserJWTTokenUseCase.execute(userJWTToken);
             if (success) return response.status(HttpStatus.OK).json({ success: true, data });
-        } catch (error) {
-            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
-        }
-    }
-
-    @Post("/forget-password")
-    async forgetPassword(
-        @Body() authForgetPasswordPayload: AuthForgetPasswordDTO,
-        @Res() response: Response,
-    ): Promise<Response<AuthUseCaseResponse>> {
-        try {
-            const { success } = await this.authForgetPasswordUseCase.execute(authForgetPasswordPayload);
-            if (success) return response.status(HttpStatus.OK).json({ success: true });
-        } catch (error) {
-            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
-        }
-    }
-
-    @Post("/reset-password/:reset_password_token")
-    async resetPassword(
-        @Body() authResetPasswordPayload: AuthResetPasswordDTO,
-        @Req() request: Request,
-        @Res() response: Response,
-    ): Promise<Response<AuthUseCaseResponse>> {
-        try {
-            const { reset_password_token } = request.params;
-            const { success } = await this.authResetPasswordUseCase.execute(
-                reset_password_token,
-                authResetPasswordPayload,
-            );
-            if (success) return response.status(HttpStatus.OK).json({ success: true });
-        } catch (error) {
-            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
-        }
-    }
-
-    @Post("/check-reset-password-token")
-    async checkResetPasswordToken(
-        @Body() { resetPasswordToken }: CheckResetPasswordTokenDTO,
-        @Res() response: Response,
-    ): Promise<Response<AuthUseCaseResponse>> {
-        try {
-            const { success } = await this.authCheckResetPasswordTokenUseCase.execute(resetPasswordToken);
-            if (success) return response.status(HttpStatus.OK).json({ success: true });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
         }

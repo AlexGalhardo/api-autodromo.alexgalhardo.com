@@ -1,57 +1,36 @@
-// import { PrismaClient } from "@prisma/client";
-// import { Bcrypt } from "../src/Utils/Bcrypt";
-// import DateTime from "../src/Utils/DataTypes/DateTime";
+import { PrismaClient, UserRole } from "@prisma/client";
+import { Bcrypt } from "../src/Utils/Bcrypt";
+import * as jwt from "jsonwebtoken";
+import { randomUUID } from "node:crypto";
 
-// const prisma = new PrismaClient({
-//     errorFormat: "pretty",
-// });
+const prisma = new PrismaClient({
+    errorFormat: "pretty",
+});
 
-// const gamesToSeedDatabase = [];
+const seedDatabase = async () => {
+	try {
+		await prisma.user.deleteMany();
 
-// gamesJSONDatabase.forEach((game) => {
-//     gamesToSeedDatabase.push({
-//         title: game.title,
-//         cover_image: game.cover_image,
-//         summary: game.summary,
-//         release_year: game.release.year,
-//         release_date: game.release.date,
-//         igdb_url: game.igdb.url,
-//         igdb_rating: game.igdb.rating,
-//         metacritic_url: game.metacritic.url,
-//         metacritic_rating: game.metacritic.rating,
-//         where_to_buy: JSON.stringify(game.where_to_buy),
-//         developer_id: game.developer.id,
-//         developer_name: game.developer.name,
-//         publisher_id: game.publisher.id,
-//         publisher_name: game.publisher.name,
-//         platforms_available: JSON.stringify(game.platforms_available),
-//         genres: JSON.stringify(game.genres),
-//         how_long_to_beat: JSON.stringify(game.how_long_to_beat),
-//         created_at: String(new Date()),
-//         updated_at: null,
-//         created_at_pt_br: DateTime.getNow(),
-//         updated_at_pt_br: null,
-//     });
-// });
+		const email = "gestor@autodromo.com",
+			  role_token = randomUUID()
 
-// const seedDatabase = async () => {
-//     await prisma.users.deleteMany({});
+		await prisma.user.create({
+			data: {
+				username: "USER GESTOR",
+				role: UserRole.GESTOR,
+				role_token,
+				email,
+				jwt_token: jwt.sign({ role_token }, process.env.JWT_SECRET),
+				password: await Bcrypt.hash("gestor123")
+			},
+		});
 
-//     await prisma.users.createMany({
-//         data: [
-//             {
-//                 username: "TEST USER",
-//                 email: "test@gmail.com",
-//                 jwt_token: null,
-//                 password: await Bcrypt.hash("testUSER!123"),
-//                 reset_password_token: null,
-//                 reset_password_token_expires_at: null,
-//                 created_at: new Date(),
-//                 updated_at: null,
-//             },
-//         ],
-//         skipDuplicates: true,
-//     });
-// };
+		console.log("Seed completed successfully.");
+	} catch (error) {
+        console.error("Error seeding database:", error);
+    } finally {
+        await prisma.$disconnect();
+    }
+};
 
-// seedDatabase();
+seedDatabase();

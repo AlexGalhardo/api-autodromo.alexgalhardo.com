@@ -1,4 +1,4 @@
-export declare const APP_URL: any;
+export declare const APP_URL: string;
 export declare const BRAZIL_STATE_SYMBOL_BY_DDD: {
     "11": string;
     "12": string;

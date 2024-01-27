@@ -6,6 +6,7 @@ import Name from "./DataTypes/Name";
 import Password from "./DataTypes/Password";
 import DateTime from "./DataTypes/DateTime";
 import Phone from "./DataTypes/Phone";
+import Role from "./DataTypes/Role";
 
 export default class Validator {
     private static readonly NAME = new Name();
@@ -16,6 +17,7 @@ export default class Validator {
     private static readonly OBJECTS = new Objects();
     private static readonly STRINGS = new Strings();
     private static readonly DATE_TIME = new DateTime();
+	private static readonly ROLE = new Role();
 
     static get username() {
         return this.NAME;
@@ -48,6 +50,10 @@ export default class Validator {
     static get password() {
         return this.PASSWORD;
     }
+
+	static get role() {
+		return this.ROLE;
+	}
 
     static get methods() {
         return {

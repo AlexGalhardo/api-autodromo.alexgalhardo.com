@@ -6,6 +6,7 @@ import Name from "./DataTypes/Name";
 import Password from "./DataTypes/Password";
 import DateTime from "./DataTypes/DateTime";
 import Phone from "./DataTypes/Phone";
+import Role from "./DataTypes/Role";
 export default class Validator {
     private static readonly NAME;
     private static readonly EMAIL;
@@ -15,6 +16,7 @@ export default class Validator {
     private static readonly OBJECTS;
     private static readonly STRINGS;
     private static readonly DATE_TIME;
+    private static readonly ROLE;
     static get username(): Name;
     static get dateTime(): DateTime;
     static get strings(): Strings;
@@ -23,6 +25,7 @@ export default class Validator {
     static get email(): Email;
     static get phone(): Phone;
     static get password(): Password;
+    static get role(): Role;
     static get methods(): {
         isStringLenghtBetween: (value: string, min: number, max: number) => boolean;
         isStringLenghtBetweenOrEqual: (value: string, min: number, max: number) => boolean;
@@ -32,7 +35,7 @@ export default class Validator {
         isStringLenghtLessThanOrEqual: (value: string, max: number) => boolean;
         isStringLenghtEqual: (value: string, length: number) => boolean;
         isStringLenghtNotEqual: (value: string, length: number) => boolean;
-        generateAlphaNumeric: (length?: number) => any;
+        generateAlphaNumeric: (length?: number) => string;
         isString: (value: unknown) => boolean;
         isAllStrings: (...values: unknown[]) => boolean;
         isNumber: (value: unknown) => boolean;
