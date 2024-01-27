@@ -1,0 +1,57 @@
+// import { PrismaClient } from "@prisma/client";
+// import { Bcrypt } from "../src/Utils/Bcrypt";
+// import DateTime from "../src/Utils/DataTypes/DateTime";
+
+// const prisma = new PrismaClient({
+//     errorFormat: "pretty",
+// });
+
+// const gamesToSeedDatabase = [];
+
+// gamesJSONDatabase.forEach((game) => {
+//     gamesToSeedDatabase.push({
+//         title: game.title,
+//         cover_image: game.cover_image,
+//         summary: game.summary,
+//         release_year: game.release.year,
+//         release_date: game.release.date,
+//         igdb_url: game.igdb.url,
+//         igdb_rating: game.igdb.rating,
+//         metacritic_url: game.metacritic.url,
+//         metacritic_rating: game.metacritic.rating,
+//         where_to_buy: JSON.stringify(game.where_to_buy),
+//         developer_id: game.developer.id,
+//         developer_name: game.developer.name,
+//         publisher_id: game.publisher.id,
+//         publisher_name: game.publisher.name,
+//         platforms_available: JSON.stringify(game.platforms_available),
+//         genres: JSON.stringify(game.genres),
+//         how_long_to_beat: JSON.stringify(game.how_long_to_beat),
+//         created_at: String(new Date()),
+//         updated_at: null,
+//         created_at_pt_br: DateTime.getNow(),
+//         updated_at_pt_br: null,
+//     });
+// });
+
+// const seedDatabase = async () => {
+//     await prisma.users.deleteMany({});
+
+//     await prisma.users.createMany({
+//         data: [
+//             {
+//                 username: "TEST USER",
+//                 email: "test@gmail.com",
+//                 jwt_token: null,
+//                 password: await Bcrypt.hash("testUSER!123"),
+//                 reset_password_token: null,
+//                 reset_password_token_expires_at: null,
+//                 created_at: new Date(),
+//                 updated_at: null,
+//             },
+//         ],
+//         skipDuplicates: true,
+//     });
+// };
+
+// seedDatabase();

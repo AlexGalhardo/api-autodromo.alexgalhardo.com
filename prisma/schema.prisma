@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Usuários: o sistema deve suportar 3 tipos de usuários.
+//  - Gestor
+// - Afiliado
+// - Comum
+// Somente o usuário gestor pode cadastrar usuários, karts e pistas. O Usuário afiliado pode realizar agendamentos. Todos os usuários podem fazer uma corrida e acessar o histórico das mesmas.
+model Users {
+  id                              String @id @default(auto()) @map("_id") @db.ObjectId
+  role                            UserRole
+  username                        String
+  email                           String    @unique
+  jwt_token                       String?   @unique
+  password                        String
+  reset_password_token            String?   @unique
+  reset_password_token_expires_at String?
+  created_at                      DateTime
+  updated_at                      DateTime?
+
+  @@unique(fields: [email, reset_password_token], name: "resetPasswordTokenIsValid")
+  @@map("users")
+}
+
+enum UserRole {
+  GESTOR
+  AFILIADO
+  COMUM
+}
+
+// Pistas: O sistema deve permitir a criação de varias pistas. Para um usuário correr ou agendar corridas em uma pista ele deve ter seu cadastro vinculado a ela antes. As pistas devem ter nome, tamanho em km, quantidade de boxes, quantidade de lugares e endereço.
+model Pista {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  km                 Int
+  quantidade_boxes   Int
+  quantidade_lugares Int
+  endereco           String
+  created_at         DateTime
+  updated_at         DateTime?
+
+  @@map("pistas")
+}
+
+// Karts: os karts podem estar alocados em uma ou nenhuma pista. precisa ter um status que diga se ele está locado, se está em manutenção ou não está locado. Usuários gestores podem enviar e remover karts da manutenção. Os Karts devem ter nome, marca, modelo, potencia em cc (cilindradas), marca dos pneus e o status.
+model Kart {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  status      KartStatus
+  name        String
+  marca       String
+  modelo      String
+  potencia    Int
+  marca_pneus String
+  created_at  DateTime
+  updated_at  DateTime?
+
+  @@map("karts")
+}
+
+enum KartStatus {
+  LOCADO
+  MANUTENCAO
+  LIVRE
+}
