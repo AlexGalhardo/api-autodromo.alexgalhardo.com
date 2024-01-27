@@ -72,7 +72,7 @@ describe("Test AuthForgetPasswordUseCase", () => {
 
     it("should register a user", async () => {
         const UserCreateDTO: UserCreateDTO = {
-            username: "Testing ResetPassword Test",
+            name: "Testing ResetPassword Test",
             email: userEmail,
             telegramNumber: Validator.phone.generate(),
             password: Validator.password.generate(),

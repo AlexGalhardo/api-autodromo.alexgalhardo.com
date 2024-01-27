@@ -45,7 +45,7 @@ describe("Test UserCreateUseCase", () => {
 
     it("should register a user", async () => {
         const UserCreateDTO: UserCreateDTO = {
-            username: "Testing Register Test",
+            name: "Testing Register Test",
             email: userEmail,
             telegramNumber: Validator.phone.generate(),
             password: Validator.password.generate(),

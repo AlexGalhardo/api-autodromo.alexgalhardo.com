@@ -13,7 +13,7 @@ interface UserCreateUseCaseResponse {
 }
 
 export interface UserCreateDTO {
-    username: string;
+    name: string;
     email: string;
     password: string;
     role: UserRole;
@@ -28,9 +28,9 @@ export default class UserCreateUseCase implements UserCreateUseCasePort {
 
     async execute(userCreatePayload: UserCreateDTO): Promise<UserCreateUseCaseResponse> {
         try {
-            const { username, email, password, role } = userCreatePayload;
+            const { name, email, password, role } = userCreatePayload;
 
-            if (!username || !email || !password || !role) throw new Error(ErrorsMessages.MISSING_REQUEST_BODY_DATA);
+            if (!name || !email || !password || !role) throw new Error(ErrorsMessages.MISSING_REQUEST_BODY_DATA);
 
             if (email && !Validator.email.isValid(email)) throw new Error(ErrorsMessages.EMAIL_IS_INVALID);
 
@@ -46,7 +46,7 @@ export default class UserCreateUseCase implements UserCreateUseCasePort {
                 const jwt_token = jwt.sign({ role_token }, process.env.JWT_SECRET);
 
                 const userCreated = await this.usersRepository.create({
-                    username,
+                    name,
                     role,
                     role_token,
                     email,

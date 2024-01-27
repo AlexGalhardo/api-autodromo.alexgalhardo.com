@@ -15,8 +15,6 @@ export class ValidateJWTTokenRoleAfiliado extends AbstractValidateJWTTokenRole i
                 .json({ success: false, message: ErrorsMessages.USER_ROLE_IS_NOT_GESTOR });
         }
 
-        console.log("\n\n userFound => ", userFound);
-
         response.locals.userId = userFound.id;
 
         next();

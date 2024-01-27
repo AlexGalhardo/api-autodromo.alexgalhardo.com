@@ -3,7 +3,7 @@ import { Database } from "src/Utils/Database";
 import { User, UserRole } from "@prisma/client";
 
 interface newUserCreateDTO {
-    username: string;
+    name: string;
     role: UserRole;
     role_token: string;
     email: string;
@@ -82,7 +82,7 @@ export default class UsersRepository implements UsersRepositoryPort {
         try {
             return await this.database.user.create({
                 data: {
-                    username: newUser.username,
+                    name: newUser.name,
                     role: newUser.role,
                     role_token: newUser.role_token,
                     email: newUser.email,

@@ -15,7 +15,7 @@ const HealthCheck_module_1 = require("./Modules/HealthCheck.module");
 const config_1 = require("@nestjs/config");
 const ValidateJWTTokenRoleGestor_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleGestor.middleware");
 const ValidateJWTTokenRoleAfiliado_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware");
-const Agendamentos_moduel_1 = require("./Modules/Agendamentos.moduel");
+const Agendamento_module_1 = require("./Modules/Agendamento.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -33,7 +33,7 @@ exports.AppModule = AppModule = __decorate([
             User_module_1.UserModule,
             Kart_module_1.KartModule,
             Pista_module_1.PistaModule,
-            Agendamentos_moduel_1.AgendamentoModule,
+            Agendamento_module_1.AgendamentoModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),
         ],
         controllers: [],

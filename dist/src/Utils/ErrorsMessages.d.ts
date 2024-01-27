@@ -8,7 +8,7 @@ export declare enum ErrorsMessages {
     PISTA_NAME_ALREADY_REGISTERED = "Pista name already registered",
     MISSING_REQUEST_BODY_DATA = "Missing request body data",
     KART_IS_NOT_AVAILABLE = "Kart is not available",
-    INVALID_USERNAME = "Invalid username",
+    INVALID_NAME = "Invalid name",
     MISSING_PASSWORD = "Missing password",
     USER_ALREADY_EXISTS = "User already exists",
     USER_NOT_FOUND = "User not found",

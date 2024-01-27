@@ -71,9 +71,8 @@ describe("Test AuthCheckResetPasswordTokenUseCase", () => {
 
     it("should register a user", async () => {
         const UserCreateDTO: UserCreateDTO = {
-            username: "Testing ForgetPassword Test",
+            name: "Testing ForgetPassword Test",
             email: userEmail,
-            telegramNumber: Validator.phone.generate(),
             password: Validator.password.generate(),
         };
         const { success, jwt_token } = await UserCreateUseCase.execute(UserCreateDTO);

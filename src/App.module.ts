@@ -6,7 +6,7 @@ import { HealthCheckModule } from "./Modules/HealthCheck.module";
 import { ConfigModule } from "@nestjs/config";
 import { ValidateJWTTokenRoleGestor } from "./MIddlewares/ValidateJWTTokenRoleGestor.middleware";
 import { ValidateJWTTokenRoleAfiliado } from "./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware";
-import { AgendamentoModule } from "./Modules/Agendamentos.moduel";
+import { AgendamentoModule } from "./Modules/Agendamento.module";
 
 @Module({
     imports: [
@@ -31,6 +31,6 @@ export class AppModule implements NestModule {
             )
 
             .apply(ValidateJWTTokenRoleAfiliado)
-            .forRoutes({ path: "/agendamento", method: RequestMethod.POST });
+            	.forRoutes({ path: "/agendamento", method: RequestMethod.POST });
     }
 }

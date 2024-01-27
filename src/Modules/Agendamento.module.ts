@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { KartController } from "src/Controllers/Kart.controller";
+import { AgendamentoController } from "src/Controllers/Agendamento.controller";
 import AgendamentosRepository, { AgendamentosRepositoryPort } from "src/Repositories/Agendamentos.repository";
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import AgendamentoCreateUseCase from "src/UseCases/agendamento/AgendamentoCreate.useCase";
@@ -7,7 +7,7 @@ import KartCreateUseCase from "src/UseCases/kart/KartCreate.useCase";
 import { Database } from "src/Utils/Database";
 
 @Module({
-    controllers: [KartController],
+    controllers: [AgendamentoController],
     providers: [
         Database,
         {
@@ -25,7 +25,7 @@ import { Database } from "src/Utils/Database";
             },
         },
         {
-            provide: "KartCreateUseCasePort",
+            provide: "KartCreateUseCasePornpmt",
             inject: ["KartsRepositoryPort"],
             useFactory: (kartsRepository: KartsRepositoryPort) => {
                 return new KartCreateUseCase(kartsRepository);
@@ -33,7 +33,7 @@ import { Database } from "src/Utils/Database";
         },
         {
             provide: "AgendamentoCreateUseCasePort",
-            inject: ["AgendamentosRepositoryPort"],
+            inject: ["AgendamentosRepositoryPort", "KartsRepositoryPort"],
             useFactory: (agendamentosRepository: AgendamentosRepositoryPort, kartsRepository: KartsRepositoryPort) => {
                 return new AgendamentoCreateUseCase(agendamentosRepository, kartsRepository);
             },

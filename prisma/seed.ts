@@ -16,7 +16,7 @@ export const prisma = new PrismaClient({
 
 // 		await prisma.user.create({
 // 			data: {
-// 				username: "USER GESTOR",
+// 				name: "USER GESTOR",
 // 				role: UserRole.GESTOR,
 // 				role_token,
 // 				email,

@@ -17,7 +17,7 @@ export enum ErrorsMessages {
 
     KART_IS_NOT_AVAILABLE = "Kart is not available",
 
-    INVALID_USERNAME = "Invalid username",
+    INVALID_NAME = "Invalid name",
 
     MISSING_PASSWORD = "Missing password",
 

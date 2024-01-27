@@ -68,7 +68,7 @@ let UsersRepository = class UsersRepository {
         try {
             return await this.database.user.create({
                 data: {
-                    username: newUser.username,
+                    name: newUser.name,
                     role: newUser.role,
                     role_token: newUser.role_token,
                     email: newUser.email,

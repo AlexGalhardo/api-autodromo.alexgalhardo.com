@@ -12,7 +12,7 @@ var ErrorsMessages;
     ErrorsMessages["PISTA_NAME_ALREADY_REGISTERED"] = "Pista name already registered";
     ErrorsMessages["MISSING_REQUEST_BODY_DATA"] = "Missing request body data";
     ErrorsMessages["KART_IS_NOT_AVAILABLE"] = "Kart is not available";
-    ErrorsMessages["INVALID_USERNAME"] = "Invalid username";
+    ErrorsMessages["INVALID_NAME"] = "Invalid name";
     ErrorsMessages["MISSING_PASSWORD"] = "Missing password";
     ErrorsMessages["USER_ALREADY_EXISTS"] = "User already exists";
     ErrorsMessages["USER_NOT_FOUND"] = "User not found";

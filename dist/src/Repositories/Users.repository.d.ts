@@ -1,7 +1,7 @@
 import { Database } from "src/Utils/Database";
 import { User, UserRole } from "@prisma/client";
 interface newUserCreateDTO {
-    username: string;
+    name: string;
     role: UserRole;
     role_token: string;
     email: string;
@@ -28,7 +28,7 @@ export default class UsersRepository implements UsersRepositoryPort {
         id: string;
         role: import(".prisma/client").$Enums.UserRole;
         role_token: string;
-        username: string;
+        name: string;
         email: string;
         jwt_token: string;
         password: string;
@@ -39,7 +39,7 @@ export default class UsersRepository implements UsersRepositoryPort {
         id: string;
         role: import(".prisma/client").$Enums.UserRole;
         role_token: string;
-        username: string;
+        name: string;
         email: string;
         jwt_token: string;
         password: string;

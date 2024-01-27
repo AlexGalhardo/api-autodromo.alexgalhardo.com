@@ -53,12 +53,12 @@ describe("Test AuthCheckUserJWTToken", () => {
 
     const userEmail = Validator.email.generate();
     const userPassword = Validator.password.generate();
-    const username = "Testing TokenUser Test";
+    const name = "Testing TokenUser Test";
     let loginToken = null;
 
     it("should register a user", async () => {
         const UserCreateDTO: UserCreateDTO = {
-            username,
+            name,
             email: userEmail,
             telegramNumber: Validator.phone.generate(),
             password: userPassword,
@@ -74,7 +74,7 @@ describe("Test AuthCheckUserJWTToken", () => {
         const { success, data } = await authCheckUserJWTToken.execute(loginToken);
 
         expect(success).toBeTruthy();
-        expect(data.username).toBe(username);
+        expect(data.name).toBe(name);
         expect(data.email).toBe(userEmail);
         expect(data.jwt_token).toBe(loginToken);
     });
