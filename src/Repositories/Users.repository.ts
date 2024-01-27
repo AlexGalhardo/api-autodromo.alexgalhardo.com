@@ -3,16 +3,16 @@ import { Database } from "src/Utils/Database";
 import { User, UserRole } from "@prisma/client";
 
 interface newUserCreateDTO {
-	username: string,
-	role: UserRole,
-	role_token: string,
-	email: string,
-	password: string,
-	jwt_token: string
+    username: string;
+    role: UserRole;
+    role_token: string;
+    email: string;
+    password: string;
+    jwt_token: string;
 }
 
 export interface UsersRepositoryPort {
-	getByRoleToken(roleToken: string): Promise<User>
+    getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
     getByEmail(email: string);
@@ -26,28 +26,32 @@ export interface UsersRepositoryPort {
 export default class UsersRepository implements UsersRepositoryPort {
     constructor(private readonly database: Database) {}
 
-	public async getByRoleToken(roleToken: string): Promise<User> {
-		return await this.database.user.findUnique({
-			where: {
-				role_token: roleToken
-			}
-		});
-	}
+    public async getByRoleToken(roleToken: string): Promise<User> {
+        return await this.database.user.findUnique({
+            where: {
+                role_token: roleToken,
+            },
+        });
+    }
 
     public async findById(userId: string): Promise<boolean> {
-        return await this.database.user.findUnique({
+        return (await this.database.user.findUnique({
             where: {
                 id: userId,
             },
-        }) ? true : false;
+        }))
+            ? true
+            : false;
     }
 
     public async findByEmail(email: string): Promise<boolean> {
-        return await this.database.user.findUnique({
+        return (await this.database.user.findUnique({
             where: {
                 email,
             },
-        }) ? true : false
+        }))
+            ? true
+            : false;
     }
 
     public async getByEmail(email: string) {
@@ -75,21 +79,20 @@ export default class UsersRepository implements UsersRepositoryPort {
     }
 
     public async create(newUser: newUserCreateDTO): Promise<User> {
-		try {
-			return await this.database.user.create({
-				data: {
-					username: newUser.username,
-					role: newUser.role,
-					role_token: newUser.role_token,
-					email: newUser.email,
-					password: newUser.password,
-					jwt_token: newUser.jwt_token
-				},
-			});
-		}
-		catch (error) {
-			throw new Error(error);
-		}
+        try {
+            return await this.database.user.create({
+                data: {
+                    username: newUser.username,
+                    role: newUser.role,
+                    role_token: newUser.role_token,
+                    email: newUser.email,
+                    password: newUser.password,
+                    jwt_token: newUser.jwt_token,
+                },
+            });
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     public async deleteByEmail(email: string): Promise<void> {

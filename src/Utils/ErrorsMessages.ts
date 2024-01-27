@@ -1,23 +1,25 @@
 export enum ErrorsMessages {
-	INVALID_USER_ROLE = "Invalid User Role",
+    INVALID_USER_ROLE = "Invalid User Role",
 
-	USER_ROLE_TOKEN_INVALID = "User role token invalid",
+    USER_ROLE_TOKEN_INVALID = "User role token invalid",
 
-	USER_ROLE_IS_NOT_GESTOR = "User role is not GESTOR",
+    USER_ROLE_IS_NOT_GESTOR = "User role is not GESTOR",
 
-	INVALID_KART_STATUS = "Invalid Kart Status",
+    INVALID_KART_STATUS = "Invalid Kart Status",
 
     PROCESSING_ERROR = "PROCESSING_ERROR",
 
-	KART_NAME_ALREADY_REGISTERED = "Kart name already registered",
+    KART_NAME_ALREADY_REGISTERED = "Kart name already registered",
 
-	PISTA_NAME_ALREADY_REGISTERED = "Pista name already registered",
+    PISTA_NAME_ALREADY_REGISTERED = "Pista name already registered",
 
-	MISSING_REQUEST_BODY_DATA = "Missing request body data",
+    MISSING_REQUEST_BODY_DATA = "Missing request body data",
+
+    KART_IS_NOT_AVAILABLE = "Kart is not available",
 
     INVALID_USERNAME = "Invalid username",
 
-	MISSING_PASSWORD = "Missing password",
+    MISSING_PASSWORD = "Missing password",
 
     USER_ALREADY_EXISTS = "User already exists",
     USER_NOT_FOUND = "User not found",
@@ -27,7 +29,7 @@ export enum ErrorsMessages {
 
     INVALID_PHONE_NUMBER = "Invalid telegram number",
 
-    MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN_ = "MIssing Header Authorization Bearer JWT Token",
+    MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN = "MIssing Header Authorization Bearer JWT Token",
 
     NAME_IS_INVALID = "Name is invalid",
 

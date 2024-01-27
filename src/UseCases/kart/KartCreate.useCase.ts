@@ -5,16 +5,16 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface KartCreateUseCaseResponse {
     success: boolean;
-    data?: Kart
+    data?: Kart;
 }
 
 export interface KartCreateDTO {
-    status: KartStatus
-  	name: string
-	marca: string
-	modelo: string
-	potencia: number
-	marca_pneus: string
+    status: KartStatus;
+    name: string;
+    marca: string;
+    modelo: string;
+    potencia: number;
+    marca_pneus: string;
 }
 
 export interface KartCreateUseCasePort {
@@ -25,25 +25,26 @@ export default class KartCreateUseCase implements KartCreateUseCasePort {
     constructor(private readonly kartsRepository: KartsRepositoryPort) {}
 
     async execute(kartCreatePayload: KartCreateDTO): Promise<KartCreateUseCaseResponse> {
-		try {
-			const { status, name, marca, modelo, potencia, marca_pneus } = kartCreatePayload;
+        try {
+            const { status, name, marca, modelo, potencia, marca_pneus } = kartCreatePayload;
 
-			if (status && !Validator.kart.statusIsValid(status)) throw new Error(ErrorsMessages.INVALID_KART_STATUS);
+            if (status && !Validator.kart.statusIsValid(status)) throw new Error(ErrorsMessages.INVALID_KART_STATUS);
 
-			if (name && (await this.kartsRepository.findByName(name))) throw new Error(ErrorsMessages.KART_NAME_ALREADY_REGISTERED);
+            if (name && (await this.kartsRepository.findByName(name)))
+                throw new Error(ErrorsMessages.KART_NAME_ALREADY_REGISTERED);
 
-			const kartCreated = await this.kartsRepository.create({
-				status,
-				name,
-				marca,
-				modelo,
-				potencia,
-				marca_pneus,
-			});
+            const kartCreated = await this.kartsRepository.create({
+                status,
+                name,
+                marca,
+                modelo,
+                potencia,
+                marca_pneus,
+            });
 
-			return { success: true, data: kartCreated };
-		} catch (error) {
-			throw new Error(error)
-		}
+            return { success: true, data: kartCreated };
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 }

@@ -5,7 +5,8 @@ import { KartCreateDTO, KartCreateUseCasePort } from "src/UseCases/kart/KartCrea
 
 interface KartControllerResponse {
     success: boolean;
-    data?: Kart
+    data?: Kart;
+    message?: string;
 }
 
 interface KartControllerPort {
@@ -14,11 +15,9 @@ interface KartControllerPort {
 
 @Controller("kart")
 export class KartController implements KartControllerPort {
-    constructor(
-        @Inject("KartCreateUseCasePort") private readonly kartCreateUseCase: KartCreateUseCasePort,
-    ) {}
+    constructor(@Inject("KartCreateUseCasePort") private readonly kartCreateUseCase: KartCreateUseCasePort) {}
 
-	@Post("/")
+    @Post("/")
     async create(
         @Body() kartCreatePayload: KartCreateDTO,
         @Res() response: Response,

@@ -47,6 +47,14 @@ export default class DateTime {
         return 3600000;
     }
 
+    public stringToDefaultDate(dateString: string): Date {
+        const [day, month, yearHour] = dateString.split("/");
+        const [year, hourMinute] = yearHour.split(" ");
+        const [hour, minute] = hourMinute.split(":");
+
+        return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
+    }
+
     public get methods() {
         return {
             secondsToMilliseconds: this.secondsToMilliseconds,

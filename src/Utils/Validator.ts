@@ -18,8 +18,8 @@ export default class Validator {
     private static readonly OBJECTS = new Objects();
     private static readonly STRINGS = new Strings();
     private static readonly DATE_TIME = new DateTime();
-	private static readonly ROLE = new Role();
-	private static readonly KART = new Kart();
+    private static readonly ROLE = new Role();
+    private static readonly KART = new Kart();
 
     static get username() {
         return this.NAME;
@@ -53,13 +53,13 @@ export default class Validator {
         return this.PASSWORD;
     }
 
-	static get role() {
-		return this.ROLE;
-	}
+    static get role() {
+        return this.ROLE;
+    }
 
-	static get kart() {
-		return this.KART;
-	}
+    static get kart() {
+        return this.KART;
+    }
 
     static get methods() {
         return {

@@ -10,6 +10,7 @@ export default class DateTime {
     get secondInMilliseconds(): number;
     get minuteInMilliseconds(): number;
     get hourInMilliseconds(): number;
+    stringToDefaultDate(dateString: string): Date;
     get methods(): {
         secondsToMilliseconds: (seconds: number) => number;
         minutesToMilliseconds: (minutes: number) => number;

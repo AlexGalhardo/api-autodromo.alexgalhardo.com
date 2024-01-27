@@ -4,7 +4,9 @@ import { KartModule } from "./Modules/Kart.module";
 import { PistaModule } from "./Modules/Pista.module";
 import { HealthCheckModule } from "./Modules/HealthCheck.module";
 import { ConfigModule } from "@nestjs/config";
-import { ValidateToken } from "./MIddlewares/ValidateToken.middleware";
+import { ValidateJWTTokenRoleGestor } from "./MIddlewares/ValidateJWTTokenRoleGestor.middleware";
+import { ValidateJWTTokenRoleAfiliado } from "./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware";
+import { AgendamentoModule } from "./Modules/Agendamentos.moduel";
 
 @Module({
     imports: [
@@ -12,6 +14,7 @@ import { ValidateToken } from "./MIddlewares/ValidateToken.middleware";
         UserModule,
         KartModule,
         PistaModule,
+        AgendamentoModule,
         ConfigModule.forRoot({ isGlobal: true }),
     ],
     controllers: [],
@@ -20,13 +23,14 @@ import { ValidateToken } from "./MIddlewares/ValidateToken.middleware";
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(ValidateToken)
+            .apply(ValidateJWTTokenRoleGestor)
             .forRoutes(
-				{ path: "/user", method: RequestMethod.POST },
-				{ path: "/kart", method: RequestMethod.POST },
-				{ path: "/pista", method: RequestMethod.POST },
-                { path: "/user/check-user-jwt-token", method: RequestMethod.POST },
-                { path: "/user/logout", method: RequestMethod.POST },
-            );
+                { path: "/user", method: RequestMethod.POST },
+                { path: "/kart", method: RequestMethod.POST },
+                { path: "/pista", method: RequestMethod.POST },
+            )
+
+            .apply(ValidateJWTTokenRoleAfiliado)
+            .forRoutes({ path: "/agendamento", method: RequestMethod.POST });
     }
 }

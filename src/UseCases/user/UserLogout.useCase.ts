@@ -22,6 +22,6 @@ export default class UserLogoutUseCase implements UserLogoutUseCasePort {
             return { success: true };
         }
 
-        throw new ClientException(ErrorsMessages.MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN_);
+        throw new ClientException(ErrorsMessages.MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN);
     }
 }

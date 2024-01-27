@@ -73,7 +73,6 @@ model Agendamento {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   user_id     String     @db.ObjectId
   kart_id     String     @db.ObjectId
-  kart_status KartStatus
   pista_id    String     @db.ObjectId
   starts_at   DateTime
   ends_at     DateTime
@@ -93,6 +92,7 @@ model Corrida {
   kart_id                        String    @db.ObjectId
   pista_id                       String    @db.ObjectId
   starts_at                      DateTime
+  ends_at 						 DateTime?
   has_agendamento_in_this_period Boolean
   created_at                     DateTime  @default(now())
   updated_at                     DateTime?

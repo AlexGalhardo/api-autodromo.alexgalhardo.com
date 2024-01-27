@@ -5,7 +5,8 @@ import { PistaCreateDTO, PistaCreateUseCasePort } from "src/UseCases/pista/Pista
 
 interface PistaControllerResponse {
     success: boolean;
-    data?: Pista
+    data?: Pista;
+    message?: string;
 }
 
 interface PistaControllerPort {
@@ -14,11 +15,9 @@ interface PistaControllerPort {
 
 @Controller("pista")
 export class PistaController implements PistaControllerPort {
-    constructor(
-        @Inject("PistaCreateUseCasePort") private readonly pistaCreateUseCase: PistaCreateUseCasePort,
-    ) {}
+    constructor(@Inject("PistaCreateUseCasePort") private readonly pistaCreateUseCase: PistaCreateUseCasePort) {}
 
-	@Post("/")
+    @Post("/")
     async create(
         @Body() pistaCreatePayload: PistaCreateDTO,
         @Res() response: Response,

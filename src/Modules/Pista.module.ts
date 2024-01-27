@@ -15,13 +15,13 @@ import { Database } from "src/Utils/Database";
                 return new PistasRepository(database);
             },
         },
-		{
+        {
             provide: "PistaCreateUseCasePort",
             inject: ["PistasRepositoryPort"],
             useFactory: (pistasRepository: PistasRepositoryPort) => {
                 return new PistaCreateUseCase(pistasRepository);
             },
         },
-	]
+    ],
 })
 export class PistaModule {}

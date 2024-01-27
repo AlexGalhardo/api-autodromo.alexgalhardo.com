@@ -45,7 +45,7 @@ import UserCheckJWTTokenUseCase from "src/UseCases/user/UserCheckJWTToken.useCas
             useFactory: (usersRepository: UsersRepositoryPort) => {
                 return new UserCheckJWTTokenUseCase(usersRepository);
             },
-        }
+        },
     ],
 })
 export class UserModule {}

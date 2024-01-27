@@ -18,23 +18,27 @@ let UsersRepository = class UsersRepository {
     async getByRoleToken(roleToken) {
         return await this.database.user.findUnique({
             where: {
-                role_token: roleToken
-            }
+                role_token: roleToken,
+            },
         });
     }
     async findById(userId) {
-        return await this.database.user.findUnique({
+        return (await this.database.user.findUnique({
             where: {
                 id: userId,
             },
-        }) ? true : false;
+        }))
+            ? true
+            : false;
     }
     async findByEmail(email) {
-        return await this.database.user.findUnique({
+        return (await this.database.user.findUnique({
             where: {
                 email,
             },
-        }) ? true : false;
+        }))
+            ? true
+            : false;
     }
     async getByEmail(email) {
         try {
@@ -69,7 +73,7 @@ let UsersRepository = class UsersRepository {
                     role_token: newUser.role_token,
                     email: newUser.email,
                     password: newUser.password,
-                    jwt_token: newUser.jwt_token
+                    jwt_token: newUser.jwt_token,
                 },
             });
         }

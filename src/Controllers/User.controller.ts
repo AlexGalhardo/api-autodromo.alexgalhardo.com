@@ -4,12 +4,12 @@ import { UserLoginDTO, UserLoginUseCasePort } from "src/UseCases/user/UserLogin.
 import { UserLogoutUseCasePort } from "src/UseCases/user/UserLogout.useCase";
 import { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
 import { UserCheckJWTTokenUseCasePort } from "src/UseCases/user/UserCheckJWTToken.useCase";
+import { User } from "@prisma/client";
 
 interface UserControllerResponse {
     success: boolean;
-    jwt_token?: string;
+    data?: User;
     message?: string;
-    redirect?: string;
 }
 
 interface UserControllerPort {

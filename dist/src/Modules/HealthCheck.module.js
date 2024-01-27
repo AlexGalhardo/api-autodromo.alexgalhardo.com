@@ -8,13 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HealthCheckModule = void 0;
 const common_1 = require("@nestjs/common");
-const HealthCheckController_1 = require("../Controllers/HealthCheckController");
+const HealthCheck_controller_1 = require("../Controllers/HealthCheck.controller");
 let HealthCheckModule = class HealthCheckModule {
 };
 exports.HealthCheckModule = HealthCheckModule;
 exports.HealthCheckModule = HealthCheckModule = __decorate([
     (0, common_1.Module)({
-        controllers: [HealthCheckController_1.HealthCheckController],
+        controllers: [HealthCheck_controller_1.HealthCheckController],
         providers: [],
     })
 ], HealthCheckModule);
