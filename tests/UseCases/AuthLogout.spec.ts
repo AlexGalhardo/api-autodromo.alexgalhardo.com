@@ -1,16 +1,16 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import Validator from "src/Utils/Validator";
-import AuthLoginUseCase, { AuthLoginDTO, AuthLoginUseCasePort } from "src/UseCases/AuthLogin.useCase";
-import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
-import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
-import AuthLogoutUseCase, { AuthLogoutUseCasePort } from "src/UseCases/AuthLogout.useCase";
+import UserLoginUseCase, { UserLoginDTO, UserLoginUseCasePort } from "src/UseCases/user/UserLogin.useCase";
+import UserCreateUseCase, { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
+import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/user/User/UserDelete.useCase";
+import UserLogoutUseCase, { UserLogoutUseCasePort } from "src/UseCases/user/User/UserLogout.useCase";
 import { Database } from "src/Utils/Database";
 
-describe("Test AuthLogoutUseCase", () => {
-    let authRegisterUseCase: AuthRegisterUseCasePort;
-    let authLoginUseCase: AuthLoginUseCasePort;
-    let authLogoutUseCase: AuthLogoutUseCasePort;
+describe("Test UserLogoutUseCase", () => {
+    let UserCreateUseCase: UserCreateUseCasePort;
+    let UserLoginUseCase: UserLoginUseCasePort;
+    let UserLogoutUseCase: UserLogoutUseCasePort;
     let deleteUserByEmail: UserDeleteUseCasePort;
 
     beforeAll(async () => {
@@ -26,24 +26,24 @@ describe("Test AuthLogoutUseCase", () => {
                     },
                 },
                 {
-                    provide: "AuthLoginUseCasePort",
+                    provide: "UserLoginUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthLoginUseCase(usersRepository);
+                        return new UserLoginUseCase(usersRepository);
                     },
                 },
                 {
-                    provide: "AuthRegisterUseCasePort",
+                    provide: "UserCreateUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthRegisterUseCase(usersRepository);
+                        return new UserCreateUseCase(usersRepository);
                     },
                 },
                 {
-                    provide: "AuthLogoutUseCasePort",
+                    provide: "UserLogoutUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthLogoutUseCase(usersRepository);
+                        return new UserLogoutUseCase(usersRepository);
                     },
                 },
                 {
@@ -55,9 +55,9 @@ describe("Test AuthLogoutUseCase", () => {
                 },
             ],
         }).compile();
-        authRegisterUseCase = module.get<AuthRegisterUseCasePort>("AuthRegisterUseCasePort");
-        authLoginUseCase = module.get<AuthLoginUseCasePort>("AuthLoginUseCasePort");
-        authLogoutUseCase = module.get<AuthLogoutUseCasePort>("AuthLogoutUseCasePort");
+        UserCreateUseCase = module.get<UserCreateUseCasePort>("UserCreateUseCasePort");
+        UserLoginUseCase = module.get<UserLoginUseCasePort>("UserLoginUseCasePort");
+        UserLogoutUseCase = module.get<UserLogoutUseCasePort>("UserLogoutUseCasePort");
         deleteUserByEmail = module.get<UserDeleteUseCasePort>("UserDeleteUseCasePort");
     });
 
@@ -72,18 +72,18 @@ describe("Test AuthLogoutUseCase", () => {
             telegramNumber: Validator.phone.generate(),
             password: userPassword,
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
+        const { success, jwt_token } = await UserCreateUseCase.execute(UserCreateDTO);
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();
     });
 
     it("should login a user", async () => {
-        const authLoginDTO: AuthLoginDTO = {
+        const UserLoginDTO: UserLoginDTO = {
             email: userEmail,
             password: userPassword,
         };
-        let { success, jwt_token } = await authLoginUseCase.execute(authLoginDTO);
+        let { success, jwt_token } = await UserLoginUseCase.execute(UserLoginDTO);
         loginToken = jwt_token;
 
         expect(success).toBeTruthy();
@@ -91,7 +91,7 @@ describe("Test AuthLogoutUseCase", () => {
     });
 
     it("should logout a user", async () => {
-        const { success } = await authLogoutUseCase.execute(loginToken);
+        const { success } = await UserLogoutUseCase.execute(loginToken);
 
         expect(success).toBeTruthy();
     });

@@ -1,14 +1,14 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import Validator from "src/Utils/Validator";
-import AuthLoginUseCase, { AuthLoginDTO, AuthLoginUseCasePort } from "src/UseCases/AuthLogin.useCase";
-import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
-import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
+import UserLoginUseCase, { UserLoginDTO, UserLoginUseCasePort } from "src/UseCases/user/UserLogin.useCase";
+import UserCreateUseCase, { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
+import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/user/UserDelete.useCase";
 import { Database } from "src/Utils/Database";
 
-describe("Test AuthLoginUseCase", () => {
-    let authRegisterUseCase: AuthRegisterUseCasePort;
-    let authLoginUseCase: AuthLoginUseCasePort;
+describe("Test UserLoginUseCase", () => {
+    let UserCreateUseCase: UserCreateUseCasePort;
+    let UserLoginUseCase: UserLoginUseCasePort;
     let deleteUserByEmail: UserDeleteUseCasePort;
 
     beforeAll(async () => {
@@ -20,7 +20,7 @@ describe("Test AuthLoginUseCase", () => {
                     provide: "UsersRepositoryPort",
                     inject: [Database],
                     useFactory: (database: Database) => {
-                        return new UsersRepository(undefined, database);
+                        return new UsersRepository(database);
                     },
                 },
                 {
@@ -31,23 +31,23 @@ describe("Test AuthLoginUseCase", () => {
                     },
                 },
                 {
-                    provide: "AuthLoginUseCasePort",
+                    provide: "UserLoginUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthLoginUseCase(usersRepository);
+                        return new UserLoginUseCase(usersRepository);
                     },
                 },
                 {
-                    provide: "AuthRegisterUseCasePort",
+                    provide: "UserCreateUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthRegisterUseCase(usersRepository);
+                        return new UserCreateUseCase(usersRepository);
                     },
                 },
             ],
         }).compile();
-        authRegisterUseCase = module.get<AuthRegisterUseCasePort>("AuthRegisterUseCasePort");
-        authLoginUseCase = module.get<AuthLoginUseCasePort>("AuthLoginUseCasePort");
+        UserCreateUseCase = module.get<UserCreateUseCasePort>("UserCreateUseCasePort");
+        UserLoginUseCase = module.get<UserLoginUseCasePort>("UserLoginUseCasePort");
         deleteUserByEmail = module.get<UserDeleteUseCasePort>("UserDeleteUseCasePort");
     });
 
@@ -61,18 +61,18 @@ describe("Test AuthLoginUseCase", () => {
             telegramNumber: Validator.phone.generate(),
             password: userPassword,
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
+        const { success, jwt_token } = await UserCreateUseCase.execute(UserCreateDTO);
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();
     });
 
     it("should login a user", async () => {
-        const authLoginDTO: AuthLoginDTO = {
+        const UserLoginDTO: UserLoginDTO = {
             email: userEmail,
             password: userPassword,
         };
-        const { success, jwt_token } = await authLoginUseCase.execute(authLoginDTO);
+        const { success, jwt_token } = await UserLoginUseCase.execute(UserLoginDTO);
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();

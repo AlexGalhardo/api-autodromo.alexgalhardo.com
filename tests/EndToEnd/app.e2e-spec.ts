@@ -4,17 +4,17 @@ import { AppModule } from "../../src/App.module";
 import { HttpStatus, INestApplication } from "@nestjs/common";
 import { UserController } from "../../src/Controllers/User.controller";
 import UsersRepository, { UsersRepositoryPort } from "../../src/Repositories/Users.repository";
-import AuthLoginUseCase from "../../src/UseCases/AuthLogin.useCase";
-import AuthRegisterUseCase from "../../src/UseCases/AuthRegister.useCase";
+import UserLoginUseCase from "../../src/UseCases/user/User/UserLogin.useCase";
+import UserCreateUseCase from "../../src/UseCases/user/User/UserCreate.useCase";
 import AuthForgetPasswordUseCase from "../../src/UseCases/AuthForgetPassword.useCase";
 import AuthResetPasswordUseCase from "../../src/UseCases/AuthResetPassword.useCase";
-import AuthLogoutUseCase from "src/UseCases/AuthLogout.useCase";
-import AuthTokenUserUseCase from "src/UseCases/AuthCheckUserJWTToken.useCase";
+import UserLogoutUseCase from "src/UseCases/user/User/UserLogout.useCase";
+import AuthTokenUserUseCase from "src/UseCases/user/UserCheckJWTToken.useCase";
 import AuthLoginGoogleUseCase from "src/UseCases/AuthLoginGoogle.useCase";
 import AuthCheckResetPasswordTokenUseCase from "src/UseCases/AuthCheckResetPasswordToken.useCase";
 import { Database } from "src/Utils/Database";
 import AuthLoginGitHubUseCase from "src/UseCases/AuthLoginGitHub.useCase";
-import AuthCheckUserJWTTokenUseCase from "src/UseCases/AuthCheckUserJWTToken.useCase";
+import UserCheckJWTTokenUseCase from "src/UseCases/user/UserCheckJWTToken.useCase";
 
 describe("AppController (e2e)", () => {
     let app: INestApplication;
@@ -33,17 +33,17 @@ describe("AppController (e2e)", () => {
                     },
                 },
                 {
-                    provide: "AuthRegisterUseCasePort",
+                    provide: "UserCreateUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthRegisterUseCase(usersRepository);
+                        return new UserCreateUseCase(usersRepository);
                     },
                 },
                 {
-                    provide: "AuthLoginUseCasePort",
+                    provide: "UserLoginUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthLoginUseCase(usersRepository);
+                        return new UserLoginUseCase(usersRepository);
                     },
                 },
                 {
@@ -61,10 +61,10 @@ describe("AppController (e2e)", () => {
                     },
                 },
                 {
-                    provide: "AuthLogoutUseCasePort",
+                    provide: "UserLogoutUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthLogoutUseCase(usersRepository);
+                        return new UserLogoutUseCase(usersRepository);
                     },
                 },
                 {
@@ -96,10 +96,10 @@ describe("AppController (e2e)", () => {
                     },
                 },
                 {
-                    provide: "AuthCheckUserJWTTokenUseCasePort",
+                    provide: "UserCheckJWTTokenUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthCheckUserJWTTokenUseCase(usersRepository);
+                        return new UserCheckJWTTokenUseCase(usersRepository);
                     },
                 },
             ],

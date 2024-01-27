@@ -5,11 +5,11 @@ import { ClientException } from "src/Utils/Exception";
 import Validator from "src/Utils/Validator";
 import * as jwt from "jsonwebtoken";
 
-export interface AuthLoginUseCasePort {
-    execute(authLoginDTO: AuthLoginDTO): Promise<UserLoginUseCaseResponse>;
+export interface UserLoginUseCasePort {
+    execute(UserLoginDTO: UserLoginDTO): Promise<UserLoginUseCaseResponse>;
 }
 
-export interface AuthLoginDTO {
+export interface UserLoginDTO {
     email: string;
     password: string;
 }
@@ -20,11 +20,11 @@ interface UserLoginUseCaseResponse {
     message?: string;
 }
 
-export default class AuthLoginUseCase implements AuthLoginUseCasePort {
+export default class UserLoginUseCase implements UserLoginUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
-    async execute(authLoginPayload: AuthLoginDTO): Promise<UserLoginUseCaseResponse> {
-        const { email, password } = authLoginPayload;
+    async execute(userLoginPayload: UserLoginDTO): Promise<UserLoginUseCaseResponse> {
+        const { email, password } = userLoginPayload;
 
         if (!Validator.email.isValid(email)) throw new ClientException(ErrorsMessages.EMAIL_IS_INVALID);
 

@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { UserController } from "src/Controllers/User.controller";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
-import AuthLoginUseCase from "src/UseCases/AuthLogin.useCase";
-import AuthLogoutUseCase from "src/UseCases/AuthLogout.useCase";
-import AuthRegisterUseCase from "src/UseCases/AuthRegister.useCase";
+import UserLoginUseCase from "src/UseCases/user/UserLogin.useCase";
+import UserLogoutUseCase from "src/UseCases/user/UserLogout.useCase";
+import UserCreateUseCase from "src/UseCases/user/UserCreate.useCase";
 import { Database } from "src/Utils/Database";
-import AuthCheckUserJWTTokenUseCase from "src/UseCases/AuthCheckUserJWTToken.useCase";
+import UserCheckJWTTokenUseCase from "src/UseCases/user/UserCheckJWTToken.useCase";
 
 @Module({
     controllers: [UserController],
@@ -19,31 +19,31 @@ import AuthCheckUserJWTTokenUseCase from "src/UseCases/AuthCheckUserJWTToken.use
             },
         },
         {
-            provide: "AuthLoginUseCasePort",
+            provide: "UserLoginUseCasePort",
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthLoginUseCase(usersRepository);
+                return new UserLoginUseCase(usersRepository);
             },
         },
         {
-            provide: "AuthRegisterUseCasePort",
+            provide: "UserCreateUseCasePort",
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthRegisterUseCase(usersRepository);
+                return new UserCreateUseCase(usersRepository);
             },
         },
         {
-            provide: "AuthLogoutUseCasePort",
+            provide: "UserLogoutUseCasePort",
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthLogoutUseCase(usersRepository);
+                return new UserLogoutUseCase(usersRepository);
             },
         },
         {
-            provide: "AuthCheckUserJWTTokenUseCasePort",
+            provide: "UserCheckJWTTokenUseCasePort",
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {
-                return new AuthCheckUserJWTTokenUseCase(usersRepository);
+                return new UserCheckJWTTokenUseCase(usersRepository);
             },
         }
     ],

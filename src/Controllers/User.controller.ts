@@ -1,11 +1,11 @@
 import { Controller, Post, Res, Body, Inject, HttpStatus } from "@nestjs/common";
 import { Response } from "express";
-import { AuthLoginDTO, AuthLoginUseCasePort } from "src/UseCases/AuthLogin.useCase";
-import { AuthLogoutUseCasePort } from "src/UseCases/AuthLogout.useCase";
-import { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
-import { AuthCheckUserJWTTokenUseCasePort } from "src/UseCases/AuthCheckUserJWTToken.useCase";
+import { UserLoginDTO, UserLoginUseCasePort } from "src/UseCases/user/UserLogin.useCase";
+import { UserLogoutUseCasePort } from "src/UseCases/user/UserLogout.useCase";
+import { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
+import { UserCheckJWTTokenUseCasePort } from "src/UseCases/user/UserCheckJWTToken.useCase";
 
-interface AuthUseCaseResponse {
+interface UserControllerResponse {
     success: boolean;
     jwt_token?: string;
     message?: string;
@@ -13,29 +13,29 @@ interface AuthUseCaseResponse {
 }
 
 interface UserControllerPort {
-    login(authLoginDTO: AuthLoginDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
-    register(UserCreateDTO: UserCreateDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
-    logout(response: Response): Promise<Response<AuthUseCaseResponse>>;
-    tokenUser(response: Response): Promise<Response<AuthUseCaseResponse>>;
+    login(UserLoginDTO: UserLoginDTO, response: Response): Promise<Response<UserControllerResponse>>;
+    register(UserCreateDTO: UserCreateDTO, response: Response): Promise<Response<UserControllerResponse>>;
+    logout(response: Response): Promise<Response<UserControllerResponse>>;
+    tokenUser(response: Response): Promise<Response<UserControllerResponse>>;
 }
 
 @Controller("user")
 export class UserController implements UserControllerPort {
     constructor(
-        @Inject("AuthLoginUseCasePort") private readonly authLoginUseCase: AuthLoginUseCasePort,
-        @Inject("AuthRegisterUseCasePort") private readonly authRegisterUseCase: AuthRegisterUseCasePort,
-        @Inject("AuthLogoutUseCasePort") private readonly authLogoutUseCase: AuthLogoutUseCasePort,
-        @Inject("AuthCheckUserJWTTokenUseCasePort")
-        private readonly authCheckUserJWTTokenUseCase: AuthCheckUserJWTTokenUseCasePort,
+        @Inject("UserLoginUseCasePort") private readonly UserLoginUseCase: UserLoginUseCasePort,
+        @Inject("UserCreateUseCasePort") private readonly UserCreateUseCase: UserCreateUseCasePort,
+        @Inject("UserLogoutUseCasePort") private readonly UserLogoutUseCase: UserLogoutUseCasePort,
+        @Inject("UserCheckJWTTokenUseCasePort")
+        private readonly UserCheckJWTTokenUseCase: UserCheckJWTTokenUseCasePort,
     ) {}
 
     @Post("/login")
     async login(
-        @Body() authLoginPayload: AuthLoginDTO,
+        @Body() userLoginPayload: UserLoginDTO,
         @Res() response: Response,
-    ): Promise<Response<AuthUseCaseResponse>> {
+    ): Promise<Response<UserControllerResponse>> {
         try {
-            const { success, jwt_token, message } = await this.authLoginUseCase.execute(authLoginPayload);
+            const { success, jwt_token, message } = await this.UserLoginUseCase.execute(userLoginPayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, jwt_token });
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message });
         } catch (error) {
@@ -47,21 +47,20 @@ export class UserController implements UserControllerPort {
     async register(
         @Body() authRegisterPayload: UserCreateDTO,
         @Res() response: Response,
-    ): Promise<Response<AuthUseCaseResponse>> {
+    ): Promise<Response<UserControllerResponse>> {
         try {
-			const userJWTToken = response.locals.token;
-            const { success, jwt_token } = await this.authRegisterUseCase.execute(userJWTToken, authRegisterPayload);
-            if (success === true) return response.status(HttpStatus.OK).json({ success: true, jwt_token });
+            const { success, data } = await this.UserCreateUseCase.execute(authRegisterPayload);
+            if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
         }
     }
 
     @Post("/logout")
-    async logout(@Res() response: Response): Promise<Response<AuthUseCaseResponse>> {
+    async logout(@Res() response: Response): Promise<Response<UserControllerResponse>> {
         try {
             const userJWTToken = response.locals.token;
-            const { success } = await this.authLogoutUseCase.execute(userJWTToken);
+            const { success } = await this.UserLogoutUseCase.execute(userJWTToken);
             if (success) return response.status(HttpStatus.OK).json({ success: true });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -69,10 +68,10 @@ export class UserController implements UserControllerPort {
     }
 
     @Post("/check-user-jwt-token")
-    async tokenUser(@Res() response: Response): Promise<Response<AuthUseCaseResponse>> {
+    async tokenUser(@Res() response: Response): Promise<Response<UserControllerResponse>> {
         try {
             const userJWTToken = response.locals.token;
-            const { success, data } = await this.authCheckUserJWTTokenUseCase.execute(userJWTToken);
+            const { success, data } = await this.UserCheckJWTTokenUseCase.execute(userJWTToken);
             if (success) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });

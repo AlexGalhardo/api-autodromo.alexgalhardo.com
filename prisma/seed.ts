@@ -3,7 +3,7 @@ import { Bcrypt } from "../src/Utils/Bcrypt";
 import * as jwt from "jsonwebtoken";
 import { randomUUID } from "node:crypto";
 
-const prisma = new PrismaClient({
+export const prisma = new PrismaClient({
     errorFormat: "pretty",
 });
 

@@ -5,7 +5,11 @@ export enum ErrorsMessages {
 
 	USER_ROLE_IS_NOT_GESTOR = "User role is not GESTOR",
 
+	INVALID_KART_STATUS = "Invalid Kart Status",
+
     PROCESSING_ERROR = "PROCESSING_ERROR",
+
+	KART_NAME_ALREADY_REGISTERED = "Kart name already registered",
 
     INVALID_USERNAME = "Invalid username",
 
@@ -19,7 +23,7 @@ export enum ErrorsMessages {
 
     INVALID_PHONE_NUMBER = "Invalid telegram number",
 
-    TOKEN_EXPIRED_OR_INVALID = "Header Authorization Bearer Token or API Key Expired Or Invalid",
+    MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN_ = "MIssing Header Authorization Bearer JWT Token",
 
     NAME_IS_INVALID = "Name is invalid",
 

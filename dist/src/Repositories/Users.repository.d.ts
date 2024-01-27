@@ -1,13 +1,20 @@
 import { Database } from "src/Utils/Database";
-import "dotenv/config";
-import { User } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
+interface newUserCreateDTO {
+    username: string;
+    role: UserRole;
+    role_token: string;
+    email: string;
+    password: string;
+    jwt_token: string;
+}
 export interface UsersRepositoryPort {
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
     getByEmail(email: string): any;
     getById(userId: string): any;
-    create(user: any): Promise<void>;
+    create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
 }
@@ -39,7 +46,8 @@ export default class UsersRepository implements UsersRepositoryPort {
         created_at: Date;
         updated_at: Date;
     }>;
-    create(newUser: any): Promise<void>;
+    create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
 }
+export {};

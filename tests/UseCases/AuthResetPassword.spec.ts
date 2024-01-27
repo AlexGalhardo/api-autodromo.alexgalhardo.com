@@ -1,8 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
-import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
+import UserCreateUseCase, { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
 import Validator from "src/Utils/Validator";
-import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
+import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/user/User/UserDelete.useCase";
 import AuthForgetPasswordUseCase, {
     AuthForgetPasswordDTO,
     AuthForgetPasswordUseCasePort,
@@ -14,7 +14,7 @@ import AuthResetPasswordUseCase, {
 import { Database } from "src/Utils/Database";
 
 describe("Test AuthForgetPasswordUseCase", () => {
-    let authRegisterUseCase: AuthRegisterUseCasePort;
+    let UserCreateUseCase: UserCreateUseCasePort;
     let authForgetPasswordUseCase: AuthForgetPasswordUseCasePort;
     let authResetPasswordUseCase: AuthResetPasswordUseCasePort;
     let deleteUserByEmail: UserDeleteUseCasePort;
@@ -32,10 +32,10 @@ describe("Test AuthForgetPasswordUseCase", () => {
                     },
                 },
                 {
-                    provide: "AuthRegisterUseCasePort",
+                    provide: "UserCreateUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthRegisterUseCase(usersRepository);
+                        return new UserCreateUseCase(usersRepository);
                     },
                 },
                 {
@@ -61,7 +61,7 @@ describe("Test AuthForgetPasswordUseCase", () => {
                 },
             ],
         }).compile();
-        authRegisterUseCase = module.get<AuthRegisterUseCasePort>("AuthRegisterUseCasePort");
+        UserCreateUseCase = module.get<UserCreateUseCasePort>("UserCreateUseCasePort");
         authForgetPasswordUseCase = module.get<AuthForgetPasswordUseCasePort>("AuthForgetPasswordUseCasePort");
         authResetPasswordUseCase = module.get<AuthResetPasswordUseCasePort>("AuthResetPasswordUseCasePort");
         deleteUserByEmail = module.get<UserDeleteUseCasePort>("UserDeleteUseCasePort");
@@ -77,7 +77,7 @@ describe("Test AuthForgetPasswordUseCase", () => {
             telegramNumber: Validator.phone.generate(),
             password: Validator.password.generate(),
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
+        const { success, jwt_token } = await UserCreateUseCase.execute(UserCreateDTO);
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();

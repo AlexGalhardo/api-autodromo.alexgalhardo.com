@@ -7,6 +7,7 @@ import Password from "./DataTypes/Password";
 import DateTime from "./DataTypes/DateTime";
 import Phone from "./DataTypes/Phone";
 import Role from "./DataTypes/Role";
+import Kart from "./DataTypes/Kart";
 export default class Validator {
     private static readonly NAME;
     private static readonly EMAIL;
@@ -17,6 +18,7 @@ export default class Validator {
     private static readonly STRINGS;
     private static readonly DATE_TIME;
     private static readonly ROLE;
+    private static readonly KART;
     static get username(): Name;
     static get dateTime(): DateTime;
     static get strings(): Strings;
@@ -26,6 +28,7 @@ export default class Validator {
     static get phone(): Phone;
     static get password(): Password;
     static get role(): Role;
+    static get kart(): Kart;
     static get methods(): {
         isStringLenghtBetween: (value: string, min: number, max: number) => boolean;
         isStringLenghtBetweenOrEqual: (value: string, min: number, max: number) => boolean;

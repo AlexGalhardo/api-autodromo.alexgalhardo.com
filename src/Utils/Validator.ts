@@ -7,6 +7,7 @@ import Password from "./DataTypes/Password";
 import DateTime from "./DataTypes/DateTime";
 import Phone from "./DataTypes/Phone";
 import Role from "./DataTypes/Role";
+import Kart from "./DataTypes/Kart";
 
 export default class Validator {
     private static readonly NAME = new Name();
@@ -18,6 +19,7 @@ export default class Validator {
     private static readonly STRINGS = new Strings();
     private static readonly DATE_TIME = new DateTime();
 	private static readonly ROLE = new Role();
+	private static readonly KART = new Kart();
 
     static get username() {
         return this.NAME;
@@ -53,6 +55,10 @@ export default class Validator {
 
 	static get role() {
 		return this.ROLE;
+	}
+
+	static get kart() {
+		return this.KART;
 	}
 
     static get methods() {

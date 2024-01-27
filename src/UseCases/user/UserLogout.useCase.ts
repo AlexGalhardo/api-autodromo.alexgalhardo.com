@@ -3,18 +3,18 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import { ClientException } from "src/Utils/Exception";
 import * as jwt from "jsonwebtoken";
 
-export interface AuthLogoutUseCasePort {
-    execute(jwtToken: string): Promise<AuthLogoutUseCaseResponse>;
+export interface UserLogoutUseCasePort {
+    execute(jwtToken: string): Promise<UserLogoutUseCaseResponse>;
 }
 
-interface AuthLogoutUseCaseResponse {
+interface UserLogoutUseCaseResponse {
     success: boolean;
 }
 
-export default class AuthLogoutUseCase implements AuthLogoutUseCasePort {
+export default class UserLogoutUseCase implements UserLogoutUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
-    async execute(jwtToken: string): Promise<AuthLogoutUseCaseResponse> {
+    async execute(jwtToken: string): Promise<UserLogoutUseCaseResponse> {
         const { userID } = jwt.verify(jwtToken, process.env.JWT_SECRET) as jwt.JwtPayload;
 
         if (userID && (await this.usersRepository.findById(userID))) {
@@ -22,6 +22,6 @@ export default class AuthLogoutUseCase implements AuthLogoutUseCasePort {
             return { success: true };
         }
 
-        throw new ClientException(ErrorsMessages.TOKEN_EXPIRED_OR_INVALID);
+        throw new ClientException(ErrorsMessages.MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN_);
     }
 }

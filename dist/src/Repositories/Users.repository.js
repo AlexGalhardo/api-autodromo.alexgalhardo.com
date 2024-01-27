@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const Database_1 = require("../Utils/Database");
-require("dotenv/config");
 let UsersRepository = class UsersRepository {
     constructor(database) {
         this.database = database;
@@ -63,7 +62,7 @@ let UsersRepository = class UsersRepository {
     }
     async create(newUser) {
         try {
-            await this.database.user.create({
+            return await this.database.user.create({
                 data: {
                     username: newUser.username,
                     role: newUser.role,

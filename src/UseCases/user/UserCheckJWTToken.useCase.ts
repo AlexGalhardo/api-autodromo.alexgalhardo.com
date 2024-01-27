@@ -3,11 +3,11 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import { ClientException } from "src/Utils/Exception";
 import * as jwt from "jsonwebtoken";
 
-export interface AuthCheckUserJWTTokenUseCasePort {
+export interface UserCheckJWTTokenUseCasePort {
     execute(token: string);
 }
 
-export default class AuthCheckUserJWTTokenUseCase implements AuthCheckUserJWTTokenUseCasePort {
+export default class UserCheckJWTTokenUseCase implements UserCheckJWTTokenUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
     async execute(token: string) {

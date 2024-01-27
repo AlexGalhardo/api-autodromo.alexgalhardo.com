@@ -1,14 +1,14 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import Validator from "src/Utils/Validator";
-import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
-import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
-import AuthTokenUserUseCase, { AuthCheckUserJWTTokenUseCasePort } from "src/UseCases/AuthCheckUserJWTToken.useCase";
+import UserCreateUseCase, { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
+import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/user/UserDelete.useCase";
+import AuthTokenUserUseCase, { UserCheckJWTTokenUseCasePort } from "src/UseCases/user/UserCheckJWTToken.useCase";
 import { Database } from "src/Utils/Database";
 
 describe("Test AuthCheckUserJWTToken", () => {
-    let authRegisterUseCase: AuthRegisterUseCasePort;
-    let authCheckUserJWTToken: AuthCheckUserJWTTokenUseCasePort;
+    let UserCreateUseCase: UserCreateUseCasePort;
+    let authCheckUserJWTToken: UserCheckJWTTokenUseCasePort;
     let deleteUserByEmail: UserDeleteUseCasePort;
 
     beforeAll(async () => {
@@ -31,10 +31,10 @@ describe("Test AuthCheckUserJWTToken", () => {
                     },
                 },
                 {
-                    provide: "AuthRegisterUseCasePort",
+                    provide: "UserCreateUseCasePort",
                     inject: ["UsersRepositoryPort"],
                     useFactory: (usersRepository: UsersRepositoryPort) => {
-                        return new AuthRegisterUseCase(usersRepository);
+                        return new UserCreateUseCase(usersRepository);
                     },
                 },
                 {
@@ -46,8 +46,8 @@ describe("Test AuthCheckUserJWTToken", () => {
                 },
             ],
         }).compile();
-        authRegisterUseCase = module.get<AuthRegisterUseCasePort>("AuthRegisterUseCasePort");
-        authCheckUserJWTToken = module.get<AuthCheckUserJWTTokenUseCasePort>("AuthTokenUserUseCasePort");
+        UserCreateUseCase = module.get<UserCreateUseCasePort>("UserCreateUseCasePort");
+        authCheckUserJWTToken = module.get<UserCheckJWTTokenUseCasePort>("AuthTokenUserUseCasePort");
         deleteUserByEmail = module.get<UserDeleteUseCasePort>("UserDeleteUseCasePort");
     });
 
@@ -63,7 +63,7 @@ describe("Test AuthCheckUserJWTToken", () => {
             telegramNumber: Validator.phone.generate(),
             password: userPassword,
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
+        const { success, jwt_token } = await UserCreateUseCase.execute(UserCreateDTO);
         loginToken = jwt_token;
 
         expect(success).toBeTruthy();

@@ -1,7 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import { Database } from "src/Utils/Database";
-import "dotenv/config";
-import { User } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
+
+interface newUserCreateDTO {
+	username: string,
+	role: UserRole,
+	role_token: string,
+	email: string,
+	password: string,
+	jwt_token: string
+}
 
 export interface UsersRepositoryPort {
 	getByRoleToken(roleToken: string): Promise<User>
@@ -9,16 +17,14 @@ export interface UsersRepositoryPort {
     findByEmail(email: string): Promise<boolean>;
     getByEmail(email: string);
     getById(userId: string);
-    create(user): Promise<void>;
+    create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
 }
 
 @Injectable()
 export default class UsersRepository implements UsersRepositoryPort {
-    constructor(
-        private readonly database: Database,
-    ) { }
+    constructor(private readonly database: Database) {}
 
 	public async getByRoleToken(roleToken: string): Promise<User> {
 		return await this.database.user.findUnique({
@@ -68,9 +74,9 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async create(newUser): Promise<void> {
+    public async create(newUser: newUserCreateDTO): Promise<User> {
 		try {
-			await this.database.user.create({
+			return await this.database.user.create({
 				data: {
 					username: newUser.username,
 					role: newUser.role,

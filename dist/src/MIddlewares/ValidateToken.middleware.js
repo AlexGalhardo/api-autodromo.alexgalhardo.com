@@ -9,18 +9,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidateToken = void 0;
 const common_1 = require("@nestjs/common");
 const ErrorsMessages_1 = require("../Utils/ErrorsMessages");
+const jwt = require("jsonwebtoken");
+const client_1 = require("@prisma/client");
+const seed_1 = require("../../prisma/seed");
 let ValidateToken = class ValidateToken {
-    use(request, response, next) {
+    async use(request, response, next) {
         var _a;
         if (!((_a = request.headers) === null || _a === void 0 ? void 0 : _a.authorization) ||
             !request.headers.authorization.startsWith("Bearer") ||
             !request.headers.authorization.split(" ")[1]) {
             return response
                 .status(common_1.HttpStatus.BAD_REQUEST)
-                .json({ success: false, message: ErrorsMessages_1.ErrorsMessages.TOKEN_EXPIRED_OR_INVALID });
+                .json({ success: false, message: ErrorsMessages_1.ErrorsMessages.MISSING_HEADER_AUTHORIZATION_BEARER_JWT_TOKEN_ });
         }
-        const token = request.headers.authorization.split(" ")[1];
-        response.locals.token = token;
+        const jwtToken = request.headers.authorization.split(" ")[1];
+        const { role_token } = jwt.verify(jwtToken, process.env.JWT_SECRET);
+        if (!role_token) {
+            return response
+                .status(common_1.HttpStatus.BAD_REQUEST)
+                .json({ success: false, message: ErrorsMessages_1.ErrorsMessages.USER_ROLE_TOKEN_INVALID });
+        }
+        const userFound = await seed_1.prisma.user.findUnique({
+            where: {
+                role_token
+            }
+        });
+        if (userFound && userFound.role !== client_1.UserRole.GESTOR) {
+            return response
+                .status(common_1.HttpStatus.BAD_REQUEST)
+                .json({ success: false, message: ErrorsMessages_1.ErrorsMessages.USER_ROLE_IS_NOT_GESTOR });
+        }
         next();
     }
 };

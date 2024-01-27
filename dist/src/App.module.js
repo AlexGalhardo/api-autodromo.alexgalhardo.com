@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const Auth_module_1 = require("./Modules/Auth.module");
+const User_module_1 = require("./Modules/User.module");
 const Kart_module_1 = require("./Modules/Kart.module");
 const Pista_module_1 = require("./Modules/Pista.module");
 const HealthCheck_module_1 = require("./Modules/HealthCheck.module");
@@ -18,7 +18,7 @@ let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateToken_middleware_1.ValidateToken)
-            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/user/check-user-jwt-token", method: common_1.RequestMethod.POST }, { path: "/user/logout", method: common_1.RequestMethod.POST });
+            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/user/check-user-jwt-token", method: common_1.RequestMethod.POST }, { path: "/user/logout", method: common_1.RequestMethod.POST });
     }
 };
 exports.AppModule = AppModule;
@@ -26,7 +26,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             HealthCheck_module_1.HealthCheckModule,
-            Auth_module_1.UserModule,
+            User_module_1.UserModule,
             Kart_module_1.KartModule,
             Pista_module_1.PistaModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),
