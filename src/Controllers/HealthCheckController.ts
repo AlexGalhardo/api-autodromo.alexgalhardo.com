@@ -7,7 +7,7 @@ export class HealthCheckController {
     async login(@Res() response: Response) {
         return response.status(HttpStatus.OK).json({
             success: true,
-            message: "Nerd API is on, lets goo!",
+            message: "API is on, lets goo!",
         });
     }
 }

@@ -24,6 +24,7 @@ export class AppModule implements NestModule {
             .forRoutes(
 				{ path: "/user", method: RequestMethod.POST },
 				{ path: "/kart", method: RequestMethod.POST },
+				{ path: "/pista", method: RequestMethod.POST },
                 { path: "/user/check-user-jwt-token", method: RequestMethod.POST },
                 { path: "/user/logout", method: RequestMethod.POST },
             );

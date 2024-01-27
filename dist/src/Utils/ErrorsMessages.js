@@ -9,6 +9,8 @@ var ErrorsMessages;
     ErrorsMessages["INVALID_KART_STATUS"] = "Invalid Kart Status";
     ErrorsMessages["PROCESSING_ERROR"] = "PROCESSING_ERROR";
     ErrorsMessages["KART_NAME_ALREADY_REGISTERED"] = "Kart name already registered";
+    ErrorsMessages["PISTA_NAME_ALREADY_REGISTERED"] = "Pista name already registered";
+    ErrorsMessages["MISSING_REQUEST_BODY_DATA"] = "Missing request body data";
     ErrorsMessages["INVALID_USERNAME"] = "Invalid username";
     ErrorsMessages["MISSING_PASSWORD"] = "Missing password";
     ErrorsMessages["USER_ALREADY_EXISTS"] = "User already exists";

@@ -18,7 +18,7 @@ let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateToken_middleware_1.ValidateToken)
-            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/user/check-user-jwt-token", method: common_1.RequestMethod.POST }, { path: "/user/logout", method: common_1.RequestMethod.POST });
+            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/pista", method: common_1.RequestMethod.POST }, { path: "/user/check-user-jwt-token", method: common_1.RequestMethod.POST }, { path: "/user/logout", method: common_1.RequestMethod.POST });
     }
 };
 exports.AppModule = AppModule;

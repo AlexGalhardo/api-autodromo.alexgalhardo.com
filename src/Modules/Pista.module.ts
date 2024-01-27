@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { PistaController } from "src/Controllers/Pista.controller";
-import UsersRepository from "src/Repositories/Users.repository";
+import PistasRepository, { PistasRepositoryPort } from "src/Repositories/Pistas.repository";
+import PistaCreateUseCase from "src/UseCases/pista/PistaCreate.useCase";
 import { Database } from "src/Utils/Database";
 
 @Module({
@@ -8,12 +9,19 @@ import { Database } from "src/Utils/Database";
     providers: [
         Database,
         {
-            provide: "UsersRepositoryPort",
+            provide: "PistasRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new UsersRepository(database);
+                return new PistasRepository(database);
             },
-        }
-    ],
+        },
+		{
+            provide: "PistaCreateUseCasePort",
+            inject: ["PistasRepositoryPort"],
+            useFactory: (pistasRepository: PistasRepositoryPort) => {
+                return new PistaCreateUseCase(pistasRepository);
+            },
+        },
+	]
 })
 export class PistaModule {}

@@ -18,7 +18,7 @@ let HealthCheckController = class HealthCheckController {
     async login(response) {
         return response.status(common_1.HttpStatus.OK).json({
             success: true,
-            message: "Nerd API is on, lets goo!",
+            message: "API is on, lets goo!",
         });
     }
 };

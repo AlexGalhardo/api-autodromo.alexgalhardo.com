@@ -5,6 +5,8 @@ export declare enum ErrorsMessages {
     INVALID_KART_STATUS = "Invalid Kart Status",
     PROCESSING_ERROR = "PROCESSING_ERROR",
     KART_NAME_ALREADY_REGISTERED = "Kart name already registered",
+    PISTA_NAME_ALREADY_REGISTERED = "Pista name already registered",
+    MISSING_REQUEST_BODY_DATA = "Missing request body data",
     INVALID_USERNAME = "Invalid username",
     MISSING_PASSWORD = "Missing password",
     USER_ALREADY_EXISTS = "User already exists",

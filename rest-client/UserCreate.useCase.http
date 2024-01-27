@@ -1,0 +1,10 @@
+POST http://localhost:4000/user HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiYjg5YjVmYzQtOWJjYy00NmMwLTk2OTEtNmU5NWRkZTYyMDc2IiwiaWF0IjoxNzA2Mzc2MDI4fQ.tcctiEI_IB3t99yy063KOQ6qeaS-4HxmZMa4coVW6CQ
+
+{
+	"username": "teste",
+	"email": "porra.denovo@gmail.com",
+	"password": "testeBR@1234567",
+	"role": "COMUM"
+}

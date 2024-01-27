@@ -30,6 +30,8 @@ export default class UserCreateUseCase implements UserCreateUseCasePort {
 		try {
 			const { username, email, password, role } = userCreatePayload;
 
+			if(!username || !email || !password || !role) throw new Error(ErrorsMessages.MISSING_REQUEST_BODY_DATA);
+
 			if (email && !Validator.email.isValid(email)) throw new Error(ErrorsMessages.EMAIL_IS_INVALID);
 
 			if (password && !Validator.password.isSecure(password)) throw new Error(ErrorsMessages.PASSWORD_INSECURE);

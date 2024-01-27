@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Kart, KartStatus } from "@prisma/client";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import Validator from "src/Utils/Validator";
@@ -22,7 +21,7 @@ export interface KartCreateUseCasePort {
     execute(kartCreatePayload: KartCreateDTO): Promise<KartCreateUseCaseResponse>;
 }
 
-export default class UserCreateUseCase implements KartCreateUseCasePort {
+export default class KartCreateUseCase implements KartCreateUseCasePort {
     constructor(private readonly kartsRepository: KartsRepositoryPort) {}
 
     async execute(kartCreatePayload: KartCreateDTO): Promise<KartCreateUseCaseResponse> {
