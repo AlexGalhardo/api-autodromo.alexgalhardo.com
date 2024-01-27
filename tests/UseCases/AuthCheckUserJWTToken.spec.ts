@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import Validator from "src/Utils/Validator";
-import AuthRegisterUseCase, { AuthRegisterDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
+import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
 import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
 import AuthTokenUserUseCase, { AuthCheckUserJWTTokenUseCasePort } from "src/UseCases/AuthCheckUserJWTToken.useCase";
 import { Database } from "src/Utils/Database";
@@ -57,13 +57,13 @@ describe("Test AuthCheckUserJWTToken", () => {
     let loginToken = null;
 
     it("should register a user", async () => {
-        const authRegisterDTO: AuthRegisterDTO = {
+        const UserCreateDTO: UserCreateDTO = {
             username,
             email: userEmail,
             telegramNumber: Validator.phone.generate(),
             password: userPassword,
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(authRegisterDTO);
+        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
         loginToken = jwt_token;
 
         expect(success).toBeTruthy();

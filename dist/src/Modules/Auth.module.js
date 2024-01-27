@@ -8,13 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const Auth_controller_1 = require("../Controllers/Auth.controller");
+const User_controller_1 = require("../Controllers/User.controller");
 const Users_repository_1 = require("../Repositories/Users.repository");
 const AuthCheckResetPasswordToken_useCase_1 = require("../UseCases/AuthCheckResetPasswordToken.useCase");
 const AuthForgetPassword_useCase_1 = require("../UseCases/AuthForgetPassword.useCase");
 const AuthLogin_useCase_1 = require("../UseCases/AuthLogin.useCase");
-const AuthLoginGitHub_useCase_1 = require("../UseCases/AuthLoginGitHub.useCase");
-const AuthLoginGoogle_useCase_1 = require("../UseCases/AuthLoginGoogle.useCase");
 const AuthLogout_useCase_1 = require("../UseCases/AuthLogout.useCase");
 const AuthRegister_useCase_1 = require("../UseCases/AuthRegister.useCase");
 const AuthResetPassword_useCase_1 = require("../UseCases/AuthResetPassword.useCase");
@@ -25,14 +23,14 @@ let AuthModule = class AuthModule {
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
-        controllers: [Auth_controller_1.AuthController],
+        controllers: [User_controller_1.AuthController],
         providers: [
             Database_1.Database,
             {
                 provide: "UsersRepositoryPort",
                 inject: [Database_1.Database],
                 useFactory: (database) => {
-                    return new Users_repository_1.default(undefined, database);
+                    return new Users_repository_1.default(database);
                 },
             },
             {
@@ -40,20 +38,6 @@ exports.AuthModule = AuthModule = __decorate([
                 inject: ["UsersRepositoryPort"],
                 useFactory: (usersRepository) => {
                     return new AuthLogin_useCase_1.default(usersRepository);
-                },
-            },
-            {
-                provide: "AuthLoginGoogleUseCasePort",
-                inject: ["UsersRepositoryPort"],
-                useFactory: (usersRepository) => {
-                    return new AuthLoginGoogle_useCase_1.default(usersRepository);
-                },
-            },
-            {
-                provide: "AuthLoginGitHubUseCasePort",
-                inject: ["UsersRepositoryPort"],
-                useFactory: (usersRepository) => {
-                    return new AuthLoginGitHub_useCase_1.default(usersRepository);
                 },
             },
             {

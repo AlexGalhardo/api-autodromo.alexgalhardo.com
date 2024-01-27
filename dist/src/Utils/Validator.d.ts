@@ -32,7 +32,7 @@ export default class Validator {
         isStringLenghtLessThanOrEqual: (value: string, max: number) => boolean;
         isStringLenghtEqual: (value: string, length: number) => boolean;
         isStringLenghtNotEqual: (value: string, length: number) => boolean;
-        generateAlphaNumeric: (length?: number) => string;
+        generateAlphaNumeric: (length?: number) => any;
         isString: (value: unknown) => boolean;
         isAllStrings: (...values: unknown[]) => boolean;
         isNumber: (value: unknown) => boolean;

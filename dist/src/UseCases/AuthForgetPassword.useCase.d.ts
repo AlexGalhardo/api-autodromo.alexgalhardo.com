@@ -13,7 +13,7 @@ interface AuthForgetPasswordUseCaseResponse {
 export default class AuthForgetPasswordUseCase implements AuthForgetPasswordUseCasePort {
     private readonly usersRepository;
     private readonly smtp;
-    constructor(usersRepository: UsersRepositoryPort, smtp?: import("nodemailer").Transporter<import("nodemailer/lib/smtp-transport").SentMessageInfo>);
+    constructor(usersRepository: UsersRepositoryPort, smtp?: any);
     execute(authForgetPasswordDTO: AuthForgetPasswordDTO): Promise<AuthForgetPasswordUseCaseResponse>;
 }
 export {};

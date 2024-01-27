@@ -6,10 +6,8 @@ import {
 } from "src/UseCases/AuthCheckResetPasswordToken.useCase";
 import { AuthForgetPasswordDTO, AuthForgetPasswordUseCasePort } from "src/UseCases/AuthForgetPassword.useCase";
 import { AuthLoginDTO, AuthLoginUseCasePort } from "src/UseCases/AuthLogin.useCase";
-import { AuthLoginGitHubUseCasePort } from "src/UseCases/AuthLoginGitHub.useCase";
-import { AuthLoginGoogleUseCasePort } from "src/UseCases/AuthLoginGoogle.useCase";
 import { AuthLogoutUseCasePort } from "src/UseCases/AuthLogout.useCase";
-import { AuthRegisterDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
+import { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
 import { AuthResetPasswordDTO, AuthResetPasswordUseCasePort } from "src/UseCases/AuthResetPassword.useCase";
 import { AuthCheckUserJWTTokenUseCasePort } from "src/UseCases/AuthCheckUserJWTToken.useCase";
 
@@ -22,7 +20,7 @@ interface AuthUseCaseResponse {
 
 interface AuthControllerPort {
     login(authLoginDTO: AuthLoginDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
-    register(authRegisterDTO: AuthRegisterDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
+    register(UserCreateDTO: UserCreateDTO, response: Response): Promise<Response<AuthUseCaseResponse>>;
     logout(response: Response): Promise<Response<AuthUseCaseResponse>>;
     tokenUser(response: Response): Promise<Response<AuthUseCaseResponse>>;
     forgetPassword(
@@ -34,16 +32,12 @@ interface AuthControllerPort {
         request: Request,
         response: Response,
     ): Promise<Response<AuthUseCaseResponse>>;
-    loginGoogle(request: Request, response: Response): Promise<Response<AuthUseCaseResponse>>;
-    loginGithub(request: Request, response: Response): Promise<Response<AuthUseCaseResponse>>;
 }
 
 @Controller()
 export class AuthController implements AuthControllerPort {
     constructor(
         @Inject("AuthLoginUseCasePort") private readonly authLoginUseCase: AuthLoginUseCasePort,
-        @Inject("AuthLoginGoogleUseCasePort") private readonly authLoginGoogleUseCase: AuthLoginGoogleUseCasePort,
-        @Inject("AuthLoginGitHubUseCasePort") private readonly authLoginGitHubUseCase: AuthLoginGitHubUseCasePort,
         @Inject("AuthRegisterUseCasePort") private readonly authRegisterUseCase: AuthRegisterUseCasePort,
         @Inject("AuthLogoutUseCasePort") private readonly authLogoutUseCase: AuthLogoutUseCasePort,
         @Inject("AuthCheckUserJWTTokenUseCasePort")
@@ -71,7 +65,7 @@ export class AuthController implements AuthControllerPort {
 
     @Post("/register")
     async register(
-        @Body() authRegisterPayload: AuthRegisterDTO,
+        @Body() authRegisterPayload: UserCreateDTO,
         @Res() response: Response,
     ): Promise<Response<AuthUseCaseResponse>> {
         try {
@@ -143,30 +137,6 @@ export class AuthController implements AuthControllerPort {
         try {
             const { success } = await this.authCheckResetPasswordTokenUseCase.execute(resetPasswordToken);
             if (success) return response.status(HttpStatus.OK).json({ success: true });
-        } catch (error) {
-            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
-        }
-    }
-
-    @Post("/login/google/callback")
-    async loginGoogle(@Req() request: Request, @Res() response: Response): Promise<Response<AuthUseCaseResponse>> {
-        try {
-            const { success, redirect } = await this.authLoginGoogleUseCase.execute(request);
-            if (success) {
-                response.redirect(redirect);
-            }
-        } catch (error) {
-            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
-        }
-    }
-
-    @Get("/login/github/callback")
-    async loginGithub(@Req() request: Request, @Res() response: Response): Promise<Response<AuthUseCaseResponse>> {
-        try {
-            const { success, redirect } = await this.authLoginGitHubUseCase.execute(request);
-            if (success) {
-                response.redirect(redirect);
-            }
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
         }

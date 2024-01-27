@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import Validator from "src/Utils/Validator";
 import AuthLoginUseCase, { AuthLoginDTO, AuthLoginUseCasePort } from "src/UseCases/AuthLogin.useCase";
-import AuthRegisterUseCase, { AuthRegisterDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
+import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
 import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
 import { Database } from "src/Utils/Database";
 
@@ -55,13 +55,13 @@ describe("Test AuthLoginUseCase", () => {
     const userPassword = Validator.password.generate();
 
     it("should register a user", async () => {
-        const authRegisterDTO: AuthRegisterDTO = {
+        const UserCreateDTO: UserCreateDTO = {
             username: "Testing Login Test",
             email: userEmail,
             telegramNumber: Validator.phone.generate(),
             password: userPassword,
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(authRegisterDTO);
+        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();

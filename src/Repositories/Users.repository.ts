@@ -1,11 +1,8 @@
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import DateTime from "src/Utils/DataTypes/DateTime";
-import { ProfileUpdateDTO } from "src/UseCases/ProfileUpdate.useCase";
-import { Bcrypt } from "src/Utils/Bcrypt";
 import { Injectable } from "@nestjs/common";
 import { Database } from "src/Utils/Database";
 import "dotenv/config";
-import { SubscriptionName } from "src/UseCases/AuthRegister.useCase";
 
 export interface UsersRepositoryPort {
     findById(userId: string): Promise<boolean>;

@@ -6,40 +6,29 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import { ClientException } from "src/Utils/Exception";
 import Validator from "src/Utils/Validator";
 import * as jwt from "jsonwebtoken";
-import DateTime from "src/Utils/DataTypes/DateTime";
-import GenerateRandomToken from "src/Utils/GenerateRandomToken";
 
 interface AuthRegisterUseCaseResponse {
     success: boolean;
     jwt_token?: string;
 }
 
-export interface AuthRegisterDTO {
+export interface UserCreateDTO {
     username: string;
     email: string;
-    telegramNumber: string | null;
     password: string;
 }
 
-export enum SubscriptionName {
-    NOOB = "NOOB",
-    CASUAL = "CASUAL",
-    PRO = "PRO",
-}
-
 export interface AuthRegisterUseCasePort {
-    execute(authRegisterDTO: AuthRegisterDTO): Promise<AuthRegisterUseCaseResponse>;
+    execute(UserCreateDTO: UserCreateDTO): Promise<AuthRegisterUseCaseResponse>;
 }
 
 export default class AuthRegisterUseCase implements AuthRegisterUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
-    async execute(authRegisterDTO: AuthRegisterDTO): Promise<AuthRegisterUseCaseResponse> {
-        const { username, email, telegramNumber, password } = authRegisterDTO;
+    async execute(UserCreateDTO: UserCreateDTO): Promise<AuthRegisterUseCaseResponse> {
+        const { username, email, password } = UserCreateDTO;
 
         if (email && !Validator.email.isValid(email)) throw new ClientException(ErrorsMessages.EMAIL_IS_INVALID);
-        if (telegramNumber && !Validator.phone.isValid(telegramNumber))
-            throw new ClientException(ErrorsMessages.INVALID_PHONE_NUMBER);
 
         if (password && !Validator.password.isSecure(password))
             throw new ClientException(ErrorsMessages.PASSWORD_INSECURE);
@@ -55,30 +44,10 @@ export default class AuthRegisterUseCase implements AuthRegisterUseCasePort {
                 id: userId,
                 username,
                 email,
-                telegram_number: telegramNumber,
                 password: hashedPassword,
                 jwt_token,
-                api_key: GenerateRandomToken(),
                 reset_password_token: null,
                 reset_password_token_expires_at: null,
-                stripe: {
-                    customer_id: null,
-                    subscription: {
-                        active: false,
-                        name: SubscriptionName.NOOB,
-                        starts_at: null,
-                        ends_at: null,
-                        charge_id: null,
-                        receipt_url: null,
-                        hosted_invoice_url: null,
-                    },
-                    updated_at: null,
-                    updated_at_pt_br: null,
-                },
-                created_at: String(new Date()),
-                updated_at: null,
-                created_at_pt_br: DateTime.getNow(),
-                updated_at_pt_br: null,
             });
 
             return { success: true, jwt_token };

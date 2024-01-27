@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
-import AuthRegisterUseCase, { AuthRegisterDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
+import AuthRegisterUseCase, { UserCreateDTO, AuthRegisterUseCasePort } from "src/UseCases/AuthRegister.useCase";
 import Validator from "src/Utils/Validator";
 import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/UserDelete.useCase";
 import AuthForgetPasswordUseCase, {
@@ -70,13 +70,13 @@ describe("Test AuthCheckResetPasswordTokenUseCase", () => {
     let userResetPasswordToken = null;
 
     it("should register a user", async () => {
-        const authRegisterDTO: AuthRegisterDTO = {
+        const UserCreateDTO: UserCreateDTO = {
             username: "Testing ForgetPassword Test",
             email: userEmail,
             telegramNumber: Validator.phone.generate(),
             password: Validator.password.generate(),
         };
-        const { success, jwt_token } = await authRegisterUseCase.execute(authRegisterDTO);
+        const { success, jwt_token } = await authRegisterUseCase.execute(UserCreateDTO);
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();

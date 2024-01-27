@@ -7,7 +7,7 @@ declare class Strings {
     isLengthLessThanOrEqual(value: string, max: number): boolean;
     isLengthEqual(value: string, length: number): boolean;
     isLengthNotEqual(value: string, length: number): boolean;
-    generateAlphaNumeric(length?: number): string;
+    generateAlphaNumeric(length?: number): any;
     get methods(): {
         isStringLenghtBetween: (value: string, min: number, max: number) => boolean;
         isStringLenghtBetweenOrEqual: (value: string, min: number, max: number) => boolean;
@@ -17,7 +17,7 @@ declare class Strings {
         isStringLenghtLessThanOrEqual: (value: string, max: number) => boolean;
         isStringLenghtEqual: (value: string, length: number) => boolean;
         isStringLenghtNotEqual: (value: string, length: number) => boolean;
-        generateAlphaNumeric: (length?: number) => string;
+        generateAlphaNumeric: (length?: number) => any;
     };
 }
 export default Strings;

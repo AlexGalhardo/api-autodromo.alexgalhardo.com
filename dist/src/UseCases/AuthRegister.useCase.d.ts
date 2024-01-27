@@ -4,23 +4,17 @@ interface AuthRegisterUseCaseResponse {
     success: boolean;
     jwt_token?: string;
 }
-export interface AuthRegisterDTO {
+export interface UserCreateDTO {
     username: string;
     email: string;
-    telegramNumber: string | null;
     password: string;
 }
-export declare enum SubscriptionName {
-    NOOB = "NOOB",
-    CASUAL = "CASUAL",
-    PRO = "PRO"
-}
 export interface AuthRegisterUseCasePort {
-    execute(authRegisterDTO: AuthRegisterDTO): Promise<AuthRegisterUseCaseResponse>;
+    execute(UserCreateDTO: UserCreateDTO): Promise<AuthRegisterUseCaseResponse>;
 }
 export default class AuthRegisterUseCase implements AuthRegisterUseCasePort {
     private readonly usersRepository;
     constructor(usersRepository: UsersRepositoryPort);
-    execute(authRegisterDTO: AuthRegisterDTO): Promise<AuthRegisterUseCaseResponse>;
+    execute(UserCreateDTO: UserCreateDTO): Promise<AuthRegisterUseCaseResponse>;
 }
 export {};

@@ -9,13 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const Auth_module_1 = require("./Modules/Auth.module");
-const Profile_module_1 = require("./Modules/Profile.module");
-const Contact_module_1 = require("./Modules/Contact.module");
-const Stripe_module_1 = require("./Modules/Stripe.module");
+const Kart_module_1 = require("./Modules/Kart.module");
+const Pista_module_1 = require("./Modules/Pista.module");
 const HealthCheck_module_1 = require("./Modules/HealthCheck.module");
 const config_1 = require("@nestjs/config");
 const ValidateToken_middleware_1 = require("./MIddlewares/ValidateToken.middleware");
-const Games_module_1 = require("./Modules/Games.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -29,10 +27,8 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             HealthCheck_module_1.HealthCheckModule,
             Auth_module_1.AuthModule,
-            Profile_module_1.ProfileModule,
-            Contact_module_1.ContactModule,
-            Stripe_module_1.StripeModule,
-            Games_module_1.GamesModule,
+            Kart_module_1.KartModule,
+            Pista_module_1.PistaModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),
         ],
         controllers: [],

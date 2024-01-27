@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HealthCheckController = void 0;
 const common_1 = require("@nestjs/common");
+const express_1 = require("express");
 let HealthCheckController = class HealthCheckController {
     async login(response) {
         return response.status(common_1.HttpStatus.OK).json({
@@ -27,7 +29,7 @@ __decorate([
     (0, common_1.Get)("/"),
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [typeof (_a = typeof express_1.Response !== "undefined" && express_1.Response) === "function" ? _a : Object]),
     __metadata("design:returntype", Promise)
 ], HealthCheckController.prototype, "login", null);
 exports.HealthCheckController = HealthCheckController = __decorate([
