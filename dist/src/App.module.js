@@ -16,13 +16,17 @@ const config_1 = require("@nestjs/config");
 const ValidateJWTTokenRoleGestor_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleGestor.middleware");
 const ValidateJWTTokenRoleAfiliado_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware");
 const Agendamento_module_1 = require("./Modules/Agendamento.module");
+const ValidateJWTTokenRoleIsValid_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleIsValid.middleware");
+const Corrida_module_1 = require("./Modules/Corrida.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateJWTTokenRoleGestor_middleware_1.ValidateJWTTokenRoleGestor)
             .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/pista", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleAfiliado_middleware_1.ValidateJWTTokenRoleAfiliado)
-            .forRoutes({ path: "/agendamento", method: common_1.RequestMethod.POST });
+            .forRoutes({ path: "/agendamento", method: common_1.RequestMethod.POST })
+            .apply(ValidateJWTTokenRoleIsValid_middleware_1.ValidateJWTTokenRoleIsValid)
+            .forRoutes({ path: "/corrida", method: common_1.RequestMethod.POST }, { path: "/corrida/historico", method: common_1.RequestMethod.GET });
     }
 };
 exports.AppModule = AppModule;
@@ -34,6 +38,7 @@ exports.AppModule = AppModule = __decorate([
             Kart_module_1.KartModule,
             Pista_module_1.PistaModule,
             Agendamento_module_1.AgendamentoModule,
+            Corrida_module_1.CorridaModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),
         ],
         controllers: [],

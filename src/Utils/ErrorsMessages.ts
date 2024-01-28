@@ -5,6 +5,8 @@ export enum ErrorsMessages {
 
     USER_ROLE_IS_NOT_GESTOR = "User role is not GESTOR",
 
+    USER_ROLE_IS_NOT_AFILIADO = "User role is not AFILIADO",
+
     INVALID_KART_STATUS = "Invalid Kart Status",
 
     PROCESSING_ERROR = "PROCESSING_ERROR",
@@ -16,6 +18,10 @@ export enum ErrorsMessages {
     MISSING_REQUEST_BODY_DATA = "Missing request body data",
 
     KART_IS_NOT_AVAILABLE = "Kart is not available",
+
+    THERE_IS_A_RACE_ALREADY_CREATED_DURING_THIS_PERIOD = "There is a race already created during this period",
+
+    had_an_agendamento_during_this_period = "Has agendamento in this period",
 
     INVALID_NAME = "Invalid name",
 

@@ -7,6 +7,8 @@ import { ConfigModule } from "@nestjs/config";
 import { ValidateJWTTokenRoleGestor } from "./MIddlewares/ValidateJWTTokenRoleGestor.middleware";
 import { ValidateJWTTokenRoleAfiliado } from "./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware";
 import { AgendamentoModule } from "./Modules/Agendamento.module";
+import { ValidateJWTTokenRoleIsValid } from "./MIddlewares/ValidateJWTTokenRoleIsValid.middleware";
+import { CorridaModule } from "./Modules/Corrida.module";
 
 @Module({
     imports: [
@@ -15,6 +17,7 @@ import { AgendamentoModule } from "./Modules/Agendamento.module";
         KartModule,
         PistaModule,
         AgendamentoModule,
+        CorridaModule,
         ConfigModule.forRoot({ isGlobal: true }),
     ],
     controllers: [],
@@ -31,6 +34,12 @@ export class AppModule implements NestModule {
             )
 
             .apply(ValidateJWTTokenRoleAfiliado)
-            	.forRoutes({ path: "/agendamento", method: RequestMethod.POST });
+            .forRoutes({ path: "/agendamento", method: RequestMethod.POST })
+
+            .apply(ValidateJWTTokenRoleIsValid)
+            .forRoutes(
+                { path: "/corrida", method: RequestMethod.POST },
+                { path: "/corrida/historico", method: RequestMethod.GET },
+            );
     }
 }

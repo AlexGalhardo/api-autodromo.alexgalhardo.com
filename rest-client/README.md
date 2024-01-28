@@ -58,7 +58,7 @@ body: {
 	kart_id
 	pista_id
 	corrida_start
-	has_agendamento_in_this_period
+	had_an_agendamento_during_this_period
 }
 
 ### EVENTO -> UPDATE CORRIDAS

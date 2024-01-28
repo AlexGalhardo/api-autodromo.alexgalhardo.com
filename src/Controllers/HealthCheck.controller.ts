@@ -4,7 +4,7 @@ import { Response } from "express";
 @Controller()
 export class HealthCheckController {
     @Get("/")
-    async login(@Res() response: Response) {
+    async check(@Res() response: Response) {
         return response.status(HttpStatus.OK).json({
             success: true,
             message: "API is on, lets goo!",

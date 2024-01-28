@@ -36,7 +36,6 @@ export default class AgendamentoCreateUseCase implements AgendamentoCreateUseCas
             starts_at = Validator.dateTime.stringToDefaultDate(String(starts_at));
             ends_at = Validator.dateTime.stringToDefaultDate(String(ends_at));
 
-            // verificar se kart_id está com status disponível
             const kartAvailable = await this.kartsRepository.isAvailable(kart_id, starts_at, ends_at);
 
             if (!kartAvailable) throw new Error(ErrorsMessages.KART_IS_NOT_AVAILABLE);
