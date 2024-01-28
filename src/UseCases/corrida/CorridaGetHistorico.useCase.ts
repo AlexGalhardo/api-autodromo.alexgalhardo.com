@@ -12,7 +12,7 @@ export interface CorridaGetHistoricoUseCasePort {
     execute(userId: string): Promise<CorridaGetHistoricoUseCaseResponse>;
 }
 
-export default class AgendamentoCreateUseCase implements CorridaGetHistoricoUseCasePort {
+export default class CorridaCreateUseCase implements CorridaGetHistoricoUseCasePort {
     constructor(
         private readonly corridasRepository: CorridasRepositoryPort,
         private readonly usersRepository: UsersRepositoryPort,

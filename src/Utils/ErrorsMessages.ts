@@ -9,11 +9,25 @@ export enum ErrorsMessages {
 
     INVALID_KART_STATUS = "Invalid Kart Status",
 
+    CORRIDA_NOT_FOUND = "Corrida not found",
+
     PROCESSING_ERROR = "PROCESSING_ERROR",
+
+    JWT_TOKEN_IS_INVALID = "JWT Token is INVALID",
+
+    CAN_NOT_UPDATE_CORRIDA_STATUS = "You can only update corrida with status CREATED",
+
+    KART_NOT_FOUND = "Kart not found",
 
     KART_NAME_ALREADY_REGISTERED = "Kart name already registered",
 
     PISTA_NAME_ALREADY_REGISTERED = "Pista name already registered",
+
+    PISTA_NOT_FOUND = "Pista not found",
+
+    ENDS_AT_MUST_BE_GREATER_THAN_REGISTERED_STARTS_AT = "Ends at must be greather than registered starts at",
+
+    INVALID_DATE_STRING_FORMAT = "Invalid date string format. It must be like day/month/year hours:minutes. Example: 30/01/2024 15:30",
 
     MISSING_REQUEST_BODY_DATA = "Missing request body data",
 

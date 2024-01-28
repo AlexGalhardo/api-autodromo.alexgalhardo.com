@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Kart, KartStatus } from "@prisma/client";
 import { Database } from "src/Utils/Database";
+import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface newKartCreateDTO {
     status: KartStatus;
@@ -36,7 +37,9 @@ export default class KartsRepository implements KartsRepositoryPort {
             where: { id: kartId },
         });
 
-        if (!kart || kart.status !== KartStatus.LIVRE) return false;
+        if (!kart) throw new Error(ErrorsMessages.KART_NOT_FOUND);
+
+        if (kart && kart.status !== KartStatus.LIVRE) return false;
 
         const entitiesToCheck = ["manutencao", "corrida", "agendamento"];
 

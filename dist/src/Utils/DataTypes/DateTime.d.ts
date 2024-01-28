@@ -1,23 +1,3 @@
 export default class DateTime {
-    static timestampToGetNow(timestamp: number): string;
-    static getNow(): string;
-    static isToday(dateLastAPIRequest: Date): boolean;
-    static isExpired(dateToCheck: Date): boolean;
-    secondsToMilliseconds(seconds: number): number;
-    minutesToMilliseconds(minutes: number): number;
-    hoursToMilliseconds(hours: number): number;
-    daysToMilliseconds(days: number): number;
-    get secondInMilliseconds(): number;
-    get minuteInMilliseconds(): number;
-    get hourInMilliseconds(): number;
     stringToDefaultDate(dateString: string): Date;
-    get methods(): {
-        secondsToMilliseconds: (seconds: number) => number;
-        minutesToMilliseconds: (minutes: number) => number;
-        hoursToMilliseconds: (hours: number) => number;
-        daysToMilliseconds: (days: number) => number;
-        secondInMilliseconds: number;
-        minuteInMilliseconds: number;
-        hourInMilliseconds: number;
-    };
 }

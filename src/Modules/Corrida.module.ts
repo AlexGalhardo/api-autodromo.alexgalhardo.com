@@ -4,6 +4,8 @@ import CorridasRepository, { CorridasRepositoryPort } from "src/Repositories/Cor
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import CorridaCreateUseCase from "src/UseCases/corrida/CorridaCreate.useCase";
 import CorridaGetHistoricoUseCase from "src/UseCases/corrida/CorridaGetHistorico.useCase";
+import CorridaUpdateEndsAtUseCase from "src/UseCases/corrida/CorridaUpdateEndsAt.useCase";
+import CorridaUpdateStatusUseCase from "src/UseCases/corrida/CorridaUpdateStatus.useCase";
 import { Database } from "src/Utils/Database";
 
 @Module({
@@ -36,6 +38,20 @@ import { Database } from "src/Utils/Database";
             inject: ["CorridasRepositoryPort", "UsersRepositoryPort"],
             useFactory: (corridasRepository: CorridasRepositoryPort, usersRepository: UsersRepositoryPort) => {
                 return new CorridaGetHistoricoUseCase(corridasRepository, usersRepository);
+            },
+        },
+        {
+            provide: "CorridaUpdateEndsAtUseCasePort",
+            inject: ["CorridasRepositoryPort"],
+            useFactory: (corridasRepository: CorridasRepositoryPort) => {
+                return new CorridaUpdateEndsAtUseCase(corridasRepository);
+            },
+        },
+        {
+            provide: "CorridaUpdateStatusUseCasePort",
+            inject: ["CorridasRepositoryPort"],
+            useFactory: (corridasRepository: CorridasRepositoryPort) => {
+                return new CorridaUpdateStatusUseCase(corridasRepository);
             },
         },
     ],

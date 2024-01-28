@@ -26,10 +26,10 @@ export default class UserLoginUseCase implements UserLoginUseCasePort {
     async execute(userLoginPayload: UserLoginDTO): Promise<UserLoginUseCaseResponse> {
         const { email, password } = userLoginPayload;
 
-        if (!Validator.email.isValid(email)) throw new ClientException(ErrorsMessages.EMAIL_IS_INVALID);
+        if (!Validator.user.emailIsValid(email)) throw new ClientException(ErrorsMessages.EMAIL_IS_INVALID);
 
         if (email && password) {
-            const { user, index } = await this.usersRepository.getByEmail(email);
+            const { user } = await this.usersRepository.getByEmail(email);
 
             if (user) {
                 if (!(await Bcrypt.compare(password, user.password))) {
@@ -38,7 +38,6 @@ export default class UserLoginUseCase implements UserLoginUseCasePort {
 
                 const jwt_token = jwt.sign({ userID: user.id }, process.env.JWT_SECRET);
                 user.jwt_token = jwt_token;
-                // await this.usersRepository.save(user, index);
 
                 return { success: true, jwt_token };
             }

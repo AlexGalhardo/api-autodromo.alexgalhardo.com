@@ -22,7 +22,7 @@ export default class AgendamentosRepository implements AgendamentosRepositoryPor
         try {
             const { userId, kart_id, pista_id, starts_at, ends_at } = newAgendamento;
 
-            const result = await this.database.agendamento.create({
+            return await this.database.agendamento.create({
                 data: {
                     user_id: userId,
                     kart_id,
@@ -31,22 +31,24 @@ export default class AgendamentosRepository implements AgendamentosRepositoryPor
                     ends_at,
                 },
                 include: {
-                    user: true,
-                    kart: true,
-                    pista: true,
+                    user: {
+                        select: {
+                            name: true,
+                            email: true,
+                        },
+                    },
+                    kart: {
+                        select: {
+                            name: true,
+                        },
+                    },
+                    pista: {
+                        select: {
+                            name: true,
+                        },
+                    },
                 },
             });
-
-            return {
-                user_id: result.user.id,
-                user_name: result.user.name,
-                kart_id: result.kart.id,
-                kart_name: result.kart.name,
-                pista_id: result.pista.id,
-                pista_name: result.pista.name,
-                starts_at: result.starts_at,
-                ends_at: result.ends_at,
-            };
         } catch (error) {
             throw new Error(error);
         }

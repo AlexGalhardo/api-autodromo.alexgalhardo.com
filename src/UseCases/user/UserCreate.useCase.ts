@@ -32,11 +32,12 @@ export default class UserCreateUseCase implements UserCreateUseCasePort {
 
             if (!name || !email || !password || !role) throw new Error(ErrorsMessages.MISSING_REQUEST_BODY_DATA);
 
-            if (email && !Validator.email.isValid(email)) throw new Error(ErrorsMessages.EMAIL_IS_INVALID);
+            if (email && !Validator.user.emailIsValid(email)) throw new Error(ErrorsMessages.EMAIL_IS_INVALID);
 
-            if (password && !Validator.password.isSecure(password)) throw new Error(ErrorsMessages.PASSWORD_INSECURE);
+            if (password && !Validator.user.passowordIsSecure(password))
+                throw new Error(ErrorsMessages.PASSWORD_INSECURE);
 
-            if (role && !Validator.role.isValid(role)) throw new Error(ErrorsMessages.INVALID_USER_ROLE);
+            if (role && !Validator.user.roleIsValid(role)) throw new Error(ErrorsMessages.INVALID_USER_ROLE);
 
             const emailAlreadyRegistered = await this.usersRepository.findByEmail(email);
 

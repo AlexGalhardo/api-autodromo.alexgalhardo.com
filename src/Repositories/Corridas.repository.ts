@@ -11,15 +11,26 @@ interface newCorridaCreateDTO {
 }
 
 export interface CorridasRepositoryPort {
+    getById(corridaId: string): Promise<Corrida>;
     getHistorico(userId: string): Promise<Corrida[]>;
     create(newCorrida: newCorridaCreateDTO): Promise<Corrida>;
     hadAnAgendamentoDuringThisPeriod(userId: string, pistaId: string, startsAt: Date): Promise<boolean>;
     thereIsARaceAlreadyCreatedDuringThisPeriod(pistaId: string, startsAt: Date): Promise<boolean>;
+    updateEndsAt(corridaId: string, endsAt: Date): Promise<Corrida>;
+    updateStatus(corridaId: string, status: CorridaStatus): Promise<Corrida>;
 }
 
 @Injectable()
 export default class CorridasRepository implements CorridasRepositoryPort {
     constructor(private readonly database: Database) {}
+
+    public async getById(corridaId: string): Promise<Corrida> {
+        return await this.database.corrida.findUnique({
+            where: {
+                id: corridaId,
+            },
+        });
+    }
 
     public async getHistorico(userId: string): Promise<Corrida[]> {
         return await this.database.corrida.findMany({
@@ -39,12 +50,61 @@ export default class CorridasRepository implements CorridasRepositoryPort {
                     kart_id,
                     pista_id,
                     starts_at,
+                    ends_at: null,
                     had_an_agendamento_during_this_period,
                     status: CorridaStatus.CREATED,
+                },
+                include: {
+                    user: {
+                        select: {
+                            name: true,
+                            email: true,
+                        },
+                    },
+                    kart: {
+                        select: {
+                            name: true,
+                        },
+                    },
+                    pista: {
+                        select: {
+                            name: true,
+                        },
+                    },
                 },
             });
         } catch (error) {
             throw new Error(error);
+        }
+    }
+
+    public async updateEndsAt(corridaId: string, endsAt: Date): Promise<Corrida> {
+        try {
+            return await this.database.corrida.update({
+                where: {
+                    id: corridaId,
+                },
+                data: {
+                    ends_at: endsAt,
+                },
+            });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    public async updateStatus(corridaId: string, status: CorridaStatus): Promise<Corrida> {
+        try {
+            return await this.database.corrida.update({
+                where: {
+                    id: corridaId,
+                },
+                data: {
+                    status,
+                },
+            });
+        } catch (error) {
+            throw new Error(error.message);
         }
     }
 
@@ -72,6 +132,7 @@ export default class CorridasRepository implements CorridasRepositoryPort {
             where: {
                 pista_id: pistaId,
                 status: CorridaStatus.CREATED,
+                ends_at: null,
                 starts_at: {
                     gte: startsAtMinus60Minutes,
                     lte: endsAtPlus60Minutes,

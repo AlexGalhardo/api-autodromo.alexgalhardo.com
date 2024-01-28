@@ -11,11 +11,23 @@ const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 let Database = class Database extends client_1.PrismaClient {
     async onModuleInit() {
-        await this.$connect();
+        try {
+            await this.$connect();
+        }
+        catch (error) {
+            console.error("Error connecting to database:", error);
+            throw error;
+        }
     }
     async enableShutdownHooks(app) {
         process.on("beforeExit", async () => {
-            await app.close();
+            try {
+                await app.close();
+            }
+            catch (error) {
+                console.error("Error closing application: ", error);
+                throw error;
+            }
         });
     }
 };

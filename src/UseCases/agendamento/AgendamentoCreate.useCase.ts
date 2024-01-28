@@ -1,6 +1,7 @@
 import { Agendamento } from "@prisma/client";
 import { AgendamentosRepositoryPort } from "src/Repositories/Agendamentos.repository";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
+import { PistasRepositoryPort } from "src/Repositories/Pistas.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import Validator from "src/Utils/Validator";
 
@@ -24,6 +25,7 @@ export default class AgendamentoCreateUseCase implements AgendamentoCreateUseCas
     constructor(
         private readonly agendamentosRepository: AgendamentosRepositoryPort,
         private readonly kartsRepository: KartsRepositoryPort,
+        private readonly pistasRepository: PistasRepositoryPort,
     ) {}
 
     async execute(
@@ -32,6 +34,10 @@ export default class AgendamentoCreateUseCase implements AgendamentoCreateUseCas
     ): Promise<AgendamentoCreateUseCaseResponse> {
         try {
             let { kart_id, pista_id, starts_at, ends_at } = agendamentoCreatePayload;
+
+            const pistaFound = await this.pistasRepository.getById(pista_id);
+
+            if (!pistaFound) throw new Error(ErrorsMessages.PISTA_NOT_FOUND);
 
             starts_at = Validator.dateTime.stringToDefaultDate(String(starts_at));
             ends_at = Validator.dateTime.stringToDefaultDate(String(ends_at));

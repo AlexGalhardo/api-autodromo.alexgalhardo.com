@@ -11,6 +11,7 @@ interface newPistaCreateDTO {
 }
 
 export interface PistasRepositoryPort {
+    getById(id: string): Promise<Pista>;
     findByName(name: string): Promise<boolean>;
     create(newPista: newPistaCreateDTO): Promise<Pista>;
 }
@@ -18,6 +19,14 @@ export interface PistasRepositoryPort {
 @Injectable()
 export default class PistasRepository implements PistasRepositoryPort {
     constructor(private readonly database: Database) {}
+
+    public async getById(id: string): Promise<Pista> {
+        return await this.database.pista.findUnique({
+            where: {
+                id,
+            },
+        });
+    }
 
     public async findByName(name: string): Promise<boolean> {
         return (await this.database.pista.findUnique({

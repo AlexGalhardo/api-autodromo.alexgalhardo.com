@@ -40,6 +40,8 @@ export class AppModule implements NestModule {
             .forRoutes(
                 { path: "/corrida", method: RequestMethod.POST },
                 { path: "/corrida/historico", method: RequestMethod.GET },
+                { path: "/corrida/ends-at", method: RequestMethod.PATCH },
+                { path: "/corrida/status", method: RequestMethod.PATCH },
             );
     }
 }
