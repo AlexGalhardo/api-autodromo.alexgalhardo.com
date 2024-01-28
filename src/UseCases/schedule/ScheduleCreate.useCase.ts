@@ -32,16 +32,16 @@ export default class ScheduleCreateUseCase implements ScheduleCreateUseCasePort 
         try {
             let { kart_id, road_id, starts_at, ends_at } = scheduleCreatePayload;
 
-            const roadFound = await this.roadsRepository.getById(road_id);
-
-            if (!roadFound) throw new Error(ErrorsMessages.ROAD_NOT_FOUND);
-
             starts_at = Validator.dateTime.stringToDefaultDate(String(starts_at));
             ends_at = Validator.dateTime.stringToDefaultDate(String(ends_at));
 
-            const kartAvailable = await this.kartsRepository.isAvailable(kart_id, starts_at, ends_at);
+			const roadAvailableToSchedule = await this.roadsRepository.isAvailable(road_id, starts_at, ends_at);
 
-            if (!kartAvailable) throw new Error(ErrorsMessages.KART_IS_NOT_AVAILABLE);
+			if (!roadAvailableToSchedule) throw new Error(ErrorsMessages.ROAD_IS_NOT_AVAILABLE);
+
+            const kartAvailableToSchedule = await this.kartsRepository.isAvailable(kart_id, starts_at, ends_at);
+
+            if (!kartAvailableToSchedule) throw new Error(ErrorsMessages.KART_IS_NOT_AVAILABLE);
 
             const scheduleCreated = await this.schedulesRepository.create({
                 userId,

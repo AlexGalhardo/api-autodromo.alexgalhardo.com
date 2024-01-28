@@ -3,9 +3,9 @@ export enum ErrorsMessages {
 
     USER_ROLE_TOKEN_INVALID = "User role token invalid",
 
-    USER_ROLE_IS_NOT_GESTOR = "User role is not MANAGER",
+    USER_ROLE_IS_NOT_MANAGER = "User role is not MANAGER",
 
-    USER_ROLE_IS_NOT_AFILIADO = "User role is not AFFILIATE",
+    USER_ROLE_IS_NOT_AFFILIATE = "User role is not AFFILIATE",
 
     INVALID_KART_STATUS = "Invalid Kart Status",
 
@@ -36,6 +36,8 @@ export enum ErrorsMessages {
     MISSING_REQUEST_BODY_DATA = "Missing request body data",
 
     KART_IS_NOT_AVAILABLE = "Kart is not available",
+
+	ROAD_IS_NOT_AVAILABLE = "Road is not availabe",
 
     THERE_IS_A_RACE_ALREADY_CREATED_DURING_THIS_PERIOD = "There is a race already created during this period",
 

@@ -36,7 +36,7 @@ period_start
 period_end
 
 ### TODOS OS USUÁRIOS -> ACESSAM HISTÓRICO DAS CORRIDAS
-GET http://localhost:3000/historico-races
+GET http://localhost:3000/history-races
 Header authorization JWT do usuário
 retorna {
 	success: true,

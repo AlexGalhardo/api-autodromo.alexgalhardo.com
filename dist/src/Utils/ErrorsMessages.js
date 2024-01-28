@@ -5,8 +5,8 @@ var ErrorsMessages;
 (function (ErrorsMessages) {
     ErrorsMessages["INVALID_USER_ROLE"] = "Invalid User Role";
     ErrorsMessages["USER_ROLE_TOKEN_INVALID"] = "User role token invalid";
-    ErrorsMessages["USER_ROLE_IS_NOT_GESTOR"] = "User role is not MANAGER";
-    ErrorsMessages["USER_ROLE_IS_NOT_AFILIADO"] = "User role is not AFFILIATE";
+    ErrorsMessages["USER_ROLE_IS_NOT_MANAGER"] = "User role is not MANAGER";
+    ErrorsMessages["USER_ROLE_IS_NOT_AFFILIATE"] = "User role is not AFFILIATE";
     ErrorsMessages["INVALID_KART_STATUS"] = "Invalid Kart Status";
     ErrorsMessages["CORRIDA_NOT_FOUND"] = "Race not found";
     ErrorsMessages["PROCESSING_ERROR"] = "PROCESSING_ERROR";
@@ -22,6 +22,7 @@ var ErrorsMessages;
     ErrorsMessages["INVALID_DATE_STRING_FORMAT"] = "Invalid date string format. It must be like day/month/year hours:minutes. Example: 30/01/2024 15:30";
     ErrorsMessages["MISSING_REQUEST_BODY_DATA"] = "Missing request body data";
     ErrorsMessages["KART_IS_NOT_AVAILABLE"] = "Kart is not available";
+    ErrorsMessages["ROAD_IS_NOT_AVAILABLE"] = "Road is not availabe";
     ErrorsMessages["THERE_IS_A_RACE_ALREADY_CREATED_DURING_THIS_PERIOD"] = "There is a race already created during this period";
     ErrorsMessages["had_an_schedule_during_this_period"] = "Has schedule in this period";
     ErrorsMessages["INVALID_NAME"] = "Invalid name";

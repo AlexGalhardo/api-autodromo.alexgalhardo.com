@@ -13,21 +13,21 @@ const Kart_module_1 = require("./Modules/Kart.module");
 const Road_module_1 = require("./Modules/Road.module");
 const HealthCheck_module_1 = require("./Modules/HealthCheck.module");
 const config_1 = require("@nestjs/config");
-const ValidateJWTTokenRoleGestor_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleGestor.middleware");
-const ValidateJWTTokenRoleAfiliado_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware");
 const Schedule_module_1 = require("./Modules/Schedule.module");
 const ValidateJWTTokenRoleIsValid_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleIsValid.middleware");
 const Race_module_1 = require("./Modules/Race.module");
 const Maintenance_module_1 = require("./Modules/Maintenance.module");
+const ValidateJWTTokenRoleAffiliate_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAffiliate.middleware");
+const ValidateJWTTokenRoleManager_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleManager.middleware");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
-            .apply(ValidateJWTTokenRoleGestor_middleware_1.ValidateJWTTokenRoleGestor)
+            .apply(ValidateJWTTokenRoleManager_middleware_1.ValidateJWTTokenRoleManager)
             .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST })
-            .apply(ValidateJWTTokenRoleAfiliado_middleware_1.ValidateJWTTokenRoleAfiliado)
+            .apply(ValidateJWTTokenRoleAffiliate_middleware_1.ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleIsValid_middleware_1.ValidateJWTTokenRoleIsValid)
-            .forRoutes({ path: "/corrida", method: common_1.RequestMethod.POST }, { path: "/corrida/historico", method: common_1.RequestMethod.GET }, { path: "/corrida/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/corrida/status", method: common_1.RequestMethod.PATCH });
+            .forRoutes({ path: "/race", method: common_1.RequestMethod.POST }, { path: "/race/history", method: common_1.RequestMethod.GET }, { path: "/race/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/race/status", method: common_1.RequestMethod.PATCH });
     }
 };
 exports.AppModule = AppModule;

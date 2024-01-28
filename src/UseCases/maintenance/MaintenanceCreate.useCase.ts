@@ -38,11 +38,11 @@ export default class MaintenanceCreateUseCase implements MaintenanceCreateUseCas
                 ends_at,
             );
 
-            if (!kartIsInMaintenance) throw new Error(ErrorsMessages.KART_IS_IN_MAINTENANCE);
+            if (kartIsInMaintenance) throw new Error(ErrorsMessages.KART_IS_IN_MAINTENANCE);
 
             const kartIsInRace = await this.racesRepository.inRace(kartFound.id, starts_at, ends_at);
 
-            if (!kartIsInRace) throw new Error(ErrorsMessages.KART_IS_IN_RACE);
+            if (kartIsInRace) throw new Error(ErrorsMessages.KART_IS_IN_RACE);
 
             const maintenanceCreated = await this.maintenancesRepository.create({
                 kart_id,

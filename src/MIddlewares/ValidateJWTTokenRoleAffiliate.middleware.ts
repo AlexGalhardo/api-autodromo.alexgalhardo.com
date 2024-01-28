@@ -5,25 +5,15 @@ import { User, UserRole } from "@prisma/client";
 import AbstractValidateJWTTokenRole from "./AbstractValidateJWTTokenRole";
 
 @Injectable()
-export class ValidateJWTTokenRoleIsValid extends AbstractValidateJWTTokenRole implements NestMiddleware {
-    constructor() {
-        super();
-    }
-
+export class ValidateJWTTokenRoleAffiliate extends AbstractValidateJWTTokenRole implements NestMiddleware {
     async use(request: Request, response: Response, next: NextFunction) {
 		try {
 			const userFound = (await this.verifyJwtTokenRole(request, response)) as User;
 
-			if (
-				!(
-					userFound.role === UserRole.MANAGER ||
-					userFound.role === UserRole.AFFILIATE ||
-					userFound.role === UserRole.COMMON
-				)
-			) {
+			if (userFound && userFound.role !== UserRole.AFFILIATE) {
 				return response
 					.status(HttpStatus.BAD_REQUEST)
-					.json({ success: false, message: ErrorsMessages.USER_ROLE_TOKEN_INVALID });
+					.json({ success: false, message: ErrorsMessages.USER_ROLE_IS_NOT_AFFILIATE });
 			}
 
 			response.locals.userId = userFound.id;

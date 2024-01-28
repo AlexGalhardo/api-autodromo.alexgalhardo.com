@@ -4,12 +4,12 @@ import { KartModule } from "./Modules/Kart.module";
 import { PistaModule } from "./Modules/Road.module";
 import { HealthCheckModule } from "./Modules/HealthCheck.module";
 import { ConfigModule } from "@nestjs/config";
-import { ValidateJWTTokenRoleGestor } from "./MIddlewares/ValidateJWTTokenRoleGestor.middleware";
-import { ValidateJWTTokenRoleAfiliado } from "./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware";
 import { AgendamentoModule } from "./Modules/Schedule.module";
 import { ValidateJWTTokenRoleIsValid } from "./MIddlewares/ValidateJWTTokenRoleIsValid.middleware";
 import { CorridaModule } from "./Modules/Race.module";
 import { ManutencaoModule } from "./Modules/Maintenance.module";
+import { ValidateJWTTokenRoleAffiliate } from "./MIddlewares/ValidateJWTTokenRoleAffiliate.middleware";
+import { ValidateJWTTokenRoleManager } from "./MIddlewares/ValidateJWTTokenRoleManager.middleware";
 
 @Module({
     imports: [
@@ -28,22 +28,22 @@ import { ManutencaoModule } from "./Modules/Maintenance.module";
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(ValidateJWTTokenRoleGestor)
+            .apply(ValidateJWTTokenRoleManager)
             .forRoutes(
                 { path: "/user", method: RequestMethod.POST },
                 { path: "/kart", method: RequestMethod.POST },
                 { path: "/road", method: RequestMethod.POST },
             )
 
-            .apply(ValidateJWTTokenRoleAfiliado)
+            .apply(ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: RequestMethod.POST })
 
             .apply(ValidateJWTTokenRoleIsValid)
             .forRoutes(
-                { path: "/corrida", method: RequestMethod.POST },
-                { path: "/corrida/historico", method: RequestMethod.GET },
-                { path: "/corrida/ends-at", method: RequestMethod.PATCH },
-                { path: "/corrida/status", method: RequestMethod.PATCH },
+                { path: "/race", method: RequestMethod.POST },
+                { path: "/race/history", method: RequestMethod.GET },
+                { path: "/race/ends-at", method: RequestMethod.PATCH },
+                { path: "/race/status", method: RequestMethod.PATCH },
             );
     }
 }

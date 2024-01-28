@@ -5,42 +5,42 @@ import { RaceCreateDTO, RaceCreateUseCasePort } from "src/UseCases/race/RaceCrea
 import { RaceGetHistoricoUseCasePort } from "src/UseCases/race/RaceGetHistorico.useCase";
 import { RaceUpdateEndsAtDTO, RaceUpdateEndsAtUseCasePort } from "src/UseCases/race/RaceUpdateEndsAt.useCase";
 
-interface CorridaControllerResponse {
+interface RaceControllerResponse {
     success: boolean;
     data?: Race | Race[];
     message?: string;
 }
 
-interface CorridaControllerPort {
-    historico(response: Response): Promise<Response<CorridaControllerResponse>>;
-    create(raceCreatePayload: RaceCreateDTO, response: Response): Promise<Response<CorridaControllerResponse>>;
+interface RaceControllerPort {
+    history(response: Response): Promise<Response<RaceControllerResponse>>;
+    create(raceCreatePayload: RaceCreateDTO, response: Response): Promise<Response<RaceControllerResponse>>;
     updateEndsAt(
         raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO,
         response: Response,
-    ): Promise<Response<CorridaControllerResponse>>;
+    ): Promise<Response<RaceControllerResponse>>;
     updateStatus(
-        corridaUpdateStatusPayload: RaceUpdateEndsAtDTO,
+        raceUpdateStatusPayload: RaceUpdateEndsAtDTO,
         response: Response,
-    ): Promise<Response<CorridaControllerResponse>>;
+    ): Promise<Response<RaceControllerResponse>>;
 }
 
-@Controller("corrida")
-export default class CorridaController implements CorridaControllerPort {
+@Controller("race")
+export default class CorridaController implements RaceControllerPort {
     constructor(
         @Inject("RaceGetHistoricoUseCasePort")
-        private readonly corridaGetHistoricoUseCase: RaceGetHistoricoUseCasePort,
-        @Inject("RaceCreateUseCasePort") private readonly corridaCreateUseCase: RaceCreateUseCasePort,
+        private readonly raceGetHistoricoUseCase: RaceGetHistoricoUseCasePort,
+        @Inject("RaceCreateUseCasePort") private readonly raceCreateUseCase: RaceCreateUseCasePort,
         @Inject("RaceUpdateEndsAtUseCasePort")
-        private readonly corridaUpdateEndsAtUseCase: RaceUpdateEndsAtUseCasePort,
+        private readonly raceUpdateEndsAtUseCase: RaceUpdateEndsAtUseCasePort,
         @Inject("RaceUpdateStatusUseCasePort")
-        private readonly corridaUpdateStatusUseCase: RaceUpdateEndsAtUseCasePort,
+        private readonly raceUpdateStatusUseCase: RaceUpdateEndsAtUseCasePort,
     ) {}
 
-    @Get("/historico")
-    async historico(@Res() response: Response): Promise<Response<CorridaControllerResponse>> {
+    @Get("/history")
+    async history(@Res() response: Response): Promise<Response<RaceControllerResponse>> {
         try {
             const userId = response.locals.userId;
-            const { success, data } = await this.corridaGetHistoricoUseCase.execute(userId);
+            const { success, data } = await this.raceGetHistoricoUseCase.execute(userId);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -51,10 +51,10 @@ export default class CorridaController implements CorridaControllerPort {
     async create(
         @Body() raceCreatePayload: RaceCreateDTO,
         @Res() response: Response,
-    ): Promise<Response<CorridaControllerResponse>> {
+    ): Promise<Response<RaceControllerResponse>> {
         try {
             const userId = response.locals.userId;
-            const { success, data } = await this.corridaCreateUseCase.execute(userId, raceCreatePayload);
+            const { success, data } = await this.raceCreateUseCase.execute(userId, raceCreatePayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -65,9 +65,9 @@ export default class CorridaController implements CorridaControllerPort {
     async updateEndsAt(
         @Body() raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO,
         @Res() response: Response,
-    ): Promise<Response<CorridaControllerResponse>> {
+    ): Promise<Response<RaceControllerResponse>> {
         try {
-            const { success, data } = await this.corridaUpdateEndsAtUseCase.execute(raceUpdateEndsAtPayload);
+            const { success, data } = await this.raceUpdateEndsAtUseCase.execute(raceUpdateEndsAtPayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -76,11 +76,11 @@ export default class CorridaController implements CorridaControllerPort {
 
     @Patch("/status")
     async updateStatus(
-        @Body() corridaUpdateStatusPayload: RaceUpdateEndsAtDTO,
+        @Body() raceUpdateStatusPayload: RaceUpdateEndsAtDTO,
         @Res() response: Response,
-    ): Promise<Response<CorridaControllerResponse>> {
+    ): Promise<Response<RaceControllerResponse>> {
         try {
-            const { success, data } = await this.corridaUpdateStatusUseCase.execute(corridaUpdateStatusPayload);
+            const { success, data } = await this.raceUpdateStatusUseCase.execute(raceUpdateStatusPayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });

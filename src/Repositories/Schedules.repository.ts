@@ -11,7 +11,7 @@ interface NewAgendamentoCreateDTO {
 }
 
 export interface SchedulesRepositoryPort {
-    create(newPista: NewAgendamentoCreateDTO): Promise<Schedule>;
+    create(newRoad: NewAgendamentoCreateDTO): Promise<Schedule>;
 }
 
 @Injectable()

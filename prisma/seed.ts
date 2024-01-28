@@ -11,7 +11,7 @@ export const prisma = new PrismaClient({
 // 	try {
 // 		await prisma.user.deleteMany();
 
-// 		const email = "gestor@autodromo.com",
+// 		const email = "manager@autodromo.com",
 // 			  role_token = randomUUID()
 
 // 		await prisma.user.create({
@@ -21,7 +21,7 @@ export const prisma = new PrismaClient({
 // 				role_token,
 // 				email,
 // 				jwt_token: jwt.sign({ role_token }, process.env.JWT_SECRET),
-// 				password: await Bcrypt.hash("gestor123")
+// 				password: await Bcrypt.hash("manager@123")
 // 			},
 // 		});
 
