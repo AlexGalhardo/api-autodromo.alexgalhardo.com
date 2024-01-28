@@ -4,6 +4,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiM
 
 {
 	"kart_id": "65b5685452164e5bf2d190d0",
-	"pista_id": "65b5687e52164e5bf2d190d1",
+	"road_id": "65b5687e52164e5bf2d190d1",
 	"starts_at": "27/01/2024 16:00"
 }

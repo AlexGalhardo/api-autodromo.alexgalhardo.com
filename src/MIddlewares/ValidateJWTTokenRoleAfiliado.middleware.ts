@@ -9,7 +9,7 @@ export class ValidateJWTTokenRoleAfiliado extends AbstractValidateJWTTokenRole i
     async use(request: Request, response: Response, next: NextFunction) {
         const userFound = (await this.verifyJwtTokenRole(request, response)) as User;
 
-        if (userFound && userFound.role !== UserRole.AFILIADO) {
+        if (userFound && userFound.role !== UserRole.AFFILIATE) {
             return response
                 .status(HttpStatus.BAD_REQUEST)
                 .json({ success: false, message: ErrorsMessages.USER_ROLE_IS_NOT_AFILIADO });

@@ -1,58 +1,71 @@
 import { Injectable } from "@nestjs/common";
-import { Corrida, CorridaStatus } from "@prisma/client";
+import { Race, RaceStatus } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 
-interface newCorridaCreateDTO {
+interface newRaceCreateDTO {
     user_id: string;
     kart_id: string;
-    pista_id: string;
+    road_id: string;
     starts_at: Date;
-    had_an_agendamento_during_this_period: boolean;
+    had_an_schedule_during_this_period: boolean;
 }
 
-export interface CorridasRepositoryPort {
-    getById(corridaId: string): Promise<Corrida>;
-    getHistorico(userId: string): Promise<Corrida[]>;
-    create(newCorrida: newCorridaCreateDTO): Promise<Corrida>;
-    hadAnAgendamentoDuringThisPeriod(userId: string, pistaId: string, startsAt: Date): Promise<boolean>;
+export interface racesRepositoryPort {
+    inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean>;
+    getById(raceId: string): Promise<Race>;
+    getHistory(userId: string): Promise<Race[]>;
+    create(newRace: newRaceCreateDTO): Promise<Race>;
+    hadAnScheduleDuringThisPeriod(userId: string, pistaId: string, startsAt: Date): Promise<boolean>;
     thereIsARaceAlreadyCreatedDuringThisPeriod(pistaId: string, startsAt: Date): Promise<boolean>;
-    updateEndsAt(corridaId: string, endsAt: Date): Promise<Corrida>;
-    updateStatus(corridaId: string, status: CorridaStatus): Promise<Corrida>;
+    updateEndsAt(raceId: string, endsAt: Date): Promise<Race>;
+    updateStatus(raceId: string, status: RaceStatus): Promise<Race>;
 }
 
 @Injectable()
-export default class CorridasRepository implements CorridasRepositoryPort {
+export default class racesRepository implements racesRepositoryPort {
     constructor(private readonly database: Database) {}
 
-    public async getById(corridaId: string): Promise<Corrida> {
-        return await this.database.corrida.findUnique({
+    public async inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean> {
+        return (await this.database.maintenance.findFirst({
             where: {
-                id: corridaId,
+                kart_id: kartId,
+                starts_at: { lte: endsAt },
+                ends_at: { gte: startAt },
+            },
+        }))
+            ? true
+            : false;
+    }
+
+    public async getById(raceId: string): Promise<Race> {
+        return await this.database.race.findUnique({
+            where: {
+                id: raceId,
             },
         });
     }
 
-    public async getHistorico(userId: string): Promise<Corrida[]> {
-        return await this.database.corrida.findMany({
+    public async getHistory(userId: string): Promise<Race[]> {
+        return await this.database.race.findMany({
             where: {
                 user_id: userId,
             },
         });
     }
 
-    public async create(newCorrida: newCorridaCreateDTO): Promise<Corrida> {
+    public async create(newRace: newRaceCreateDTO): Promise<Race> {
         try {
-            const { user_id, kart_id, pista_id, starts_at, had_an_agendamento_during_this_period } = newCorrida;
+            const { user_id, kart_id, road_id, starts_at, had_an_schedule_during_this_period } = newRace;
 
-            return await this.database.corrida.create({
+            return await this.database.race.create({
                 data: {
                     user_id,
                     kart_id,
-                    pista_id,
+                    road_id,
                     starts_at,
                     ends_at: null,
-                    had_an_agendamento_during_this_period,
-                    status: CorridaStatus.CREATED,
+                    had_an_schedule_during_this_period,
+                    status: RaceStatus.CREATED,
                 },
                 include: {
                     user: {
@@ -66,7 +79,7 @@ export default class CorridasRepository implements CorridasRepositoryPort {
                             name: true,
                         },
                     },
-                    pista: {
+                    road: {
                         select: {
                             name: true,
                         },
@@ -78,11 +91,11 @@ export default class CorridasRepository implements CorridasRepositoryPort {
         }
     }
 
-    public async updateEndsAt(corridaId: string, endsAt: Date): Promise<Corrida> {
+    public async updateEndsAt(raceId: string, endsAt: Date): Promise<Race> {
         try {
-            return await this.database.corrida.update({
+            return await this.database.race.update({
                 where: {
-                    id: corridaId,
+                    id: raceId,
                 },
                 data: {
                     ends_at: endsAt,
@@ -93,11 +106,11 @@ export default class CorridasRepository implements CorridasRepositoryPort {
         }
     }
 
-    public async updateStatus(corridaId: string, status: CorridaStatus): Promise<Corrida> {
+    public async updateStatus(raceId: string, status: RaceStatus): Promise<Race> {
         try {
-            return await this.database.corrida.update({
+            return await this.database.race.update({
                 where: {
-                    id: corridaId,
+                    id: raceId,
                 },
                 data: {
                     status,
@@ -108,11 +121,11 @@ export default class CorridasRepository implements CorridasRepositoryPort {
         }
     }
 
-    public async hadAnAgendamentoDuringThisPeriod(userId: string, pistaId: string, startsAt: Date): Promise<boolean> {
-        return (await this.database.agendamento.findFirst({
+    public async hadAnScheduleDuringThisPeriod(userId: string, pistaId: string, startsAt: Date): Promise<boolean> {
+        return (await this.database.schedule.findFirst({
             where: {
                 user_id: userId,
-                pista_id: pistaId,
+                road_id: pistaId,
                 starts_at: startsAt,
             },
         }))
@@ -123,15 +136,15 @@ export default class CorridasRepository implements CorridasRepositoryPort {
     public async thereIsARaceAlreadyCreatedDuringThisPeriod(pistaId: string, startsAt: Date): Promise<boolean> {
         // estou partindo do princípio que a criação da corrida tem que levar no mínimo/máximo 60 minutos
         // ou seja, se alguém tentar criar uma corrida as 15:45, mas já existe uma uma corrida marcada para começar as 16:30h
-        // essa corrida não vai ser possível ser criada, porque vai ter conflito de uso na mesma pista
+        // essa corrida não vai ser possível ser criada, porque vai ter conflito de uso na mesma road
 
         const startsAtMinus60Minutes = new Date(startsAt.getTime() - 60 * 60000);
         const endsAtPlus60Minutes = new Date(startsAt.getTime() + 60 * 60000);
 
-        return (await this.database.corrida.findFirst({
+        return (await this.database.race.findFirst({
             where: {
-                pista_id: pistaId,
-                status: CorridaStatus.CREATED,
+                road_id: pistaId,
+                status: RaceStatus.CREATED,
                 ends_at: null,
                 starts_at: {
                     gte: startsAtMinus60Minutes,

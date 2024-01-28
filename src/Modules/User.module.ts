@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { UserController } from "src/Controllers/User.controller";
+import UserController from "src/Controllers/User.controller";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import UserLoginUseCase from "src/UseCases/user/UserLogin.useCase";
 import UserLogoutUseCase from "src/UseCases/user/UserLogout.useCase";

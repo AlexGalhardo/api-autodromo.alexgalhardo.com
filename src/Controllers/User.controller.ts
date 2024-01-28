@@ -20,7 +20,7 @@ interface UserControllerPort {
 }
 
 @Controller("user")
-export class UserController implements UserControllerPort {
+export default class UserController implements UserControllerPort {
     constructor(
         @Inject("UserLoginUseCasePort") private readonly UserLoginUseCase: UserLoginUseCasePort,
         @Inject("UserCreateUseCasePort") private readonly UserCreateUseCase: UserCreateUseCasePort,

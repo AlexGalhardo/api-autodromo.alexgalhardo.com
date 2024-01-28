@@ -15,9 +15,9 @@ export class ValidateJWTTokenRoleIsValid extends AbstractValidateJWTTokenRole im
 
         if (
             !(
-                userFound.role === UserRole.GESTOR ||
-                userFound.role === UserRole.AFILIADO ||
-                userFound.role === UserRole.COMUM
+                userFound.role === UserRole.MANAGER ||
+                userFound.role === UserRole.AFFILIATE ||
+                userFound.role === UserRole.COMMON
             )
         ) {
             return response

@@ -11,10 +11,10 @@ interface KartCreateUseCaseResponse {
 export interface KartCreateDTO {
     status: KartStatus;
     name: string;
-    marca: string;
-    modelo: string;
-    potencia: number;
-    marca_pneus: string;
+    brand: string;
+    model: string;
+    power: number;
+    tire_brand: string;
 }
 
 export interface KartCreateUseCasePort {
@@ -26,7 +26,7 @@ export default class KartCreateUseCase implements KartCreateUseCasePort {
 
     async execute(kartCreatePayload: KartCreateDTO): Promise<KartCreateUseCaseResponse> {
         try {
-            const { status, name, marca, modelo, potencia, marca_pneus } = kartCreatePayload;
+            const { status, name, brand, model, power, tire_brand } = kartCreatePayload;
 
             if (status && !Validator.kart.statusIsValid(status)) throw new Error(ErrorsMessages.INVALID_KART_STATUS);
 
@@ -36,10 +36,10 @@ export default class KartCreateUseCase implements KartCreateUseCasePort {
             const kartCreated = await this.kartsRepository.create({
                 status,
                 name,
-                marca,
-                modelo,
-                potencia,
-                marca_pneus,
+                brand,
+                model,
+                power,
+                tire_brand,
             });
 
             return { success: true, data: kartCreated };

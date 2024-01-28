@@ -1,42 +1,42 @@
 ## VSCode REST Client
 * <https://marketplace.visualstudio.com/items?itemName=humao.rest-client>
 
-### USUÁRIO GESTOR -> CRIA USER (COMUM, AFILIADO)
+### USUÁRIO MANAGER -> CRIA USER (COMMON, AFFILIATE)
 POST http://localhost:3000/user
-Header authorization JWT GESTOR
+Header authorization JWT MANAGER
 name, email, password, role (comum, afiliado)
 
-### USUÁRIO GESTOR -> CRIA KART
+### USUÁRIO MANAGER -> CRIA KART
 POST http://localhost:3000/kart
-Header authorization JWT GESTOR
+Header authorization JWT MANAGER
 status      KartStatus
 name        String
-marca       String
-modelo      String
-potencia    Int
-marca_pneus String
+brand       String
+model      String
+power    Int
+tire_brand String
 
-### USUÁRIO GESTOR -> CRIA PISTA
-POST http://localhost:3000/pista
-Header authorization JWT GESTOR
+### USUÁRIO MANAGER -> CRIA PISTA
+POST http://localhost:3000/road
+Header authorization JWT MANAGER
 name               String
 km                 Int
-quantidade_boxes   Int
-quantidade_lugares Int
-endereco           String
+quantity_boxes   Int
+quantity_places Int
+address           String
 
-### USUÁRIO AFILIADO -> CRIA AGENDAMENTO
-POST http://localhost:3333/agendamento
-Header authorization JWT AFILIADO
+### USUÁRIO AFFILIATE -> CRIA AGENDAMENTO
+POST http://localhost:3333/schedule
+Header authorization JWT AFFILIATE
 user_id
 kart_id
 kart_status (FREE?)
-pista_id
+road_id
 period_start
 period_end
 
 ### TODOS OS USUÁRIOS -> ACESSAM HISTÓRICO DAS CORRIDAS
-GET http://localhost:3000/historico-corridas
+GET http://localhost:3000/historico-races
 Header authorization JWT do usuário
 retorna {
 	success: true,
@@ -52,49 +52,49 @@ retorna {
 
 ### EVENTO -> CREATE CORRIDAS
 POST http://localhost:3000/event/corrida
-Header authorization JWT GESTOR
+Header authorization JWT MANAGER
 body: {
 	user_id
 	kart_id
-	pista_id
+	road_id
 	corrida_start
-	had_an_agendamento_during_this_period
+	had_an_schedule_during_this_period
 }
 
 ### EVENTO -> UPDATE CORRIDAS
 PATCH http://localhost:3000/event/corrida/{corrida_id}/update
-Header authorization JWT GESTOR
+Header authorization JWT MANAGER
 body: {
 	corrida_end
 	Caso a corrida não possua horário de fim informado, o sistema deve interpretar que houve um acidente e a corrida foi abortada.
 }
 
 ### EVENTO -> ENVIA/RETIRA KART MANUTENÇÃO
-POST http://localhost:3000/event/kart/send-manutencao
-Header authorization JWT GESTOR
+POST http://localhost:3000/event/kart/send-maintenance
+Header authorization JWT MANAGER
 body: {
 	kart_id
-	motivo
+	reason
 	manutencao_start
 	manutencao_end
 }
 
 ### EVENTO -> ENVIA/RETIRA KART MANUTENÇÃO
-POST http://localhost:3000/event/kart/send-manutencao
-Header authorization JWT GESTOR
+POST http://localhost:3000/event/kart/send-maintenance
+Header authorization JWT MANAGER
 body: {
 	kart_id
-	motivo
+	reason
 	manutencao_start
 	manutencao_end
 }
 
 ### EVENTO -> CRIA ACIDENTE
 POST http://localhost:3000/event/acidente
-Header authorization JWT GESTOR
+Header authorization JWT MANAGER
 body: {
-	envolvidos: [users_ids aqui]
-	pista_id
+	involved: [users_ids aqui]
+	road_id
 	horario_do_acidente
 }
 

@@ -1,21 +1,21 @@
 import { Module } from "@nestjs/common";
-import { AgendamentoController } from "src/Controllers/Agendamento.controller";
-import AgendamentosRepository, { AgendamentosRepositoryPort } from "src/Repositories/Agendamentos.repository";
+import ScheduleController from "src/Controllers/Schedule.controller";
+import SchedulesRepository, { SchedulesRepositoryPort } from "src/Repositories/Schedules.repository";
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
-import PistasRepository, { PistasRepositoryPort } from "src/Repositories/Pistas.repository";
-import AgendamentoCreateUseCase from "src/UseCases/agendamento/AgendamentoCreate.useCase";
+import PistasRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
+import ScheduleCreateUseCase from "src/UseCases/schedule/ScheduleCreate.useCase";
 import KartCreateUseCase from "src/UseCases/kart/KartCreate.useCase";
 import { Database } from "src/Utils/Database";
 
 @Module({
-    controllers: [AgendamentoController],
+    controllers: [ScheduleController],
     providers: [
         Database,
         {
-            provide: "AgendamentosRepositoryPort",
+            provide: "SchedulesRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new AgendamentosRepository(database);
+                return new SchedulesRepository(database);
             },
         },
         {
@@ -26,7 +26,7 @@ import { Database } from "src/Utils/Database";
             },
         },
         {
-            provide: "PistasRepositoryPort",
+            provide: "RoadsRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
                 return new PistasRepository(database);
@@ -40,14 +40,14 @@ import { Database } from "src/Utils/Database";
             },
         },
         {
-            provide: "AgendamentoCreateUseCasePort",
-            inject: ["AgendamentosRepositoryPort", "KartsRepositoryPort", "PistasRepositoryPort"],
+            provide: "ScheduleCreateUseCasePort",
+            inject: ["SchedulesRepositoryPort", "KartsRepositoryPort", "RoadsRepositoryPort"],
             useFactory: (
-                agendamentosRepository: AgendamentosRepositoryPort,
+                schedulesRepository: SchedulesRepositoryPort,
                 kartsRepository: KartsRepositoryPort,
-                pistasRepository: PistasRepositoryPort,
+                roadsRepository: RoadsRepositoryPort,
             ) => {
-                return new AgendamentoCreateUseCase(agendamentosRepository, kartsRepository, pistasRepository);
+                return new ScheduleCreateUseCase(schedulesRepository, kartsRepository, roadsRepository);
             },
         },
     ],

@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { KartController } from "src/Controllers/Kart.controller";
+import KartController from "src/Controllers/Kart.controller";
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import KartCreateUseCase from "src/UseCases/kart/KartCreate.useCase";
 import { Database } from "src/Utils/Database";

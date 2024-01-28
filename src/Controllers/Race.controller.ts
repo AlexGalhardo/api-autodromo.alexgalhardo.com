@@ -1,42 +1,39 @@
 import { Controller, Res, HttpStatus, Inject, Get, Post, Body, Patch } from "@nestjs/common";
-import { Corrida } from "@prisma/client";
+import { Race } from "@prisma/client";
 import { Response } from "express";
-import { CorridaCreateDTO, CorridaCreateUseCasePort } from "src/UseCases/corrida/CorridaCreate.useCase";
-import { CorridaGetHistoricoUseCasePort } from "src/UseCases/corrida/CorridaGetHistorico.useCase";
-import {
-    CorridaUpdateEndsAtDTO,
-    CorridaUpdateEndsAtUseCasePort,
-} from "src/UseCases/corrida/CorridaUpdateEndsAt.useCase";
+import { RaceCreateDTO, RaceCreateUseCasePort } from "src/UseCases/race/RaceCreate.useCase";
+import { RaceGetHistoricoUseCasePort } from "src/UseCases/race/RaceGetHistorico.useCase";
+import { RaceUpdateEndsAtDTO, RaceUpdateEndsAtUseCasePort } from "src/UseCases/race/RaceUpdateEndsAt.useCase";
 
 interface CorridaControllerResponse {
     success: boolean;
-    data?: Corrida | Corrida[];
+    data?: Race | Race[];
     message?: string;
 }
 
 interface CorridaControllerPort {
     historico(response: Response): Promise<Response<CorridaControllerResponse>>;
-    create(corridaCreatePayload: CorridaCreateDTO, response: Response): Promise<Response<CorridaControllerResponse>>;
+    create(raceCreatePayload: RaceCreateDTO, response: Response): Promise<Response<CorridaControllerResponse>>;
     updateEndsAt(
-        corridaUpdateEndsAtPayload: CorridaUpdateEndsAtDTO,
+        raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO,
         response: Response,
     ): Promise<Response<CorridaControllerResponse>>;
     updateStatus(
-        corridaUpdateStatusPayload: CorridaUpdateEndsAtDTO,
+        corridaUpdateStatusPayload: RaceUpdateEndsAtDTO,
         response: Response,
     ): Promise<Response<CorridaControllerResponse>>;
 }
 
 @Controller("corrida")
-export class CorridaController implements CorridaControllerPort {
+export default class CorridaController implements CorridaControllerPort {
     constructor(
-        @Inject("CorridaGetHistoricoUseCasePort")
-        private readonly corridaGetHistoricoUseCase: CorridaGetHistoricoUseCasePort,
-        @Inject("CorridaCreateUseCasePort") private readonly corridaCreateUseCase: CorridaCreateUseCasePort,
-        @Inject("CorridaUpdateEndsAtUseCasePort")
-        private readonly corridaUpdateEndsAtUseCase: CorridaUpdateEndsAtUseCasePort,
-        @Inject("CorridaUpdateStatusUseCasePort")
-        private readonly corridaUpdateStatusUseCase: CorridaUpdateEndsAtUseCasePort,
+        @Inject("RaceGetHistoricoUseCasePort")
+        private readonly corridaGetHistoricoUseCase: RaceGetHistoricoUseCasePort,
+        @Inject("RaceCreateUseCasePort") private readonly corridaCreateUseCase: RaceCreateUseCasePort,
+        @Inject("RaceUpdateEndsAtUseCasePort")
+        private readonly corridaUpdateEndsAtUseCase: RaceUpdateEndsAtUseCasePort,
+        @Inject("RaceUpdateStatusUseCasePort")
+        private readonly corridaUpdateStatusUseCase: RaceUpdateEndsAtUseCasePort,
     ) {}
 
     @Get("/historico")
@@ -52,12 +49,12 @@ export class CorridaController implements CorridaControllerPort {
 
     @Post("/")
     async create(
-        @Body() corridaCreatePayload: CorridaCreateDTO,
+        @Body() raceCreatePayload: RaceCreateDTO,
         @Res() response: Response,
     ): Promise<Response<CorridaControllerResponse>> {
         try {
             const userId = response.locals.userId;
-            const { success, data } = await this.corridaCreateUseCase.execute(userId, corridaCreatePayload);
+            const { success, data } = await this.corridaCreateUseCase.execute(userId, raceCreatePayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -66,11 +63,11 @@ export class CorridaController implements CorridaControllerPort {
 
     @Patch("/ends-at")
     async updateEndsAt(
-        @Body() corridaUpdateEndsAtPayload: CorridaUpdateEndsAtDTO,
+        @Body() raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO,
         @Res() response: Response,
     ): Promise<Response<CorridaControllerResponse>> {
         try {
-            const { success, data } = await this.corridaUpdateEndsAtUseCase.execute(corridaUpdateEndsAtPayload);
+            const { success, data } = await this.corridaUpdateEndsAtUseCase.execute(raceUpdateEndsAtPayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -79,7 +76,7 @@ export class CorridaController implements CorridaControllerPort {
 
     @Patch("/status")
     async updateStatus(
-        @Body() corridaUpdateStatusPayload: CorridaUpdateEndsAtDTO,
+        @Body() corridaUpdateStatusPayload: RaceUpdateEndsAtDTO,
         @Res() response: Response,
     ): Promise<Response<CorridaControllerResponse>> {
         try {

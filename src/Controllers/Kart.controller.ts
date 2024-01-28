@@ -14,7 +14,7 @@ interface KartControllerPort {
 }
 
 @Controller("kart")
-export class KartController implements KartControllerPort {
+export default class KartController implements KartControllerPort {
     constructor(@Inject("KartCreateUseCasePort") private readonly kartCreateUseCase: KartCreateUseCasePort) {}
 
     @Post("/")

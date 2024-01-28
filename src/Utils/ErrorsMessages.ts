@@ -3,13 +3,13 @@ export enum ErrorsMessages {
 
     USER_ROLE_TOKEN_INVALID = "User role token invalid",
 
-    USER_ROLE_IS_NOT_GESTOR = "User role is not GESTOR",
+    USER_ROLE_IS_NOT_GESTOR = "User role is not MANAGER",
 
-    USER_ROLE_IS_NOT_AFILIADO = "User role is not AFILIADO",
+    USER_ROLE_IS_NOT_AFILIADO = "User role is not AFFILIATE",
 
     INVALID_KART_STATUS = "Invalid Kart Status",
 
-    CORRIDA_NOT_FOUND = "Corrida not found",
+    CORRIDA_NOT_FOUND = "Race not found",
 
     PROCESSING_ERROR = "PROCESSING_ERROR",
 
@@ -19,11 +19,15 @@ export enum ErrorsMessages {
 
     KART_NOT_FOUND = "Kart not found",
 
+    KART_IS_IN_MAINTENANCE = "Kart is in maintenance",
+
+    KART_IS_IN_RACE = "Kart is in race",
+
     KART_NAME_ALREADY_REGISTERED = "Kart name already registered",
 
-    PISTA_NAME_ALREADY_REGISTERED = "Pista name already registered",
+    ROAD_NAME_ALREADY_REGISTERED = "Road name already registered",
 
-    PISTA_NOT_FOUND = "Pista not found",
+    ROAD_NOT_FOUND = "Road not found",
 
     ENDS_AT_MUST_BE_GREATER_THAN_REGISTERED_STARTS_AT = "Ends at must be greather than registered starts at",
 
@@ -35,7 +39,7 @@ export enum ErrorsMessages {
 
     THERE_IS_A_RACE_ALREADY_CREATED_DURING_THIS_PERIOD = "There is a race already created during this period",
 
-    had_an_agendamento_during_this_period = "Has agendamento in this period",
+    had_an_schedule_during_this_period = "Has schedule in this period",
 
     INVALID_NAME = "Invalid name",
 

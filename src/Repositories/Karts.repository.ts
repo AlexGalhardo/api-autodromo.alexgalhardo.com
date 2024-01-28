@@ -6,13 +6,14 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 interface newKartCreateDTO {
     status: KartStatus;
     name: string;
-    marca: string;
-    modelo: string;
-    potencia: number;
-    marca_pneus: string;
+    brand: string;
+    model: string;
+    power: number;
+    tire_brand: string;
 }
 
 export interface KartsRepositoryPort {
+    getById(id: string): Promise<Kart>;
     findByName(name: string): Promise<boolean>;
     isAvailable(kartId: string, starts_at: Date, ends_at: Date): Promise<boolean>;
     create(newKart: newKartCreateDTO): Promise<Kart>;
@@ -21,6 +22,14 @@ export interface KartsRepositoryPort {
 @Injectable()
 export default class KartsRepository implements KartsRepositoryPort {
     constructor(private readonly database: Database) {}
+
+    public async getById(id: string): Promise<Kart> {
+        return await this.database.kart.findUnique({
+            where: {
+                id,
+            },
+        });
+    }
 
     public async findByName(name: string): Promise<boolean> {
         return (await this.database.kart.findUnique({
@@ -32,23 +41,23 @@ export default class KartsRepository implements KartsRepositoryPort {
             : false;
     }
 
-    public async isAvailable(kartId: string, starts_at: Date, ends_at: Date): Promise<boolean> {
+    public async isAvailable(kartId: string, startsAt: Date, endsAt: Date): Promise<boolean> {
         const kart = await this.database.kart.findUnique({
             where: { id: kartId },
         });
 
         if (!kart) throw new Error(ErrorsMessages.KART_NOT_FOUND);
 
-        if (kart && kart.status !== KartStatus.LIVRE) return false;
+        if (kart && kart.status !== KartStatus.AVAILABLE) return false;
 
-        const entitiesToCheck = ["manutencao", "corrida", "agendamento"];
+        const entitiesToCheck = ["maintenance", "race", "schedule"];
 
         for (const entity of entitiesToCheck) {
             const isEntityAvailable = await this.database[entity].findFirst({
                 where: {
                     kart_id: kartId,
-                    starts_at: { lte: ends_at },
-                    ends_at: { gte: starts_at },
+                    starts_at: { lte: endsAt },
+                    ends_at: { gte: startsAt },
                 },
             });
 
@@ -60,16 +69,16 @@ export default class KartsRepository implements KartsRepositoryPort {
 
     public async create(newKart: newKartCreateDTO): Promise<Kart> {
         try {
-            const { status, name, marca, modelo, potencia, marca_pneus } = newKart;
+            const { status, name, brand, model, power, tire_brand } = newKart;
 
             return await this.database.kart.create({
                 data: {
                     status,
                     name,
-                    marca,
-                    modelo,
-                    potencia,
-                    marca_pneus,
+                    brand,
+                    model,
+                    power,
+                    tire_brand,
                 },
             });
         } catch (error) {

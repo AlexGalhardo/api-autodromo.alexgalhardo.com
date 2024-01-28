@@ -13,7 +13,7 @@ export class ValidateJWTTokenRoleGestor extends AbstractValidateJWTTokenRole imp
     async use(request: Request, response: Response, next: NextFunction) {
         const userFound = (await this.verifyJwtTokenRole(request, response)) as User;
 
-        if (userFound && userFound.role !== UserRole.GESTOR) {
+        if (userFound && userFound.role !== UserRole.MANAGER) {
             return response
                 .status(HttpStatus.BAD_REQUEST)
                 .json({ success: false, message: ErrorsMessages.USER_ROLE_IS_NOT_GESTOR });

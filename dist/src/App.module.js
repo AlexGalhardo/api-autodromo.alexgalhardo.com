@@ -10,21 +10,22 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const User_module_1 = require("./Modules/User.module");
 const Kart_module_1 = require("./Modules/Kart.module");
-const Pista_module_1 = require("./Modules/Pista.module");
+const Road_module_1 = require("./Modules/Road.module");
 const HealthCheck_module_1 = require("./Modules/HealthCheck.module");
 const config_1 = require("@nestjs/config");
 const ValidateJWTTokenRoleGestor_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleGestor.middleware");
 const ValidateJWTTokenRoleAfiliado_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAfiliado.middleware");
-const Agendamento_module_1 = require("./Modules/Agendamento.module");
+const Schedule_module_1 = require("./Modules/Schedule.module");
 const ValidateJWTTokenRoleIsValid_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleIsValid.middleware");
-const Corrida_module_1 = require("./Modules/Corrida.module");
+const Race_module_1 = require("./Modules/Race.module");
+const Maintenance_module_1 = require("./Modules/Maintenance.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateJWTTokenRoleGestor_middleware_1.ValidateJWTTokenRoleGestor)
-            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/pista", method: common_1.RequestMethod.POST })
+            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleAfiliado_middleware_1.ValidateJWTTokenRoleAfiliado)
-            .forRoutes({ path: "/agendamento", method: common_1.RequestMethod.POST })
+            .forRoutes({ path: "/schedule", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleIsValid_middleware_1.ValidateJWTTokenRoleIsValid)
             .forRoutes({ path: "/corrida", method: common_1.RequestMethod.POST }, { path: "/corrida/historico", method: common_1.RequestMethod.GET }, { path: "/corrida/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/corrida/status", method: common_1.RequestMethod.PATCH });
     }
@@ -36,9 +37,10 @@ exports.AppModule = AppModule = __decorate([
             HealthCheck_module_1.HealthCheckModule,
             User_module_1.UserModule,
             Kart_module_1.KartModule,
-            Pista_module_1.PistaModule,
-            Agendamento_module_1.AgendamentoModule,
-            Corrida_module_1.CorridaModule,
+            Road_module_1.PistaModule,
+            Schedule_module_1.AgendamentoModule,
+            Race_module_1.CorridaModule,
+            Maintenance_module_1.ManutencaoModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),
         ],
         controllers: [],

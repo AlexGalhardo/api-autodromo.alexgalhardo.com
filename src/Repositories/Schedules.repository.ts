@@ -1,32 +1,32 @@
 import { Injectable } from "@nestjs/common";
-import { Agendamento } from "@prisma/client";
+import { Schedule } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 
 interface NewAgendamentoCreateDTO {
     userId: string;
     kart_id: string;
-    pista_id: string;
+    road_id: string;
     starts_at: Date;
     ends_at: Date;
 }
 
-export interface AgendamentosRepositoryPort {
-    create(newPista: NewAgendamentoCreateDTO): Promise<Agendamento>;
+export interface SchedulesRepositoryPort {
+    create(newPista: NewAgendamentoCreateDTO): Promise<Schedule>;
 }
 
 @Injectable()
-export default class AgendamentosRepository implements AgendamentosRepositoryPort {
+export default class SchedulesRepository implements SchedulesRepositoryPort {
     constructor(private readonly database: Database) {}
 
     public async create(newAgendamento: NewAgendamentoCreateDTO): Promise<any> {
         try {
-            const { userId, kart_id, pista_id, starts_at, ends_at } = newAgendamento;
+            const { userId, kart_id, road_id, starts_at, ends_at } = newAgendamento;
 
-            return await this.database.agendamento.create({
+            return await this.database.schedule.create({
                 data: {
                     user_id: userId,
                     kart_id,
-                    pista_id,
+                    road_id,
                     starts_at,
                     ends_at,
                 },
@@ -42,7 +42,7 @@ export default class AgendamentosRepository implements AgendamentosRepositoryPor
                             name: true,
                         },
                     },
-                    pista: {
+                    road: {
                         select: {
                             name: true,
                         },

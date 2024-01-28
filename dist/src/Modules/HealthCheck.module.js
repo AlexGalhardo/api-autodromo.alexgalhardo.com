@@ -14,7 +14,7 @@ let HealthCheckModule = class HealthCheckModule {
 exports.HealthCheckModule = HealthCheckModule;
 exports.HealthCheckModule = HealthCheckModule = __decorate([
     (0, common_1.Module)({
-        controllers: [HealthCheck_controller_1.HealthCheckController],
+        controllers: [HealthCheck_controller_1.default],
         providers: [],
     })
 ], HealthCheckModule);

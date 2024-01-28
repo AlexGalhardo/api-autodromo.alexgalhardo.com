@@ -8,120 +8,134 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  role         UserRole
-  role_token   String        @unique
-  name         String        @unique
-  email        String        @unique
-  jwt_token    String        @unique
-  password     String
-  corridas     Corrida[]
-  agendamendos Agendamento[]
-  created_at   DateTime      @default(now())
-  updated_at   DateTime?
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  role       UserRole
+  role_token String    @unique
+  name       String    @unique
+  email      String    @unique
+  jwt_token  String    @unique
+  password   String
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  races     Race[]
+  schedules Schedule[]
 
   @@map("users")
 }
 
 enum UserRole {
-  GESTOR
-  AFILIADO
-  COMUM
+  MANAGER
+  AFFILIATE
+  COMMON
 }
 
-model Pista {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  name               String    @unique
-  kilometers         Int
-  quantidade_boxes   Int
-  quantidade_lugares Int
-  endereco           String
-  created_at         DateTime  @default(now())
-  updated_at         DateTime?
+model Road {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String    @unique
+  kilometers      Int
+  quantity_boxes  Int
+  quantity_places Int
+  address         String
+  created_at      DateTime  @default(now())
+  updated_at      DateTime?
 
-  corridas     Corrida[]
-  agendamentos Agendamento[]
+  races     Race[]
+  schedules Schedule[]
+  accidents Acidente[]
 
-  @@map("pistas")
+  @@map("roads")
 }
 
 model Kart {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  status      KartStatus
-  name        String     @unique
-  marca       String
-  modelo      String
-  potencia    Int
-  marca_pneus String
-  created_at  DateTime   @default(now())
-  updated_at  DateTime?
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  status     KartStatus
+  name       String     @unique
+  brand      String
+  model      String
+  power      Int
+  tire_brand String
+  created_at DateTime   @default(now())
+  updated_at DateTime?
 
-  manutencoes  Manutencao[]
-  corridas     Corrida[]
-  agendamentos Agendamento[]
+  maintenances Maintenance[]
+  races        Race[]
+  schedules    Schedule[]
 
   @@map("karts")
 }
 
 enum KartStatus {
-  LOCADO
-  MANUTENCAO
-  LIVRE
+  LEASED
+  IN_MAINTENANCE
+  AVAILABLE
 }
 
-model Agendamento {
+model Schedule {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   user_id    String    @db.ObjectId
   kart_id    String    @db.ObjectId
-  pista_id   String    @db.ObjectId
+  road_id    String    @db.ObjectId
   starts_at  DateTime
   ends_at    DateTime
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  user  User  @relation(fields: [user_id], references: [id])
-  kart  Kart  @relation(fields: [kart_id], references: [id])
-  pista Pista @relation(fields: [pista_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
+  kart Kart @relation(fields: [kart_id], references: [id])
+  road Road @relation(fields: [road_id], references: [id])
 
-  @@map("agendamentos")
+  @@map("schedules")
 }
 
-model Corrida {
-  id                                    String        @id @default(auto()) @map("_id") @db.ObjectId
-  user_id                               String        @db.ObjectId
-  kart_id                               String        @db.ObjectId
-  pista_id                              String        @db.ObjectId
-  starts_at                             DateTime
-  ends_at                               DateTime?
-  had_an_agendamento_during_this_period Boolean
-  status                                CorridaStatus
-  created_at                            DateTime      @default(now())
-  updated_at                            DateTime?
+model Race {
+  id                                 String     @id @default(auto()) @map("_id") @db.ObjectId
+  user_id                            String     @db.ObjectId
+  kart_id                            String     @db.ObjectId
+  road_id                            String     @db.ObjectId
+  starts_at                          DateTime
+  ends_at                            DateTime?
+  had_an_schedule_during_this_period Boolean
+  status                             RaceStatus
+  created_at                         DateTime   @default(now())
+  updated_at                         DateTime?
 
-  user  User  @relation(fields: [user_id], references: [id])
-  kart  Kart  @relation(fields: [kart_id], references: [id])
-  pista Pista @relation(fields: [pista_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
+  kart Kart @relation(fields: [kart_id], references: [id])
+  road Road @relation(fields: [road_id], references: [id])
 
-  @@map("corridas")
+  @@map("races")
 }
 
-enum CorridaStatus {
+enum RaceStatus {
   CREATED
   FINISHED
   ABORTED
 }
 
-model Manutencao {
+model Maintenance {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   kart_id    String    @db.ObjectId
-  motivo     String
+  reason     String
   starts_at  DateTime
   ends_at    DateTime
-  finished   Boolean
   created_at DateTime  @default(now())
   updated_at DateTime?
 
   kart Kart @relation(fields: [kart_id], references: [id])
 
-  @@map("manutencoes")
+  @@map("maintenances")
+}
+
+model Acidente {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  involved    Json
+  road_id     String    @db.ObjectId
+  happened_at DateTime
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+
+  road Road @relation(fields: [road_id], references: [id])
+
+  @@map("accidents")
 }
