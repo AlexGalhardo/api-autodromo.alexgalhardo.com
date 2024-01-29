@@ -37,7 +37,7 @@ export enum ErrorsMessages {
 
     KART_IS_NOT_AVAILABLE = "Kart is not available",
 
-	ROAD_IS_NOT_AVAILABLE = "Road is not availabe",
+    ROAD_IS_NOT_AVAILABLE = "Road is not availabe",
 
     THERE_IS_A_RACE_ALREADY_CREATED_DURING_THIS_PERIOD = "There is a race already created during this period",
 

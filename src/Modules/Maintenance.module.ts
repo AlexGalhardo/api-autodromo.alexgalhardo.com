@@ -24,7 +24,7 @@ import { Database } from "src/Utils/Database";
                 return new KartsRepository(database);
             },
         },
-		{
+        {
             provide: "RacesRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {

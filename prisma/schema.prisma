@@ -42,7 +42,7 @@ model Road {
 
   races     Race[]
   schedules Schedule[]
-  accidents Acidente[]
+  accidents Accident[]
 
   @@map("roads")
 }
@@ -127,7 +127,7 @@ model Maintenance {
   @@map("maintenances")
 }
 
-model Acidente {
+model Accident {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   involved    Json
   road_id     String    @db.ObjectId

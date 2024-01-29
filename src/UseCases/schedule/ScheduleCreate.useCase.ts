@@ -35,9 +35,9 @@ export default class ScheduleCreateUseCase implements ScheduleCreateUseCasePort 
             starts_at = Validator.dateTime.stringToDefaultDate(String(starts_at));
             ends_at = Validator.dateTime.stringToDefaultDate(String(ends_at));
 
-			const roadAvailableToSchedule = await this.roadsRepository.isAvailable(road_id, starts_at, ends_at);
+            const roadAvailableToSchedule = await this.roadsRepository.isAvailable(road_id, starts_at, ends_at);
 
-			if (!roadAvailableToSchedule) throw new Error(ErrorsMessages.ROAD_IS_NOT_AVAILABLE);
+            if (!roadAvailableToSchedule) throw new Error(ErrorsMessages.ROAD_IS_NOT_AVAILABLE);
 
             const kartAvailableToSchedule = await this.kartsRepository.isAvailable(kart_id, starts_at, ends_at);
 

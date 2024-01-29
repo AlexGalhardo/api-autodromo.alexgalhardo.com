@@ -14,7 +14,7 @@ interface newRoadCreateDTO {
 export interface RoadsRepositoryPort {
     getById(id: string): Promise<Road>;
     findByName(name: string): Promise<boolean>;
-	isAvailable(roadId: string, startsAt: Date, endsAt: Date): Promise<boolean>;
+    isAvailable(roadId: string, startsAt: Date, endsAt: Date): Promise<boolean>;
     create(newRoad: newRoadCreateDTO): Promise<Road>;
 }
 
@@ -40,8 +40,8 @@ export default class PistasRepository implements RoadsRepositoryPort {
             : false;
     }
 
-	public async isAvailable(roadId: string, startsAt: Date, endsAt: Date): Promise<boolean> {
-		const road = await this.database.road.findUnique({
+    public async isAvailable(roadId: string, startsAt: Date, endsAt: Date): Promise<boolean> {
+        const road = await this.database.road.findUnique({
             where: { id: roadId },
         });
 
