@@ -2,6 +2,7 @@ import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import { ClientException } from "src/Utils/Exception";
 import * as jwt from "jsonwebtoken";
+import "dotenv/config";
 
 export interface UserCheckJWTTokenUseCasePort {
     execute(token: string);

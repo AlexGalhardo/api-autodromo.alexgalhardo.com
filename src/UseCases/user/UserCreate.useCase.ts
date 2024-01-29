@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { Bcrypt } from "src/Utils/Bcrypt";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";

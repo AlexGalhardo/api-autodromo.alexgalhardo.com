@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import { User } from "@prisma/client";
 import { HttpStatus } from "@nestjs/common";
+import "dotenv/config";
 
 export default abstract class AbstractValidateJWTTokenRole {
     protected async verifyJwtTokenRole(request: Request, response: Response): Promise<User | Response> {
