@@ -14,7 +14,7 @@ interface RaceControllerResponse {
 
 interface RaceControllerPort {
     history(response: Response): Promise<Response<RaceControllerResponse>>;
-	all(response: Response): Promise<Response<RaceControllerResponse>>;
+    all(response: Response): Promise<Response<RaceControllerResponse>>;
     create(raceCreatePayload: RaceCreateDTO, response: Response): Promise<Response<RaceControllerResponse>>;
     updateEndsAt(
         raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO,
@@ -31,7 +31,7 @@ export default class RaceController implements RaceControllerPort {
     constructor(
         @Inject("RaceGetHistoryUseCasePort")
         private readonly raceGetHistoryUseCase: RaceGetHistoryUseCasePort,
-		@Inject("RaceGetAllUseCasePort")
+        @Inject("RaceGetAllUseCasePort")
         private readonly raceGetAllUseCase: RaceGetAllUseCasePort,
         @Inject("RaceCreateUseCasePort") private readonly raceCreateUseCase: RaceCreateUseCasePort,
         @Inject("RaceUpdateEndsAtUseCasePort")
@@ -50,7 +50,7 @@ export default class RaceController implements RaceControllerPort {
         }
     }
 
-	@Get("/all")
+    @Get("/all")
     async all(@Res() response: Response): Promise<Response<RaceControllerResponse>> {
         try {
             const { success, data } = await this.raceGetAllUseCase.execute(response.locals.userId);

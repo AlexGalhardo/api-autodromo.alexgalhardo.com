@@ -43,12 +43,10 @@ import RaceGetAllUseCase from "src/UseCases/race/RaceGetAll.useCase";
                 return new RoadsRepository(database);
             },
         },
-		{
+        {
             provide: "RaceGetAllUseCasePort",
             inject: ["RacesRepositoryPort", "UsersRepositoryPort"],
-            useFactory: (
-                racesRepository: RacesRepositoryPort, usersRepository: UsersRepositoryPort
-            ) => {
+            useFactory: (racesRepository: RacesRepositoryPort, usersRepository: UsersRepositoryPort) => {
                 return new RaceGetAllUseCase(racesRepository, usersRepository);
             },
         },

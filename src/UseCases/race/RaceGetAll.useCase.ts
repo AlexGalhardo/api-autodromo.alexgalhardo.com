@@ -24,7 +24,8 @@ export default class RaceGetHistoryUseCase implements RaceGetAllUseCasePort {
 
             if (!userExists) throw new Error(ErrorsMessages.USER_NOT_FOUND);
 
-			if(userExists.role !== UserRole.MANAGER) throw new Error(ErrorsMessages.USER_MUST_BE_MANAGER_TO_SEE_ALL_RACES);
+            if (userExists.role !== UserRole.MANAGER)
+                throw new Error(ErrorsMessages.USER_MUST_BE_MANAGER_TO_SEE_ALL_RACES);
 
             const allRacesFound = await this.racesRepository.getAll();
 
