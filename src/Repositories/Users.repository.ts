@@ -15,11 +15,12 @@ export interface UsersRepositoryPort {
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
-    getByEmail(email: string);
-    getById(userId: string);
+    getByEmail(email: string): Promise<User>;
+    getById(userId: string): Promise<User>;
     create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
+	updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 
 @Injectable()
@@ -54,7 +55,7 @@ export default class UsersRepository implements UsersRepositoryPort {
             : false;
     }
 
-    public async getByEmail(email: string) {
+    public async getByEmail(email: string): Promise<User> {
         try {
             return await this.database.user.findUnique({
                 where: {
@@ -66,7 +67,7 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async getById(userId: string) {
+    public async getById(userId: string): Promise<User> {
         try {
             return await this.database.user.findUnique({
                 where: {
@@ -113,4 +114,21 @@ export default class UsersRepository implements UsersRepositoryPort {
             },
         });
     }
+s
+	public async updateJwtToken(id: string, jwt_token: string): Promise<User> {
+		try {
+			return await this.database.user.update({
+				where: {
+					id,
+				},
+				data: {
+					jwt_token
+				}
+			})
+		}
+		catch(error) {
+			throw new Error(error.message)
+		}
+
+	}
 }

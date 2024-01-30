@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Race, RaceStatus } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 
-interface newRaceCreateDTO {
+interface RaceCreateRepositoryDTO {
     user_id: string;
     kart_id: string;
     road_id: string;
@@ -14,7 +14,7 @@ export interface RacesRepositoryPort {
     inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean>;
     getById(raceId: string): Promise<Race>;
     getHistory(userId: string): Promise<Race[]>;
-    create(newRace: newRaceCreateDTO): Promise<Race>;
+    create(newRace: RaceCreateRepositoryDTO): Promise<Race>;
     hadAnScheduleDuringThisPeriod(userId: string, pistaId: string, startsAt: Date): Promise<boolean>;
     thereIsARaceAlreadyCreatedDuringThisPeriod(pistaId: string, startsAt: Date): Promise<boolean>;
     updateEndsAt(raceId: string, endsAt: Date): Promise<Race>;
@@ -50,10 +50,28 @@ export default class RacesRepository implements RacesRepositoryPort {
             where: {
                 user_id: userId,
             },
+			include: {
+				user: {
+					select: {
+						name: true,
+						email: true
+					}
+				},
+				kart: {
+					select: {
+						name: true
+					}
+				},
+				road: {
+					select: {
+						name: true
+					}
+				}
+			}
         });
     }
 
-    public async create(newRace: newRaceCreateDTO): Promise<Race> {
+    public async create(newRace: RaceCreateRepositoryDTO): Promise<Race> {
         try {
             const { user_id, kart_id, road_id, starts_at, had_an_schedule_during_this_period } = newRace;
 

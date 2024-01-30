@@ -11,6 +11,7 @@ var ErrorsMessages;
     ErrorsMessages["CORRIDA_NOT_FOUND"] = "Race not found";
     ErrorsMessages["PROCESSING_ERROR"] = "PROCESSING_ERROR";
     ErrorsMessages["JWT_TOKEN_IS_INVALID"] = "JWT Token is INVALID";
+    ErrorsMessages["ROLE_TOKEN_NOT_FOUND_IN_JWT"] = "Role token not found in JWT";
     ErrorsMessages["CAN_NOT_UPDATE_CORRIDA_STATUS"] = "You can only update corrida with status CREATED";
     ErrorsMessages["KART_NOT_FOUND"] = "Kart not found";
     ErrorsMessages["KART_IS_IN_MAINTENANCE"] = "Kart is in maintenance";

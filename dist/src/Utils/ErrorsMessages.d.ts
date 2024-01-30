@@ -7,6 +7,7 @@ export declare enum ErrorsMessages {
     CORRIDA_NOT_FOUND = "Race not found",
     PROCESSING_ERROR = "PROCESSING_ERROR",
     JWT_TOKEN_IS_INVALID = "JWT Token is INVALID",
+    ROLE_TOKEN_NOT_FOUND_IN_JWT = "Role token not found in JWT",
     CAN_NOT_UPDATE_CORRIDA_STATUS = "You can only update corrida with status CREATED",
     KART_NOT_FOUND = "Kart not found",
     KART_IS_IN_MAINTENANCE = "Kart is in maintenance",

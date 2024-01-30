@@ -27,7 +27,7 @@ let AppModule = class AppModule {
             .apply(ValidateJWTTokenRoleAffiliate_middleware_1.ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleIsValid_middleware_1.ValidateJWTTokenRoleIsValid)
-            .forRoutes({ path: "/race", method: common_1.RequestMethod.POST }, { path: "/race/history", method: common_1.RequestMethod.GET }, { path: "/race/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/race/status", method: common_1.RequestMethod.PATCH });
+            .forRoutes({ path: "/user/check-logged-in", method: common_1.RequestMethod.POST }, { path: "/race", method: common_1.RequestMethod.POST }, { path: "/race/history", method: common_1.RequestMethod.GET }, { path: "/race/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/race/status", method: common_1.RequestMethod.PATCH });
     }
 };
 exports.AppModule = AppModule;

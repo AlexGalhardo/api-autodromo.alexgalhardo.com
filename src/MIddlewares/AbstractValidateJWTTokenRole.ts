@@ -26,7 +26,7 @@ export default abstract class AbstractValidateJWTTokenRole {
             if (!role_token) {
                 return response
                     .status(HttpStatus.BAD_REQUEST)
-                    .json({ success: false, message: ErrorsMessages.USER_ROLE_TOKEN_INVALID });
+                    .json({ success: false, message: ErrorsMessages.ROLE_TOKEN_NOT_FOUND_IN_JWT });
             }
 
             return await prisma.user.findUnique({

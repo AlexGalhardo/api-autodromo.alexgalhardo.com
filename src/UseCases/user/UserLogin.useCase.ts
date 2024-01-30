@@ -23,21 +23,20 @@ interface UserLoginUseCaseResponse {
 export default class UserLoginUseCase implements UserLoginUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
-    async execute(userLoginPayload: UserLoginDTO): Promise<UserLoginUseCaseResponse> {
-        const { email, password } = userLoginPayload;
-
+    async execute({ email, password }: UserLoginDTO): Promise<UserLoginUseCaseResponse> {
         if (!Validator.user.emailIsValid(email)) throw new ClientException(ErrorsMessages.EMAIL_IS_INVALID);
 
         if (email && password) {
-            const { user } = await this.usersRepository.getByEmail(email);
+            const userFound = await this.usersRepository.getByEmail(email);
 
-            if (user) {
-                if (!(await Bcrypt.compare(password, user.password))) {
+            if (userFound) {
+                if (!(await Bcrypt.compare(password, userFound.password))) {
                     return { success: false, message: ErrorsMessages.EMAIL_OR_PASSWORD_INVALID };
                 }
 
-                const jwt_token = jwt.sign({ userID: user.id }, process.env.JWT_SECRET);
-                user.jwt_token = jwt_token;
+                const jwt_token = jwt.sign({ role_token: userFound.role_token }, process.env.JWT_SECRET, { expiresIn: '1h'});
+
+				await this.usersRepository.updateJwtToken(userFound.id, jwt_token)
 
                 return { success: true, jwt_token };
             }

@@ -5,7 +5,7 @@ import UserLoginUseCase from "src/UseCases/user/UserLogin.useCase";
 import UserLogoutUseCase from "src/UseCases/user/UserLogout.useCase";
 import UserCreateUseCase from "src/UseCases/user/UserCreate.useCase";
 import { Database } from "src/Utils/Database";
-import UserCheckJWTTokenUseCase from "src/UseCases/user/UserCheckJWTToken.useCase";
+import UserCheckJWTTokenUseCase from "src/UseCases/user/UserLoggedIn.useCase";
 
 @Module({
     controllers: [UserController],

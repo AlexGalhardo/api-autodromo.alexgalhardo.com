@@ -12,11 +12,12 @@ export interface UsersRepositoryPort {
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
-    getByEmail(email: string): any;
-    getById(userId: string): any;
+    getByEmail(email: string): Promise<User>;
+    getById(userId: string): Promise<User>;
     create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
+    updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 export default class UsersRepository implements UsersRepositoryPort {
     private readonly database;
@@ -24,30 +25,12 @@ export default class UsersRepository implements UsersRepositoryPort {
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
-    getByEmail(email: string): Promise<{
-        id: string;
-        role: import(".prisma/client").$Enums.UserRole;
-        role_token: string;
-        name: string;
-        email: string;
-        jwt_token: string;
-        password: string;
-        created_at: Date;
-        updated_at: Date;
-    }>;
-    getById(userId: string): Promise<{
-        id: string;
-        role: import(".prisma/client").$Enums.UserRole;
-        role_token: string;
-        name: string;
-        email: string;
-        jwt_token: string;
-        password: string;
-        created_at: Date;
-        updated_at: Date;
-    }>;
+    getByEmail(email: string): Promise<User>;
+    getById(userId: string): Promise<User>;
     create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
+    s: any;
+    updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 export {};

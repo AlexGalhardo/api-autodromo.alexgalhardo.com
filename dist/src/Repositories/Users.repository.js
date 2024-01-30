@@ -98,6 +98,21 @@ let UsersRepository = class UsersRepository {
             },
         });
     }
+    async updateJwtToken(id, jwt_token) {
+        try {
+            return await this.database.user.update({
+                where: {
+                    id,
+                },
+                data: {
+                    jwt_token
+                }
+            });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };
 UsersRepository = __decorate([
     (0, common_1.Injectable)(),

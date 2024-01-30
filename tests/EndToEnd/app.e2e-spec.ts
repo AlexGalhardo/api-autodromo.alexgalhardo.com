@@ -9,12 +9,12 @@ import UserCreateUseCase from "../../src/UseCases/user/User/UserCreate.useCase";
 import AuthForgetPasswordUseCase from "../../src/UseCases/AuthForgetPassword.useCase";
 import AuthResetPasswordUseCase from "../../src/UseCases/AuthResetPassword.useCase";
 import UserLogoutUseCase from "src/UseCases/user/User/UserLogout.useCase";
-import AuthTokenUserUseCase from "src/UseCases/user/UserCheckJWTToken.useCase";
+import AuthTokenUserUseCase from "src/UseCases/user/UserLoggedIn.useCase";
 import AuthLoginGoogleUseCase from "src/UseCases/AuthLoginGoogle.useCase";
 import AuthCheckResetPasswordTokenUseCase from "src/UseCases/AuthCheckResetPasswordToken.useCase";
 import { Database } from "src/Utils/Database";
 import AuthLoginGitHubUseCase from "src/UseCases/AuthLoginGitHub.useCase";
-import UserCheckJWTTokenUseCase from "src/UseCases/user/UserCheckJWTToken.useCase";
+import UserCheckJWTTokenUseCase from "src/UseCases/user/UserLoggedIn.useCase";
 
 describe("AppController (e2e)", () => {
     let app: INestApplication;

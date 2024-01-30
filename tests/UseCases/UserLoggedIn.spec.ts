@@ -3,12 +3,12 @@ import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.rep
 import Validator from "src/Utils/Validator";
 import UserCreateUseCase, { UserCreateDTO, UserCreateUseCasePort } from "src/UseCases/user/UserCreate.useCase";
 import UserDeleteUseCase, { UserDeleteUseCasePort } from "src/UseCases/user/UserDelete.useCase";
-import AuthTokenUserUseCase, { UserCheckJWTTokenUseCasePort } from "src/UseCases/user/UserCheckJWTToken.useCase";
+import AuthTokenUserUseCase, { UserLoggedInUseCasePort } from "src/UseCases/user/UserLoggedIn.useCase";
 import { Database } from "src/Utils/Database";
 
-describe("Test AuthCheckUserJWTToken", () => {
-    let UserCreateUseCase: UserCreateUseCasePort;
-    let authCheckUserJWTToken: UserCheckJWTTokenUseCasePort;
+describe("Test UserLoggedIn Use Case", () => {
+    let userCreateUseCase: UserCreateUseCasePort;
+    let userLoggedInUseCasePort: UserLoggedInUseCasePort;
     let deleteUserByEmail: UserDeleteUseCasePort;
 
     beforeAll(async () => {
@@ -20,7 +20,7 @@ describe("Test AuthCheckUserJWTToken", () => {
                     provide: "UsersRepositoryPort",
                     inject: [Database],
                     useFactory: (database: Database) => {
-                        return new UsersRepository(undefined, database);
+                        return new UsersRepository(database);
                     },
                 },
                 {
@@ -46,13 +46,13 @@ describe("Test AuthCheckUserJWTToken", () => {
                 },
             ],
         }).compile();
-        UserCreateUseCase = module.get<UserCreateUseCasePort>("UserCreateUseCasePort");
-        authCheckUserJWTToken = module.get<UserCheckJWTTokenUseCasePort>("AuthTokenUserUseCasePort");
+        userCreateUseCase = module.get<UserCreateUseCasePort>("UserCreateUseCasePort");
+        userLoggedInUseCasePort = module.get<UserLoggedInUseCasePort>("UserLoggedInUseCasePort");
         deleteUserByEmail = module.get<UserDeleteUseCasePort>("UserDeleteUseCasePort");
     });
 
-    const userEmail = Validator.email.generate();
-    const userPassword = Validator.password.generate();
+    const userEmail = Validator.user.generateEmail();
+    const userPassword = Validator.user.generatePassword();
     const name = "Testing TokenUser Test";
     let loginToken = null;
 
@@ -60,18 +60,17 @@ describe("Test AuthCheckUserJWTToken", () => {
         const UserCreateDTO: UserCreateDTO = {
             name,
             email: userEmail,
-            telegramNumber: Validator.phone.generate(),
             password: userPassword,
         };
-        const { success, jwt_token } = await UserCreateUseCase.execute(UserCreateDTO);
+        const { success, jwt_token } = await userCreateUseCase.execute(UserCreateDTO);
         loginToken = jwt_token;
 
         expect(success).toBeTruthy();
         expect(jwt_token).toBeDefined();
     });
 
-    it("should check token and return user", async () => {
-        const { success, data } = await authCheckUserJWTToken.execute(loginToken);
+    it("should check if user is logged in", async () => {
+        const { success, data } = await userLoggedInUseCasePort.execute(loginToken);
 
         expect(success).toBeTruthy();
         expect(data.name).toBe(name);
