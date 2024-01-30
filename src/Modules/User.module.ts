@@ -6,6 +6,7 @@ import UserLogoutUseCase from "src/UseCases/user/UserLogout.useCase";
 import UserCreateUseCase from "src/UseCases/user/UserCreate.useCase";
 import { Database } from "src/Utils/Database";
 import UserCheckJWTTokenUseCase from "src/UseCases/user/UserLoggedIn.useCase";
+import UserGetAllUseCase from "src/UseCases/user/UserGetAll.useCase";
 
 @Module({
     controllers: [UserController],
@@ -23,6 +24,13 @@ import UserCheckJWTTokenUseCase from "src/UseCases/user/UserLoggedIn.useCase";
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {
                 return new UserLoginUseCase(usersRepository);
+            },
+        },
+		{
+            provide: "UserGetAllUseCasePort",
+            inject: ["UsersRepositoryPort"],
+            useFactory: (usersRepository: UsersRepositoryPort) => {
+                return new UserGetAllUseCase(usersRepository);
             },
         },
         {

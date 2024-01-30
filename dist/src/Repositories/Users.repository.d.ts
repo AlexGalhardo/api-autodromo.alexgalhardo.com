@@ -9,6 +9,7 @@ interface newUserCreateDTO {
     jwt_token: string;
 }
 export interface UsersRepositoryPort {
+    getAll(): Promise<User[]>;
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
@@ -22,6 +23,7 @@ export interface UsersRepositoryPort {
 export default class UsersRepository implements UsersRepositoryPort {
     private readonly database;
     constructor(database: Database);
+    getAll(): Promise<User[]>;
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
@@ -30,7 +32,6 @@ export default class UsersRepository implements UsersRepositoryPort {
     create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
-    s: any;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 export {};

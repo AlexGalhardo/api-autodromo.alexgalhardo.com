@@ -15,6 +15,14 @@ let UsersRepository = class UsersRepository {
     constructor(database) {
         this.database = database;
     }
+    async getAll() {
+        try {
+            return await this.database.user.findMany();
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
     async getByRoleToken(roleToken) {
         return await this.database.user.findUnique({
             where: {

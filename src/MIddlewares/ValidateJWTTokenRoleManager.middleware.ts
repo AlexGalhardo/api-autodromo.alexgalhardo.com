@@ -20,6 +20,8 @@ export class ValidateJWTTokenRoleManager extends AbstractValidateJWTTokenRole im
                     .json({ success: false, message: ErrorsMessages.USER_ROLE_IS_NOT_MANAGER });
             }
 
+			response.locals.userId = userFound.id;
+
             next();
         } catch (error) {
             return response

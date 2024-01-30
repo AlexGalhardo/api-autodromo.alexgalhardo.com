@@ -13,6 +13,7 @@ var ErrorsMessages;
     ErrorsMessages["JWT_TOKEN_IS_INVALID"] = "JWT Token is INVALID";
     ErrorsMessages["ROLE_TOKEN_NOT_FOUND_IN_JWT"] = "Role token not found in JWT";
     ErrorsMessages["USER_MUST_BE_MANAGER_TO_SEE_ALL_RACES"] = "User must be manager to see all races";
+    ErrorsMessages["USER_MUST_BE_MANAGER_TO_SEE_ALL_USERS"] = "User must be manager to see all users";
     ErrorsMessages["CAN_NOT_UPDATE_CORRIDA_STATUS"] = "You can only update corrida with status CREATED";
     ErrorsMessages["KART_NOT_FOUND"] = "Kart not found";
     ErrorsMessages["KART_IS_IN_MAINTENANCE"] = "Kart is in maintenance";

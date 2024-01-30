@@ -12,7 +12,7 @@ export interface RaceGetAllUseCasePort {
     execute(userId: string): Promise<RaceGetAllUseCaseResponse>;
 }
 
-export default class RaceGetHistoryUseCase implements RaceGetAllUseCasePort {
+export default class RaceGetAllUseCase implements RaceGetAllUseCasePort {
     constructor(
         private readonly racesRepository: RacesRepositoryPort,
         private readonly usersRepository: UsersRepositoryPort,

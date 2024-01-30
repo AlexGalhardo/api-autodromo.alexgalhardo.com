@@ -43,7 +43,7 @@ export default class User {
     }
 
     public passowordIsSecure(plainTextPasswordToCheck: string): boolean {
-        if (plainTextPasswordToCheck.length < 12) {
+        if (plainTextPasswordToCheck.length < 8) {
             return false;
         }
 
