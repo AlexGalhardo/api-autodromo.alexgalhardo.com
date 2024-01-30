@@ -1,18 +1,18 @@
 import { Module } from "@nestjs/common";
-import PistaController from "src/Controllers/Road.controller";
-import PistasRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
+import RoadController from "src/Controllers/Road.controller";
+import RoadsRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
 import RoadCreateUseCase from "src/UseCases/road/RoadCreate.useCase";
 import { Database } from "src/Utils/Database";
 
 @Module({
-    controllers: [PistaController],
+    controllers: [RoadController],
     providers: [
         Database,
         {
             provide: "RoadsRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new PistasRepository(database);
+                return new RoadsRepository(database);
             },
         },
         {
@@ -24,4 +24,4 @@ import { Database } from "src/Utils/Database";
         },
     ],
 })
-export class PistaModule {}
+export class RoadModule {}

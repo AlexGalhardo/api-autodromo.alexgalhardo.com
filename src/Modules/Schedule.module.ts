@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import ScheduleController from "src/Controllers/Schedule.controller";
 import SchedulesRepository, { SchedulesRepositoryPort } from "src/Repositories/Schedules.repository";
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
-import PistasRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
+import RoadsRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
 import ScheduleCreateUseCase from "src/UseCases/schedule/ScheduleCreate.useCase";
 import KartCreateUseCase from "src/UseCases/kart/KartCreate.useCase";
 import { Database } from "src/Utils/Database";
@@ -29,7 +29,7 @@ import { Database } from "src/Utils/Database";
             provide: "RoadsRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new PistasRepository(database);
+                return new RoadsRepository(database);
             },
         },
         {
@@ -52,4 +52,4 @@ import { Database } from "src/Utils/Database";
         },
     ],
 })
-export class AgendamentoModule {}
+export class ScheduleModule {}

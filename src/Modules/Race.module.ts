@@ -1,24 +1,24 @@
 import { Module } from "@nestjs/common";
-import CorridaController from "src/Controllers/Race.controller";
-import racesRepository, { racesRepositoryPort } from "src/Repositories/Races.repository";
+import RaceController from "src/Controllers/Race.controller";
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
-import PistasRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
+import RoadsRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import RaceCreateUseCase from "src/UseCases/race/RaceCreate.useCase";
-import CorridaGetHistoricoUseCase from "src/UseCases/race/RaceGetHistorico.useCase";
+import RaceGetHistoryUseCase from "src/UseCases/race/RaceGetHistory.useCase";
 import RaceUpdateEndsAtUseCase from "src/UseCases/race/RaceUpdateEndsAt.useCase";
 import RaceUpdateStatusUseCase from "src/UseCases/race/RaceUpdateStatus.useCase";
 import { Database } from "src/Utils/Database";
+import RacesRepository, { RacesRepositoryPort } from "src/Repositories/Races.repository";
 
 @Module({
-    controllers: [CorridaController],
+    controllers: [RaceController],
     providers: [
         Database,
         {
-            provide: "racesRepositoryPort",
+            provide: "RacesRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new racesRepository(database);
+                return new RacesRepository(database);
             },
         },
         {
@@ -39,14 +39,14 @@ import { Database } from "src/Utils/Database";
             provide: "RoadsRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new PistasRepository(database);
+                return new RoadsRepository(database);
             },
         },
         {
             provide: "RaceCreateUseCasePort",
-            inject: ["racesRepositoryPort", "KartsRepositoryPort", "RoadsRepositoryPort"],
+            inject: ["RacesRepositoryPort", "KartsRepositoryPort", "RoadsRepositoryPort"],
             useFactory: (
-                racesRepository: racesRepositoryPort,
+                racesRepository: RacesRepositoryPort,
                 kartsRepository: KartsRepositoryPort,
                 roadsRepository: RoadsRepositoryPort,
             ) => {
@@ -54,26 +54,26 @@ import { Database } from "src/Utils/Database";
             },
         },
         {
-            provide: "RaceGetHistoricoUseCasePort",
-            inject: ["racesRepositoryPort", "UsersRepositoryPort"],
-            useFactory: (racesRepository: racesRepositoryPort, usersRepository: UsersRepositoryPort) => {
-                return new CorridaGetHistoricoUseCase(racesRepository, usersRepository);
+            provide: "RaceGetHistoryUseCasePort",
+            inject: ["RacesRepositoryPort", "UsersRepositoryPort"],
+            useFactory: (racesRepository: RacesRepositoryPort, usersRepository: UsersRepositoryPort) => {
+                return new RaceGetHistoryUseCase(racesRepository, usersRepository);
             },
         },
         {
             provide: "RaceUpdateEndsAtUseCasePort",
-            inject: ["racesRepositoryPort"],
-            useFactory: (racesRepository: racesRepositoryPort) => {
+            inject: ["RacesRepositoryPort"],
+            useFactory: (racesRepository: RacesRepositoryPort) => {
                 return new RaceUpdateEndsAtUseCase(racesRepository);
             },
         },
         {
             provide: "RaceUpdateStatusUseCasePort",
-            inject: ["racesRepositoryPort"],
-            useFactory: (racesRepository: racesRepositoryPort) => {
+            inject: ["RacesRepositoryPort"],
+            useFactory: (racesRepository: RacesRepositoryPort) => {
                 return new RaceUpdateStatusUseCase(racesRepository);
             },
         },
     ],
 })
-export class CorridaModule {}
+export class RaceModule {}

@@ -1,5 +1,5 @@
 import { Race, RaceStatus } from "@prisma/client";
-import { racesRepositoryPort } from "src/Repositories/Races.repository";
+import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RaceUpdateStatusUseCaseResponse {
@@ -17,7 +17,7 @@ export interface RaceUpdateStatusUseCasePort {
 }
 
 export default class RaceUpdateStatusUseCase implements RaceUpdateStatusUseCasePort {
-    constructor(private readonly racesRepository: racesRepositoryPort) {}
+    constructor(private readonly racesRepository: RacesRepositoryPort) {}
 
     async execute(raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO): Promise<RaceUpdateStatusUseCaseResponse> {
         try {

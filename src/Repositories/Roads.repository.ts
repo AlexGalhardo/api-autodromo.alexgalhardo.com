@@ -19,7 +19,7 @@ export interface RoadsRepositoryPort {
 }
 
 @Injectable()
-export default class PistasRepository implements RoadsRepositoryPort {
+export default class RoadsRepository implements RoadsRepositoryPort {
     constructor(private readonly database: Database) {}
 
     public async getById(id: string): Promise<Road> {

@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import MaintenanceController from "src/Controllers/Maintenance.controller";
-import RacesRepository, { racesRepositoryPort } from "src/Repositories/Races.repository";
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
-import maintenancesRepository from "src/Repositories/Maintenances.repository";
+import MaintenancesRepository from "src/Repositories/Maintenances.repository";
+import RacesRepository, { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import MaintenanceCreateUseCase from "src/UseCases/maintenance/MaintenanceCreate.useCase";
 import { Database } from "src/Utils/Database";
 
@@ -11,10 +11,10 @@ import { Database } from "src/Utils/Database";
     providers: [
         Database,
         {
-            provide: "maintenancesRepositoryPort",
+            provide: "MaintenancesRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
-                return new maintenancesRepository(database);
+                return new MaintenancesRepository(database);
             },
         },
         {
@@ -33,15 +33,15 @@ import { Database } from "src/Utils/Database";
         },
         {
             provide: "MaintenanceCreateUseCasePort",
-            inject: ["maintenancesRepositoryPort", "KartsRepositoryPort", "RacesRepositoryPort"],
+            inject: ["MaintenancesRepositoryPort", "KartsRepositoryPort", "RacesRepositoryPort"],
             useFactory: (
-                maintenancesRepository: maintenancesRepository,
+                maintenancesRepository: MaintenancesRepository,
                 kartsRepository: KartsRepositoryPort,
-                racesRepository: racesRepositoryPort,
+                racesRepository: RacesRepositoryPort,
             ) => {
                 return new MaintenanceCreateUseCase(maintenancesRepository, kartsRepository, racesRepository);
             },
         },
     ],
 })
-export class ManutencaoModule {}
+export class MaintenanceModule {}

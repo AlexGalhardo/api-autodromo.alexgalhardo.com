@@ -1,6 +1,6 @@
 import { Race } from "@prisma/client";
 import Validator from "src/Utils/Validator";
-import { racesRepositoryPort } from "src/Repositories/Races.repository";
+import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
@@ -22,7 +22,7 @@ export interface RaceCreateUseCasePort {
 
 export default class RaceCreateUseCase implements RaceCreateUseCasePort {
     constructor(
-        private readonly racesRepository: racesRepositoryPort,
+        private readonly racesRepository: RacesRepositoryPort,
         private readonly kartsRepository: KartsRepositoryPort,
         private readonly roadsRepository: RoadsRepositoryPort,
     ) {}

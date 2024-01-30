@@ -10,7 +10,7 @@ interface newRaceCreateDTO {
     had_an_schedule_during_this_period: boolean;
 }
 
-export interface racesRepositoryPort {
+export interface RacesRepositoryPort {
     inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean>;
     getById(raceId: string): Promise<Race>;
     getHistory(userId: string): Promise<Race[]>;
@@ -22,7 +22,7 @@ export interface racesRepositoryPort {
 }
 
 @Injectable()
-export default class racesRepository implements racesRepositoryPort {
+export default class RacesRepository implements RacesRepositoryPort {
     constructor(private readonly database: Database) {}
 
     public async inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean> {

@@ -1,13 +1,13 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { UserModule } from "./Modules/User.module";
 import { KartModule } from "./Modules/Kart.module";
-import { PistaModule } from "./Modules/Road.module";
+import { RoadModule } from "./Modules/Road.module";
 import { HealthCheckModule } from "./Modules/HealthCheck.module";
 import { ConfigModule } from "@nestjs/config";
-import { AgendamentoModule } from "./Modules/Schedule.module";
+import { ScheduleModule } from "./Modules/Schedule.module";
 import { ValidateJWTTokenRoleIsValid } from "./MIddlewares/ValidateJWTTokenRoleIsValid.middleware";
-import { CorridaModule } from "./Modules/Race.module";
-import { ManutencaoModule } from "./Modules/Maintenance.module";
+import { RaceModule } from "./Modules/Race.module";
+import { MaintenanceModule } from "./Modules/Maintenance.module";
 import { ValidateJWTTokenRoleAffiliate } from "./MIddlewares/ValidateJWTTokenRoleAffiliate.middleware";
 import { ValidateJWTTokenRoleManager } from "./MIddlewares/ValidateJWTTokenRoleManager.middleware";
 
@@ -16,10 +16,10 @@ import { ValidateJWTTokenRoleManager } from "./MIddlewares/ValidateJWTTokenRoleM
         HealthCheckModule,
         UserModule,
         KartModule,
-        PistaModule,
-        AgendamentoModule,
-        CorridaModule,
-        ManutencaoModule,
+        RoadModule,
+        ScheduleModule,
+        RaceModule,
+        MaintenanceModule,
         ConfigModule.forRoot({ isGlobal: true }),
     ],
     controllers: [],

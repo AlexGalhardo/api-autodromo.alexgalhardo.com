@@ -14,7 +14,7 @@ interface RoadControllerPort {
 }
 
 @Controller("road")
-export default class PistaController implements RoadControllerPort {
+export default class RoadController implements RoadControllerPort {
     constructor(@Inject("RoadCreateUseCasePort") private readonly roadCreateUseCase: RoadCreateUseCasePort) {}
 
     @Post("/")

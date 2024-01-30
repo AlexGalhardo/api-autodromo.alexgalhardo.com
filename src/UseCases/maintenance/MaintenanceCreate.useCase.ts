@@ -1,5 +1,5 @@
 import { Maintenance } from "@prisma/client";
-import { racesRepositoryPort } from "src/Repositories/Races.repository";
+import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import { MaintenanceCreateDTO, maintenancesRepositoryPort } from "src/Repositories/Maintenances.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
@@ -18,7 +18,7 @@ export default class MaintenanceCreateUseCase implements MaintenanceCreateUseCas
     constructor(
         private readonly maintenancesRepository: maintenancesRepositoryPort,
         private readonly kartsRepository: KartsRepositoryPort,
-        private readonly racesRepository: racesRepositoryPort,
+        private readonly racesRepository: RacesRepositoryPort,
     ) {}
 
     async execute(maintenanceCreatePayload: MaintenanceCreateDTO): Promise<MaintenanceCreateUseCaseResponse> {

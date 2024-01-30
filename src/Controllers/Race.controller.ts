@@ -2,7 +2,7 @@ import { Controller, Res, HttpStatus, Inject, Get, Post, Body, Patch } from "@ne
 import { Race } from "@prisma/client";
 import { Response } from "express";
 import { RaceCreateDTO, RaceCreateUseCasePort } from "src/UseCases/race/RaceCreate.useCase";
-import { RaceGetHistoricoUseCasePort } from "src/UseCases/race/RaceGetHistorico.useCase";
+import { RaceGetHistoryUseCasePort } from "src/UseCases/race/RaceGetHistory.useCase";
 import { RaceUpdateEndsAtDTO, RaceUpdateEndsAtUseCasePort } from "src/UseCases/race/RaceUpdateEndsAt.useCase";
 
 interface RaceControllerResponse {
@@ -25,10 +25,10 @@ interface RaceControllerPort {
 }
 
 @Controller("race")
-export default class CorridaController implements RaceControllerPort {
+export default class RaceController implements RaceControllerPort {
     constructor(
-        @Inject("RaceGetHistoricoUseCasePort")
-        private readonly raceGetHistoricoUseCase: RaceGetHistoricoUseCasePort,
+        @Inject("RaceGetHistoryUseCasePort")
+        private readonly raceGetHistoryUseCase: RaceGetHistoryUseCasePort,
         @Inject("RaceCreateUseCasePort") private readonly raceCreateUseCase: RaceCreateUseCasePort,
         @Inject("RaceUpdateEndsAtUseCasePort")
         private readonly raceUpdateEndsAtUseCase: RaceUpdateEndsAtUseCasePort,
@@ -40,7 +40,7 @@ export default class CorridaController implements RaceControllerPort {
     async history(@Res() response: Response): Promise<Response<RaceControllerResponse>> {
         try {
             const userId = response.locals.userId;
-            const { success, data } = await this.raceGetHistoricoUseCase.execute(userId);
+            const { success, data } = await this.raceGetHistoryUseCase.execute(userId);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
