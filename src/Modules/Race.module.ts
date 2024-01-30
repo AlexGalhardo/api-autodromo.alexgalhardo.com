@@ -9,6 +9,7 @@ import RaceUpdateEndsAtUseCase from "src/UseCases/race/RaceUpdateEndsAt.useCase"
 import RaceUpdateStatusUseCase from "src/UseCases/race/RaceUpdateStatus.useCase";
 import { Database } from "src/Utils/Database";
 import RacesRepository, { RacesRepositoryPort } from "src/Repositories/Races.repository";
+import RaceGetAllUseCase from "src/UseCases/race/RaceGetAll.useCase";
 
 @Module({
     controllers: [RaceController],
@@ -40,6 +41,15 @@ import RacesRepository, { RacesRepositoryPort } from "src/Repositories/Races.rep
             inject: [Database],
             useFactory: (database: Database) => {
                 return new RoadsRepository(database);
+            },
+        },
+		{
+            provide: "RaceGetAllUseCasePort",
+            inject: ["RacesRepositoryPort", "UsersRepositoryPort"],
+            useFactory: (
+                racesRepository: RacesRepositoryPort, usersRepository: UsersRepositoryPort
+            ) => {
+                return new RaceGetAllUseCase(racesRepository, usersRepository);
             },
         },
         {

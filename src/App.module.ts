@@ -40,7 +40,8 @@ export class AppModule implements NestModule {
 
             .apply(ValidateJWTTokenRoleIsValid)
             .forRoutes(
-				{ path: "/user/check-logged-in", method: RequestMethod.POST },
+                { path: "/user/check-logged-in", method: RequestMethod.POST },
+				{ path: "/race/all", method: RequestMethod.GET },
                 { path: "/race", method: RequestMethod.POST },
                 { path: "/race/history", method: RequestMethod.GET },
                 { path: "/race/ends-at", method: RequestMethod.PATCH },

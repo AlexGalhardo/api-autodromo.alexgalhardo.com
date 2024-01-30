@@ -16,16 +16,34 @@ const seedDatabase = async () => {
         await exports.prisma.maintenance.deleteMany();
         await exports.prisma.accident.deleteMany();
         await exports.prisma.user.deleteMany();
-        const email = "aleexgvieira@gmail.com", role_token = (0, node_crypto_1.randomUUID)();
-        await exports.prisma.user.create({
-            data: {
-                name: "ALEX MANAGER",
-                role: client_1.UserRole.MANAGER,
-                role_token,
-                email,
-                jwt_token: jwt.sign({ role_token }, process.env.JWT_SECRET),
-                password: await Bcrypt_1.Bcrypt.hash("passwordBR@123")
-            },
+        const role_token_manager = (0, node_crypto_1.randomUUID)(), role_token_commom = (0, node_crypto_1.randomUUID)(), role_token_affiliate = (0, node_crypto_1.randomUUID)();
+        await exports.prisma.user.createMany({
+            data: [
+                {
+                    name: "USER MANAGER",
+                    role: client_1.UserRole.MANAGER,
+                    role_token: role_token_manager,
+                    email: "manager@gmail.com",
+                    jwt_token: jwt.sign({ role_token: role_token_manager }, process.env.JWT_SECRET),
+                    password: await Bcrypt_1.Bcrypt.hash("managerTEST@123")
+                },
+                {
+                    name: "USER COMMOM",
+                    role: client_1.UserRole.COMMON,
+                    role_token: role_token_commom,
+                    email: "commom@gmail.com",
+                    jwt_token: jwt.sign({ role_token: role_token_commom }, process.env.JWT_SECRET),
+                    password: await Bcrypt_1.Bcrypt.hash("commomTEST@123")
+                },
+                {
+                    name: "USER AFFILIATE",
+                    role: client_1.UserRole.AFFILIATE,
+                    role_token: role_token_affiliate,
+                    email: "affiliate@gmail.com",
+                    jwt_token: jwt.sign({ role_token: role_token_affiliate }, process.env.JWT_SECRET),
+                    password: await Bcrypt_1.Bcrypt.hash("affiliateTEST@123")
+                },
+            ]
         });
         console.log("Seed completed successfully.");
     }

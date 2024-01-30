@@ -105,8 +105,8 @@ let UsersRepository = class UsersRepository {
                     id,
                 },
                 data: {
-                    jwt_token
-                }
+                    jwt_token,
+                },
             });
         }
         catch (error) {

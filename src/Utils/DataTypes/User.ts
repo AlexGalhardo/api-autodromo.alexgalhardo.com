@@ -10,11 +10,11 @@ export default class User {
         return regex.test(email);
     }
 
-	public generateEmail(): string {
+    public generateEmail(): string {
         return `teste.${Math.random().toString().split(".")[1]}@teste.com.br`;
     }
 
-	public generatePassword(): string {
+    public generatePassword(): string {
         const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
         const specialChars = "!@#$%^&*()_+[]{}|;:,.<>?";

@@ -2,6 +2,7 @@ import { Controller, Res, HttpStatus, Inject, Get, Post, Body, Patch } from "@ne
 import { Race } from "@prisma/client";
 import { Response } from "express";
 import { RaceCreateDTO, RaceCreateUseCasePort } from "src/UseCases/race/RaceCreate.useCase";
+import { RaceGetAllUseCasePort } from "src/UseCases/race/RaceGetAll.useCase";
 import { RaceGetHistoryUseCasePort } from "src/UseCases/race/RaceGetHistory.useCase";
 import { RaceUpdateEndsAtDTO, RaceUpdateEndsAtUseCasePort } from "src/UseCases/race/RaceUpdateEndsAt.useCase";
 
@@ -13,6 +14,7 @@ interface RaceControllerResponse {
 
 interface RaceControllerPort {
     history(response: Response): Promise<Response<RaceControllerResponse>>;
+	all(response: Response): Promise<Response<RaceControllerResponse>>;
     create(raceCreatePayload: RaceCreateDTO, response: Response): Promise<Response<RaceControllerResponse>>;
     updateEndsAt(
         raceUpdateEndsAtPayload: RaceUpdateEndsAtDTO,
@@ -29,6 +31,8 @@ export default class RaceController implements RaceControllerPort {
     constructor(
         @Inject("RaceGetHistoryUseCasePort")
         private readonly raceGetHistoryUseCase: RaceGetHistoryUseCasePort,
+		@Inject("RaceGetAllUseCasePort")
+        private readonly raceGetAllUseCase: RaceGetAllUseCasePort,
         @Inject("RaceCreateUseCasePort") private readonly raceCreateUseCase: RaceCreateUseCasePort,
         @Inject("RaceUpdateEndsAtUseCasePort")
         private readonly raceUpdateEndsAtUseCase: RaceUpdateEndsAtUseCasePort,
@@ -39,8 +43,17 @@ export default class RaceController implements RaceControllerPort {
     @Get("/history")
     async history(@Res() response: Response): Promise<Response<RaceControllerResponse>> {
         try {
-            const userId = response.locals.userId;
-            const { success, data } = await this.raceGetHistoryUseCase.execute(userId);
+            const { success, data } = await this.raceGetHistoryUseCase.execute(response.locals.userId);
+            if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
+        } catch (error) {
+            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
+        }
+    }
+
+	@Get("/all")
+    async all(@Res() response: Response): Promise<Response<RaceControllerResponse>> {
+        try {
+            const { success, data } = await this.raceGetAllUseCase.execute(response.locals.userId);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
@@ -53,8 +66,7 @@ export default class RaceController implements RaceControllerPort {
         @Res() response: Response,
     ): Promise<Response<RaceControllerResponse>> {
         try {
-            const userId = response.locals.userId;
-            const { success, data } = await this.raceCreateUseCase.execute(userId, raceCreatePayload);
+            const { success, data } = await this.raceCreateUseCase.execute(response.locals.userId, raceCreatePayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });

@@ -1,0 +1,3 @@
+GET http://localhost:4000/race/all HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiMjcwZDBiYzgtZjhmOS00YTNiLWI4YWItOTRmMzIzM2U3NTkyIiwiaWF0IjoxNzA2NjQwNzgxfQ.wU_GQPbAgiK38MBd_bfLOBD8QIeoqJqSv1jaWcfHAx8

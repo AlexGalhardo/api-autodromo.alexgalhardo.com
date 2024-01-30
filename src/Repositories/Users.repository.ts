@@ -20,7 +20,7 @@ export interface UsersRepositoryPort {
     create(newUser: newUserCreateDTO): Promise<User>;
     deleteByEmail(email: string): Promise<void>;
     logout(userId: string): Promise<void>;
-	updateJwtToken(id: string, jwt_token: string): Promise<User>;
+    updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 
 @Injectable()
@@ -114,21 +114,19 @@ export default class UsersRepository implements UsersRepositoryPort {
             },
         });
     }
-s
-	public async updateJwtToken(id: string, jwt_token: string): Promise<User> {
-		try {
-			return await this.database.user.update({
-				where: {
-					id,
-				},
-				data: {
-					jwt_token
-				}
-			})
-		}
-		catch(error) {
-			throw new Error(error.message)
-		}
-
-	}
+    s;
+    public async updateJwtToken(id: string, jwt_token: string): Promise<User> {
+        try {
+            return await this.database.user.update({
+                where: {
+                    id,
+                },
+                data: {
+                    jwt_token,
+                },
+            });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }

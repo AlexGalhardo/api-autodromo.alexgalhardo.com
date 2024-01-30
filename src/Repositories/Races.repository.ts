@@ -11,6 +11,7 @@ interface RaceCreateRepositoryDTO {
 }
 
 export interface RacesRepositoryPort {
+	getAll(): Promise<Race[]>;
     inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean>;
     getById(raceId: string): Promise<Race>;
     getHistory(userId: string): Promise<Race[]>;
@@ -24,6 +25,10 @@ export interface RacesRepositoryPort {
 @Injectable()
 export default class RacesRepository implements RacesRepositoryPort {
     constructor(private readonly database: Database) {}
+
+	public async getAll(): Promise<Race[]> {
+		return await this.database.race.findMany()
+	}
 
     public async inRace(kartId: string, startAt: Date, endsAt: Date): Promise<boolean> {
         return (await this.database.maintenance.findFirst({
@@ -50,24 +55,24 @@ export default class RacesRepository implements RacesRepositoryPort {
             where: {
                 user_id: userId,
             },
-			include: {
-				user: {
-					select: {
-						name: true,
-						email: true
-					}
-				},
-				kart: {
-					select: {
-						name: true
-					}
-				},
-				road: {
-					select: {
-						name: true
-					}
-				}
-			}
+            include: {
+                user: {
+                    select: {
+                        name: true,
+                        email: true,
+                    },
+                },
+                kart: {
+                    select: {
+                        name: true,
+                    },
+                },
+                road: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
         });
     }
 

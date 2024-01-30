@@ -16,18 +16,37 @@ const seedDatabase = async () => {
 		await prisma.accident.deleteMany();
 		await prisma.user.deleteMany();
 
-		const email = "aleexgvieira@gmail.com",
-			  role_token = randomUUID()
+		const role_token_manager = randomUUID(),
+			  role_token_commom = randomUUID(),
+			  role_token_affiliate = randomUUID()
 
-		await prisma.user.create({
-			data: {
-				name: "ALEX MANAGER",
-				role: UserRole.MANAGER,
-				role_token,
-				email,
-				jwt_token: jwt.sign({ role_token }, process.env.JWT_SECRET),
-				password: await Bcrypt.hash("passwordBR@123")
-			},
+		await prisma.user.createMany({
+			data: [
+				{
+					name: "USER MANAGER",
+					role: UserRole.MANAGER,
+					role_token: role_token_manager,
+					email: "manager@gmail.com",
+					jwt_token: jwt.sign({ role_token: role_token_manager }, process.env.JWT_SECRET),
+					password: await Bcrypt.hash("managerTEST@123")
+				},
+				{
+					name: "USER COMMOM",
+					role: UserRole.COMMON,
+					role_token: role_token_commom,
+					email: "commom@gmail.com",
+					jwt_token: jwt.sign({ role_token: role_token_commom }, process.env.JWT_SECRET),
+					password: await Bcrypt.hash("commomTEST@123")
+				},
+				{
+					name: "USER AFFILIATE",
+					role: UserRole.AFFILIATE,
+					role_token: role_token_affiliate,
+					email: "affiliate@gmail.com",
+					jwt_token: jwt.sign({ role_token: role_token_affiliate }, process.env.JWT_SECRET),
+					password: await Bcrypt.hash("affiliateTEST@123")
+				},
+			]
 		});
 
 		console.log("Seed completed successfully.");

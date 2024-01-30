@@ -34,9 +34,11 @@ export default class UserLoginUseCase implements UserLoginUseCasePort {
                     return { success: false, message: ErrorsMessages.EMAIL_OR_PASSWORD_INVALID };
                 }
 
-                const jwt_token = jwt.sign({ role_token: userFound.role_token }, process.env.JWT_SECRET, { expiresIn: '1h'});
+                const jwt_token = jwt.sign({ role_token: userFound.role_token }, process.env.JWT_SECRET, {
+                    expiresIn: "1h",
+                });
 
-				await this.usersRepository.updateJwtToken(userFound.id, jwt_token)
+                await this.usersRepository.updateJwtToken(userFound.id, jwt_token);
 
                 return { success: true, jwt_token };
             }
