@@ -17,14 +17,14 @@ import { Database } from "src/Utils/Database";
                 return new KartsRepository(database);
             },
         },
-		{
+        {
             provide: "UsersRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
                 return new UsersRepository(database);
             },
         },
-		{
+        {
             provide: "KartGetAllUseCasePort",
             inject: ["UsersRepositoryPort", "KartsRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort, kartsRepository: KartsRepositoryPort) => {

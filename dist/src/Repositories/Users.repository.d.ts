@@ -16,7 +16,7 @@ export interface UsersRepositoryPort {
     getByEmail(email: string): Promise<User>;
     getById(userId: string): Promise<User>;
     create(newUser: newUserCreateDTO): Promise<User>;
-    deleteByEmail(email: string): Promise<void>;
+    deleteById(userId: string): Promise<User>;
     logout(userId: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
@@ -30,7 +30,7 @@ export default class UsersRepository implements UsersRepositoryPort {
     getByEmail(email: string): Promise<User>;
     getById(userId: string): Promise<User>;
     create(newUser: newUserCreateDTO): Promise<User>;
-    deleteByEmail(email: string): Promise<void>;
+    deleteById(id: string): Promise<User>;
     logout(userId: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }

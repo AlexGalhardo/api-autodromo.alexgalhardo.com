@@ -15,7 +15,7 @@ export enum ErrorsMessages {
 
     JWT_TOKEN_IS_INVALID = "JWT Token is INVALID",
 
-	USER_ROLE_MUST_BE_AFFILIATE_OR_MANAGER = "User role must be affiliate or manager",
+    USER_ROLE_MUST_BE_AFFILIATE_OR_MANAGER = "User role must be affiliate or manager",
 
     ROLE_TOKEN_NOT_FOUND_IN_JWT = "Role token not found in JWT",
 

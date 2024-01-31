@@ -13,7 +13,10 @@ export interface KartGetAllUseCasePort {
 }
 
 export default class KartGetAllUseCase implements KartGetAllUseCasePort {
-    constructor(private readonly usersRepository: UsersRepositoryPort, private readonly kartsRepository: KartsRepositoryPort) {}
+    constructor(
+        private readonly usersRepository: UsersRepositoryPort,
+        private readonly kartsRepository: KartsRepositoryPort,
+    ) {}
 
     async execute(userId: string): Promise<KartGetAllUseCaseResponse> {
         try {
@@ -21,8 +24,7 @@ export default class KartGetAllUseCase implements KartGetAllUseCasePort {
 
             if (!userExists) throw new Error(ErrorsMessages.USER_NOT_FOUND);
 
-            if (userExists.role !== UserRole.MANAGER)
-                throw new Error(ErrorsMessages.USER_ROLE_MUST_BE_MANAGER);
+            if (userExists.role !== UserRole.MANAGER) throw new Error(ErrorsMessages.USER_ROLE_MUST_BE_MANAGER);
 
             const allKartsFound = await this.kartsRepository.getAll();
 

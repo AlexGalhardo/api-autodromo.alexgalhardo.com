@@ -6,7 +6,7 @@ const Bcrypt_1 = require("../src/Utils/Bcrypt");
 const jwt = require("jsonwebtoken");
 const node_crypto_1 = require("node:crypto");
 exports.prisma = new client_1.PrismaClient({
-    errorFormat: "pretty",
+    errorFormat: "minimal",
 });
 const seedDatabase = async () => {
     try {

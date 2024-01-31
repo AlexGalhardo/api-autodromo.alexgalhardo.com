@@ -33,7 +33,7 @@ import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.rep
                 return new RoadsRepository(database);
             },
         },
-		{
+        {
             provide: "UsersRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {

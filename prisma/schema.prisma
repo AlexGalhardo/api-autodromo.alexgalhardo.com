@@ -18,8 +18,10 @@ model User {
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  races     Race[]
-  schedules Schedule[]
+  races          Race[]
+  schedules      Schedule[]
+  notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: Restrict)
+  notificationId String?       @db.ObjectId
 
   @@map("users")
 }
@@ -81,9 +83,9 @@ model Schedule {
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  user User @relation(fields: [user_id], references: [id])
-  kart Kart @relation(fields: [kart_id], references: [id])
-  road Road @relation(fields: [road_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  kart Kart @relation(fields: [kart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  road Road @relation(fields: [road_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
   @@map("schedules")
 }
@@ -100,9 +102,9 @@ model Race {
   created_at                         DateTime   @default(now())
   updated_at                         DateTime?
 
-  user User @relation(fields: [user_id], references: [id])
-  kart Kart @relation(fields: [kart_id], references: [id])
-  road Road @relation(fields: [road_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  kart Kart @relation(fields: [kart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  road Road @relation(fields: [road_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
   @@map("races")
 }
@@ -122,7 +124,7 @@ model Maintenance {
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  kart Kart @relation(fields: [kart_id], references: [id])
+  kart Kart @relation(fields: [kart_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
   @@map("maintenances")
 }
@@ -135,7 +137,28 @@ model Accident {
   created_at  DateTime  @default(now())
   updated_at  DateTime?
 
-  road Road @relation(fields: [road_id], references: [id])
+  road Road @relation(fields: [road_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
   @@map("accidents")
+}
+
+model Notification {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  type              NotificationType
+  message           String           @db.ObjectId
+  send_to_users_ids User[]
+
+  created_at DateTime @default(now())
+
+  @@map("notifications")
+}
+
+enum NotificationType {
+  RACE_CREATED
+  RACE_ACCIDENT
+  RACE_CANCELLED
+  MAINTENANCE_CREATED
+  MAINTENANCE_FINISHED
+  SCHEDULE_CREATED
+  SCHEDULE_CANCELLED
 }

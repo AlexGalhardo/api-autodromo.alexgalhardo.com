@@ -11,10 +11,10 @@ export class ValidateJWTTokenRoleManagerOrAffiliate extends AbstractValidateJWTT
             const userFound = (await this.verifyJwtTokenRole(request, response)) as User;
 
             if (!userFound || (userFound.role !== UserRole.AFFILIATE && userFound.role !== UserRole.MANAGER)) {
-				return response
-					.status(HttpStatus.BAD_REQUEST)
-					.json({ success: false, message: ErrorsMessages.USER_ROLE_MUST_BE_AFFILIATE_OR_MANAGER });
-			}
+                return response
+                    .status(HttpStatus.BAD_REQUEST)
+                    .json({ success: false, message: ErrorsMessages.USER_ROLE_MUST_BE_AFFILIATE_OR_MANAGER });
+            }
 
             response.locals.userId = userFound.id;
 

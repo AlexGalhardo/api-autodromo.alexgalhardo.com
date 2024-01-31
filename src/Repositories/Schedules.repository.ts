@@ -11,7 +11,7 @@ interface ScheduleRepositoryCreateDTO {
 }
 
 export interface SchedulesRepositoryPort {
-	getAll(): Promise<Schedule[]>;
+    getAll(): Promise<Schedule[]>;
     create(schedule: ScheduleRepositoryCreateDTO): Promise<Schedule>;
 }
 
@@ -19,9 +19,9 @@ export interface SchedulesRepositoryPort {
 export default class SchedulesRepository implements SchedulesRepositoryPort {
     constructor(private readonly database: Database) {}
 
-	public async getAll(): Promise<Schedule[]> {
-		return await this.database.schedule.findMany()
-	}
+    public async getAll(): Promise<Schedule[]> {
+        return await this.database.schedule.findMany();
+    }
 
     public async create(schedule: ScheduleRepositoryCreateDTO): Promise<any> {
         try {

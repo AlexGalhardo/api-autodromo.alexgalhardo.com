@@ -28,27 +28,26 @@ import { ValidateJWTTokenRoleManagerOrAffiliate } from "./MIddlewares/ValidateJW
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-		consumer
+        consumer
             .apply(ValidateJWTTokenRoleManager)
             .forRoutes(
                 { path: "/user", method: RequestMethod.POST },
                 { path: "/kart", method: RequestMethod.POST },
                 { path: "/road", method: RequestMethod.POST },
-				{ path: "/race/all", method: RequestMethod.GET },
+                { path: "/race/all", method: RequestMethod.GET },
                 { path: "/user/all", method: RequestMethod.GET },
-				{ path: "/kart/all", method: RequestMethod.GET },
-				{ path: "/road/all", method: RequestMethod.GET },
+                { path: "/kart/all", method: RequestMethod.GET },
+                { path: "/road/all", method: RequestMethod.GET },
+				{ path: "/maintenance/all", method: RequestMethod.GET },
+				{ path: "/notification/all", method: RequestMethod.GET },
+				{ path: "/user/:user_id", method: RequestMethod.DELETE },
             )
 
-			.apply(ValidateJWTTokenRoleAffiliate)
-			.forRoutes(
-				{ path: "/schedule", method: RequestMethod.POST },
-			)
+            .apply(ValidateJWTTokenRoleAffiliate)
+            .forRoutes({ path: "/schedule", method: RequestMethod.POST })
 
-			.apply(ValidateJWTTokenRoleManagerOrAffiliate)
-			.forRoutes(
-				{ path: "/schedule/all", method: RequestMethod.GET }
-            )
+            .apply(ValidateJWTTokenRoleManagerOrAffiliate)
+            .forRoutes({ path: "/schedule/all", method: RequestMethod.GET })
 
             .apply(ValidateJWTTokenRoleIsValid)
             .forRoutes(

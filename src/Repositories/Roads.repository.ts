@@ -12,7 +12,7 @@ interface RoadRepositoryCreateDTO {
 }
 
 export interface RoadsRepositoryPort {
-	getAll(): Promise<Road[]>;
+    getAll(): Promise<Road[]>;
     getById(id: string): Promise<Road>;
     findByName(name: string): Promise<boolean>;
     isAvailable(roadId: string, startsAt: Date, endsAt: Date): Promise<boolean>;
@@ -23,9 +23,9 @@ export interface RoadsRepositoryPort {
 export default class RoadsRepository implements RoadsRepositoryPort {
     constructor(private readonly database: Database) {}
 
-	public async getAll(): Promise<Road[]> {
-		return await this.database.road.findMany()
-	}
+    public async getAll(): Promise<Road[]> {
+        return await this.database.road.findMany();
+    }
 
     public async getById(id: string): Promise<Road> {
         return await this.database.road.findUnique({

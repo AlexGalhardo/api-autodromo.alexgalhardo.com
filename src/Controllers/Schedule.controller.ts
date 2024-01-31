@@ -17,11 +17,11 @@ interface AgendamentoControllerPort {
 @Controller("schedule")
 export default class ScheduleController implements AgendamentoControllerPort {
     constructor(
-		@Inject("ScheduleGetAllUseCasePort") private readonly scheduleGetAllUseCase: ScheduleGetAllUseCasePort,
+        @Inject("ScheduleGetAllUseCasePort") private readonly scheduleGetAllUseCase: ScheduleGetAllUseCasePort,
         @Inject("ScheduleCreateUseCasePort") private readonly scheduleCreateUseCase: ScheduleCreateUseCasePort,
     ) {}
 
-	@Get("/all")
+    @Get("/all")
     async all(@Res() response: Response): Promise<Response<ScheduleControllerResponse>> {
         try {
             const { success, data } = await this.scheduleGetAllUseCase.execute(response.locals.userId);

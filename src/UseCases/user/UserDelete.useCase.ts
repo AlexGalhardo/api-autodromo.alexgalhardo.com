@@ -1,10 +1,10 @@
+import { User } from "@prisma/client";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
-import { ErrorsMessages } from "src/Utils/ErrorsMessages";
-import { ClientException } from "src/Utils/Exception";
 
 interface UserDeleteUseCaseResponse {
     success: boolean;
-    jwt_token?: string;
+	message: 'User Deleted!',
+	data: User;
 }
 
 export interface UserDeleteUseCasePort {
@@ -14,12 +14,13 @@ export interface UserDeleteUseCasePort {
 export default class UserDeleteUseCase implements UserDeleteUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
-    async execute(email: string): Promise<UserDeleteUseCaseResponse> {
-        if (this.usersRepository.findByEmail(email)) {
-            await this.usersRepository.deleteByEmail(email);
-            return { success: true };
+    async execute(userId: string): Promise<UserDeleteUseCaseResponse> {
+        try {
+            const userDeleted = await this.usersRepository.deleteById(userId);
+            return { success: true, message: 'User Deleted!', data: userDeleted };
         }
-
-        throw new ClientException(ErrorsMessages.EMAIL_NOT_REGISTRED);
+		catch(error){
+			throw new Error(error.message)
+		}
     }
 }

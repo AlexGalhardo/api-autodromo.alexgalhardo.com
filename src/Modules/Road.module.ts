@@ -17,14 +17,14 @@ import { Database } from "src/Utils/Database";
                 return new RoadsRepository(database);
             },
         },
-		{
+        {
             provide: "UsersRepositoryPort",
             inject: [Database],
             useFactory: (database: Database) => {
                 return new UsersRepository(database);
             },
         },
-		{
+        {
             provide: "RoadGetAllUseCasePort",
             inject: ["UsersRepositoryPort", "RoadsRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort, roadsRepository: RoadsRepositoryPort) => {
@@ -37,7 +37,7 @@ import { Database } from "src/Utils/Database";
             useFactory: (roadsRepository: RoadsRepositoryPort) => {
                 return new RoadCreateUseCase(roadsRepository);
             },
-        }
+        },
     ],
 })
 export class RoadModule {}

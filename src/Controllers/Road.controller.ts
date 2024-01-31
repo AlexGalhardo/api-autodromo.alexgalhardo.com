@@ -17,11 +17,11 @@ interface RoadControllerPort {
 @Controller("road")
 export default class RoadController implements RoadControllerPort {
     constructor(
-		@Inject("RoadGetAllUseCasePort") private readonly roadGetAllUseCase: RoadGetAllUseCasePort,
-		@Inject("RoadCreateUseCasePort") private readonly roadCreateUseCase: RoadCreateUseCasePort
-	) {}
+        @Inject("RoadGetAllUseCasePort") private readonly roadGetAllUseCase: RoadGetAllUseCasePort,
+        @Inject("RoadCreateUseCasePort") private readonly roadCreateUseCase: RoadCreateUseCasePort,
+    ) {}
 
-	@Get("/all")
+    @Get("/all")
     async all(@Res() response: Response): Promise<Response<RoadControllerResponse>> {
         try {
             const { success, data } = await this.roadGetAllUseCase.execute(response.locals.userId);

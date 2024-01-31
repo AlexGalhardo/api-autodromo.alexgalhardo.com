@@ -4,7 +4,7 @@ import * as jwt from "jsonwebtoken";
 import { randomUUID } from "node:crypto";
 
 export const prisma = new PrismaClient({
-    errorFormat: "pretty",
+    errorFormat: "minimal",
 });
 
 const seedDatabase = async () => {

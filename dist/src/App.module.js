@@ -24,7 +24,7 @@ let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateJWTTokenRoleManager_middleware_1.ValidateJWTTokenRoleManager)
-            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST }, { path: "/race/all", method: common_1.RequestMethod.GET }, { path: "/user/all", method: common_1.RequestMethod.GET }, { path: "/kart/all", method: common_1.RequestMethod.GET }, { path: "/road/all", method: common_1.RequestMethod.GET })
+            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST }, { path: "/race/all", method: common_1.RequestMethod.GET }, { path: "/user/all", method: common_1.RequestMethod.GET }, { path: "/kart/all", method: common_1.RequestMethod.GET }, { path: "/road/all", method: common_1.RequestMethod.GET }, { path: "/maintenance/all", method: common_1.RequestMethod.GET }, { path: "/notification/all", method: common_1.RequestMethod.GET }, { path: "/user/:user_id", method: common_1.RequestMethod.DELETE })
             .apply(ValidateJWTTokenRoleAffiliate_middleware_1.ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleManagerOrAffiliate_middleware_1.ValidateJWTTokenRoleManagerOrAffiliate)

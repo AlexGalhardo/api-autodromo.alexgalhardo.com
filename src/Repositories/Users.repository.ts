@@ -19,7 +19,7 @@ export interface UsersRepositoryPort {
     getByEmail(email: string): Promise<User>;
     getById(userId: string): Promise<User>;
     create(newUser: newUserCreateDTO): Promise<User>;
-    deleteByEmail(email: string): Promise<void>;
+    deleteById(userId: string): Promise<User>;
     logout(userId: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
@@ -105,10 +105,10 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async deleteByEmail(email: string): Promise<void> {
-        await this.database.user.delete({
+    public async deleteById(id: string): Promise<User> {
+        return await this.database.user.delete({
             where: {
-                email,
+                id,
             },
         });
     }

@@ -89,10 +89,10 @@ let UsersRepository = class UsersRepository {
             throw new Error(error);
         }
     }
-    async deleteByEmail(email) {
-        await this.database.user.delete({
+    async deleteById(id) {
+        return await this.database.user.delete({
             where: {
-                email,
+                id,
             },
         });
     }

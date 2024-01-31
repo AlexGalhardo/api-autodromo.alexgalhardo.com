@@ -13,7 +13,10 @@ export interface RoadGetAllUseCasePort {
 }
 
 export default class RoadGetAllUseCase implements RoadGetAllUseCasePort {
-    constructor(private readonly usersRepository: UsersRepositoryPort, private readonly roadsRepository: RoadsRepositoryPort) {}
+    constructor(
+        private readonly usersRepository: UsersRepositoryPort,
+        private readonly roadsRepository: RoadsRepositoryPort,
+    ) {}
 
     async execute(userId: string): Promise<RoadGetAllUseCaseResponse> {
         try {
@@ -21,8 +24,7 @@ export default class RoadGetAllUseCase implements RoadGetAllUseCasePort {
 
             if (!userExists) throw new Error(ErrorsMessages.USER_NOT_FOUND);
 
-            if (userExists.role !== UserRole.MANAGER)
-                throw new Error(ErrorsMessages.USER_ROLE_MUST_BE_MANAGER);
+            if (userExists.role !== UserRole.MANAGER) throw new Error(ErrorsMessages.USER_ROLE_MUST_BE_MANAGER);
 
             const allRoadsFound = await this.roadsRepository.getAll();
 

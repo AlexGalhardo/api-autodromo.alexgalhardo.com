@@ -13,7 +13,7 @@ interface KartRepositoryCreateDTO {
 }
 
 export interface KartsRepositoryPort {
-	getAll(): Promise<Kart[]>;
+    getAll(): Promise<Kart[]>;
     getById(id: string): Promise<Kart>;
     findByName(name: string): Promise<boolean>;
     isAvailable(kartId: string, starts_at: Date, ends_at: Date): Promise<boolean>;
@@ -24,9 +24,9 @@ export interface KartsRepositoryPort {
 export default class KartsRepository implements KartsRepositoryPort {
     constructor(private readonly database: Database) {}
 
-	public async getAll(): Promise<Kart[]> {
-		return await this.database.kart.findMany()
-	}
+    public async getAll(): Promise<Kart[]> {
+        return await this.database.kart.findMany();
+    }
 
     public async getById(id: string): Promise<Kart> {
         return await this.database.kart.findUnique({
