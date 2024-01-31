@@ -20,7 +20,7 @@ interface UserControllerPort {
     register(UserCreateDTO: UserCreateDTO, response: Response): Promise<Response<UserControllerResponse>>;
     logout(response: Response): Promise<Response<UserControllerResponse>>;
     checkLoggedIn(response: Response): Promise<Response<UserControllerResponse>>;
-	delete(userIdToBeDeleted: string, response: Response): Promise<Response<UserControllerResponse>>;
+    delete(userIdToBeDeleted: string, response: Response): Promise<Response<UserControllerResponse>>;
 }
 
 @Controller("user")
@@ -32,7 +32,7 @@ export default class UserController implements UserControllerPort {
         @Inject("UserLogoutUseCasePort") private readonly userLogoutUseCase: UserLogoutUseCasePort,
         @Inject("UserCheckJWTTokenUseCasePort")
         private readonly userLoggedInUseCase: UserLoggedInUseCasePort,
-		@Inject("UserDeleteUseCasePort")
+        @Inject("UserDeleteUseCasePort")
         private readonly userDeleteUseCase: UserDeleteUseCasePort,
     ) {}
 
@@ -93,8 +93,11 @@ export default class UserController implements UserControllerPort {
         }
     }
 
-	@Delete("/:user_id")
-    async delete(@Param('user_id') userIdToBeDeleted: string, @Res() response: Response): Promise<Response<UserControllerResponse>> {
+    @Delete("/:user_id")
+    async delete(
+        @Param("user_id") userIdToBeDeleted: string,
+        @Res() response: Response,
+    ): Promise<Response<UserControllerResponse>> {
         try {
             const { success, message, data } = await this.userDeleteUseCase.execute(userIdToBeDeleted);
             if (success) return response.status(HttpStatus.OK).json({ success: true, message, data });

@@ -38,9 +38,9 @@ export class AppModule implements NestModule {
                 { path: "/user/all", method: RequestMethod.GET },
                 { path: "/kart/all", method: RequestMethod.GET },
                 { path: "/road/all", method: RequestMethod.GET },
-				{ path: "/maintenance/all", method: RequestMethod.GET },
-				{ path: "/notification/all", method: RequestMethod.GET },
-				{ path: "/user/:user_id", method: RequestMethod.DELETE },
+                { path: "/maintenance/all", method: RequestMethod.GET },
+                { path: "/notification/all", method: RequestMethod.GET },
+                { path: "/user/:user_id", method: RequestMethod.DELETE },
             )
 
             .apply(ValidateJWTTokenRoleAffiliate)

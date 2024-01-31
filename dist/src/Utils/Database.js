@@ -15,7 +15,7 @@ const client_1 = require("@prisma/client");
 let Database = class Database extends client_1.PrismaClient {
     constructor() {
         super({
-            errorFormat: 'minimal',
+            errorFormat: "minimal",
         });
     }
     async onModuleInit() {

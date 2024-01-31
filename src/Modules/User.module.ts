@@ -55,7 +55,7 @@ import UserDeleteUseCase from "src/UseCases/user/UserDelete.useCase";
                 return new UserCheckJWTTokenUseCase(usersRepository);
             },
         },
-		{
+        {
             provide: "UserDeleteUseCasePort",
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {

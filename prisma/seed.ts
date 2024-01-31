@@ -31,12 +31,12 @@ const seedDatabase = async () => {
 					password: await Bcrypt.hash("managerTEST@123")
 				},
 				{
-					name: "USER COMMOM",
+					name: "USER COMMON",
 					role: UserRole.COMMON,
 					role_token: role_token_commom,
-					email: "commom@gmail.com",
+					email: "common@gmail.com",
 					jwt_token: jwt.sign({ role_token: role_token_commom }, process.env.JWT_SECRET),
-					password: await Bcrypt.hash("commomTEST@123")
+					password: await Bcrypt.hash("commonTEST@123")
 				},
 				{
 					name: "USER AFFILIATE",

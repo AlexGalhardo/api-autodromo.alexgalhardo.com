@@ -3,9 +3,9 @@ import { PrismaClient } from "@prisma/client";
 
 @Injectable()
 export class Database extends PrismaClient implements OnModuleInit {
-	constructor() {
+    constructor() {
         super({
-            errorFormat: 'minimal',
+            errorFormat: "minimal",
         });
     }
 
@@ -14,7 +14,7 @@ export class Database extends PrismaClient implements OnModuleInit {
             await this.$connect();
         } catch (error) {
             console.error("Error connecting to mongodb: ", error);
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 
@@ -24,7 +24,7 @@ export class Database extends PrismaClient implements OnModuleInit {
                 await app.close();
             } catch (error) {
                 console.error("Error closing application: ", error);
-                throw new Error(error.message)
+                throw new Error(error.message);
             }
         });
     }
