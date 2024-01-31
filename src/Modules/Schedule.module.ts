@@ -4,8 +4,9 @@ import SchedulesRepository, { SchedulesRepositoryPort } from "src/Repositories/S
 import KartsRepository, { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import RoadsRepository, { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
 import ScheduleCreateUseCase from "src/UseCases/schedule/ScheduleCreate.useCase";
-import KartCreateUseCase from "src/UseCases/kart/KartCreate.useCase";
 import { Database } from "src/Utils/Database";
+import ScheduleGetAllUseCase from "src/UseCases/schedule/ScheduleGetAll.useCase";
+import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 
 @Module({
     controllers: [ScheduleController],
@@ -32,11 +33,18 @@ import { Database } from "src/Utils/Database";
                 return new RoadsRepository(database);
             },
         },
+		{
+            provide: "UsersRepositoryPort",
+            inject: [Database],
+            useFactory: (database: Database) => {
+                return new UsersRepository(database);
+            },
+        },
         {
-            provide: "KartCreateUseCasePornpmt",
-            inject: ["KartsRepositoryPort"],
-            useFactory: (kartsRepository: KartsRepositoryPort) => {
-                return new KartCreateUseCase(kartsRepository);
+            provide: "ScheduleGetAllUseCasePort",
+            inject: ["SchedulesRepositoryPort", "UsersRepositoryPort"],
+            useFactory: (schedulesRepository: SchedulesRepositoryPort, usersRepository: UsersRepositoryPort) => {
+                return new ScheduleGetAllUseCase(schedulesRepository, usersRepository);
             },
         },
         {

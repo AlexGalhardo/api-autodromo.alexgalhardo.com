@@ -14,7 +14,7 @@ interface UserControllerResponse {
 }
 
 interface UserControllerPort {
-	all(response: Response): Promise<Response<UserControllerResponse>>
+    all(response: Response): Promise<Response<UserControllerResponse>>;
     login(UserLoginDTO: UserLoginDTO, response: Response): Promise<Response<UserControllerResponse>>;
     register(UserCreateDTO: UserCreateDTO, response: Response): Promise<Response<UserControllerResponse>>;
     logout(response: Response): Promise<Response<UserControllerResponse>>;
@@ -24,7 +24,7 @@ interface UserControllerPort {
 @Controller("user")
 export default class UserController implements UserControllerPort {
     constructor(
-		@Inject("UserGetAllUseCasePort") private readonly userGetAllUseCase: UserGetAllUseCasePort,
+        @Inject("UserGetAllUseCasePort") private readonly userGetAllUseCase: UserGetAllUseCasePort,
         @Inject("UserLoginUseCasePort") private readonly userLoginUseCase: UserLoginUseCasePort,
         @Inject("UserCreateUseCasePort") private readonly userCreateUseCase: UserCreateUseCasePort,
         @Inject("UserLogoutUseCasePort") private readonly userLogoutUseCase: UserLogoutUseCasePort,
@@ -32,7 +32,7 @@ export default class UserController implements UserControllerPort {
         private readonly userLoggedInUseCase: UserLoggedInUseCasePort,
     ) {}
 
-	@Get("/all")
+    @Get("/all")
     async all(@Res() response: Response): Promise<Response<UserControllerResponse>> {
         try {
             const { success, data } = await this.userGetAllUseCase.execute(response.locals.userId);

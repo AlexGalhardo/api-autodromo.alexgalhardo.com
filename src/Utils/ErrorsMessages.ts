@@ -15,10 +15,11 @@ export enum ErrorsMessages {
 
     JWT_TOKEN_IS_INVALID = "JWT Token is INVALID",
 
+	USER_ROLE_MUST_BE_AFFILIATE_OR_MANAGER = "User role must be affiliate or manager",
+
     ROLE_TOKEN_NOT_FOUND_IN_JWT = "Role token not found in JWT",
 
-    USER_MUST_BE_MANAGER_TO_SEE_ALL_RACES = "User must be manager to see all races",
-	USER_MUST_BE_MANAGER_TO_SEE_ALL_USERS = "User must be manager to see all users",
+    USER_ROLE_MUST_BE_MANAGER = "User role must be manager",
 
     CAN_NOT_UPDATE_CORRIDA_STATUS = "You can only update corrida with status CREATED",
 

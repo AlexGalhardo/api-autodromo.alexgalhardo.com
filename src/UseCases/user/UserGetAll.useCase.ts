@@ -12,9 +12,7 @@ export interface UserGetAllUseCasePort {
 }
 
 export default class UserGetAllUseCase implements UserGetAllUseCasePort {
-    constructor(
-        private readonly usersRepository: UsersRepositoryPort,
-    ) {}
+    constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
     async execute(userId: string): Promise<UserGetAllUseCaseResponse> {
         try {
@@ -23,7 +21,7 @@ export default class UserGetAllUseCase implements UserGetAllUseCasePort {
             if (!userExists) throw new Error(ErrorsMessages.USER_NOT_FOUND);
 
             if (userExists.role !== UserRole.MANAGER)
-                throw new Error(ErrorsMessages.USER_MUST_BE_MANAGER_TO_SEE_ALL_USERS);
+                throw new Error(ErrorsMessages.USER_ROLE_MUST_BE_MANAGER);
 
             const allUsersFound = await this.usersRepository.getAll();
 

@@ -19,13 +19,16 @@ const Race_module_1 = require("./Modules/Race.module");
 const Maintenance_module_1 = require("./Modules/Maintenance.module");
 const ValidateJWTTokenRoleAffiliate_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAffiliate.middleware");
 const ValidateJWTTokenRoleManager_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleManager.middleware");
+const ValidateJWTTokenRoleManagerOrAffiliate_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleManagerOrAffiliate.middleware");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateJWTTokenRoleManager_middleware_1.ValidateJWTTokenRoleManager)
-            .forRoutes({ path: "/race/all", method: common_1.RequestMethod.GET }, { path: "/user/all", method: common_1.RequestMethod.GET }, { path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST })
+            .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST }, { path: "/race/all", method: common_1.RequestMethod.GET }, { path: "/user/all", method: common_1.RequestMethod.GET }, { path: "/kart/all", method: common_1.RequestMethod.GET }, { path: "/road/all", method: common_1.RequestMethod.GET })
             .apply(ValidateJWTTokenRoleAffiliate_middleware_1.ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: common_1.RequestMethod.POST })
+            .apply(ValidateJWTTokenRoleManagerOrAffiliate_middleware_1.ValidateJWTTokenRoleManagerOrAffiliate)
+            .forRoutes({ path: "/schedule/all", method: common_1.RequestMethod.GET })
             .apply(ValidateJWTTokenRoleIsValid_middleware_1.ValidateJWTTokenRoleIsValid)
             .forRoutes({ path: "/user/check-logged-in", method: common_1.RequestMethod.POST }, { path: "/race", method: common_1.RequestMethod.POST }, { path: "/race/history", method: common_1.RequestMethod.GET }, { path: "/race/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/race/status", method: common_1.RequestMethod.PATCH });
     }

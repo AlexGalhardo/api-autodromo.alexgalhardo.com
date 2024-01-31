@@ -3,7 +3,7 @@ import { Road } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
-interface newRoadCreateDTO {
+interface RoadRepositoryCreateDTO {
     name: string;
     kilometers: number;
     quantity_boxes: number;
@@ -12,15 +12,20 @@ interface newRoadCreateDTO {
 }
 
 export interface RoadsRepositoryPort {
+	getAll(): Promise<Road[]>;
     getById(id: string): Promise<Road>;
     findByName(name: string): Promise<boolean>;
     isAvailable(roadId: string, startsAt: Date, endsAt: Date): Promise<boolean>;
-    create(newRoad: newRoadCreateDTO): Promise<Road>;
+    create(newRoad: RoadRepositoryCreateDTO): Promise<Road>;
 }
 
 @Injectable()
 export default class RoadsRepository implements RoadsRepositoryPort {
     constructor(private readonly database: Database) {}
+
+	public async getAll(): Promise<Road[]> {
+		return await this.database.road.findMany()
+	}
 
     public async getById(id: string): Promise<Road> {
         return await this.database.road.findUnique({
@@ -64,7 +69,7 @@ export default class RoadsRepository implements RoadsRepositoryPort {
         return true;
     }
 
-    public async create(newRoad: newRoadCreateDTO): Promise<Road> {
+    public async create(newRoad: RoadRepositoryCreateDTO): Promise<Road> {
         try {
             const { name, kilometers, quantity_boxes, quantity_places, address } = newRoad;
 

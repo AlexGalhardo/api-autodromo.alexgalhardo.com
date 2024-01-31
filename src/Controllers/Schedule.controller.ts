@@ -1,7 +1,8 @@
-import { Controller, Res, HttpStatus, Inject, Post, Body } from "@nestjs/common";
+import { Controller, Res, HttpStatus, Inject, Post, Get, Body } from "@nestjs/common";
 import { Schedule } from "@prisma/client";
 import { Response } from "express";
 import { ScheduleCreateDTO, ScheduleCreateUseCasePort } from "src/UseCases/schedule/ScheduleCreate.useCase";
+import { ScheduleGetAllUseCasePort } from "src/UseCases/schedule/ScheduleGetAll.useCase";
 
 interface ScheduleControllerResponse {
     success: boolean;
@@ -16,8 +17,19 @@ interface AgendamentoControllerPort {
 @Controller("schedule")
 export default class ScheduleController implements AgendamentoControllerPort {
     constructor(
-        @Inject("ScheduleCreateUseCasePort") private readonly agendamentoCreateUseCase: ScheduleCreateUseCasePort,
+		@Inject("ScheduleGetAllUseCasePort") private readonly scheduleGetAllUseCase: ScheduleGetAllUseCasePort,
+        @Inject("ScheduleCreateUseCasePort") private readonly scheduleCreateUseCase: ScheduleCreateUseCasePort,
     ) {}
+
+	@Get("/all")
+    async all(@Res() response: Response): Promise<Response<ScheduleControllerResponse>> {
+        try {
+            const { success, data } = await this.scheduleGetAllUseCase.execute(response.locals.userId);
+            if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
+        } catch (error) {
+            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
+        }
+    }
 
     @Post("/")
     async create(
@@ -26,7 +38,7 @@ export default class ScheduleController implements AgendamentoControllerPort {
     ): Promise<Response<ScheduleControllerResponse>> {
         try {
             const userId = response.locals.userId;
-            const { success, data } = await this.agendamentoCreateUseCase.execute(userId, scheduleCreatePayload);
+            const { success, data } = await this.scheduleCreateUseCase.execute(userId, scheduleCreatePayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });

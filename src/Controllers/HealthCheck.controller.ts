@@ -7,7 +7,7 @@ export default class HealthCheckController {
     async check(@Res() response: Response) {
         return response.status(HttpStatus.OK).json({
             success: true,
-            message: "API is on, lets goo!",
+            message: "Galhardo Autodromo API is on, lets goo!",
         });
     }
 }

@@ -3,7 +3,7 @@ import { Kart, KartStatus } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
-interface newKartCreateDTO {
+interface KartRepositoryCreateDTO {
     status: KartStatus;
     name: string;
     brand: string;
@@ -13,15 +13,20 @@ interface newKartCreateDTO {
 }
 
 export interface KartsRepositoryPort {
+	getAll(): Promise<Kart[]>;
     getById(id: string): Promise<Kart>;
     findByName(name: string): Promise<boolean>;
     isAvailable(kartId: string, starts_at: Date, ends_at: Date): Promise<boolean>;
-    create(newKart: newKartCreateDTO): Promise<Kart>;
+    create(newKart: KartRepositoryCreateDTO): Promise<Kart>;
 }
 
 @Injectable()
 export default class KartsRepository implements KartsRepositoryPort {
     constructor(private readonly database: Database) {}
+
+	public async getAll(): Promise<Kart[]> {
+		return await this.database.kart.findMany()
+	}
 
     public async getById(id: string): Promise<Kart> {
         return await this.database.kart.findUnique({
@@ -67,13 +72,13 @@ export default class KartsRepository implements KartsRepositoryPort {
         return true;
     }
 
-    public async create(newKart: newKartCreateDTO): Promise<Kart> {
+    public async create(newKart: KartRepositoryCreateDTO): Promise<Kart> {
         try {
-            const { status, name, brand, model, power, tire_brand } = newKart;
+            const { name, brand, model, power, tire_brand } = newKart;
 
             return await this.database.kart.create({
                 data: {
-                    status,
+                    status: KartStatus.AVAILABLE,
                     name,
                     brand,
                     model,

@@ -12,7 +12,7 @@ interface newUserCreateDTO {
 }
 
 export interface UsersRepositoryPort {
-	getAll(): Promise<User[]>;
+    getAll(): Promise<User[]>;
     getByRoleToken(roleToken: string): Promise<User>;
     findById(userId: string): Promise<boolean>;
     findByEmail(email: string): Promise<boolean>;
@@ -29,15 +29,14 @@ export default class UsersRepository implements UsersRepositoryPort {
     constructor(private readonly database: Database) {}
 
     public async getAll(): Promise<User[]> {
-		try {
-			return await this.database.user.findMany()
-		}
-		catch(error) {
-			throw new Error(error.message);
-		}
-	}
+        try {
+            return await this.database.user.findMany();
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 
-	public async getByRoleToken(roleToken: string): Promise<User> {
+    public async getByRoleToken(roleToken: string): Promise<User> {
         return await this.database.user.findUnique({
             where: {
                 role_token: roleToken,

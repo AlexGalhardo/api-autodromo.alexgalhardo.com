@@ -26,7 +26,7 @@ import UserGetAllUseCase from "src/UseCases/user/UserGetAll.useCase";
                 return new UserLoginUseCase(usersRepository);
             },
         },
-		{
+        {
             provide: "UserGetAllUseCasePort",
             inject: ["UsersRepositoryPort"],
             useFactory: (usersRepository: UsersRepositoryPort) => {

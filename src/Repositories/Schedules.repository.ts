@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Schedule } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 
-interface NewAgendamentoCreateDTO {
+interface ScheduleRepositoryCreateDTO {
     userId: string;
     kart_id: string;
     road_id: string;
@@ -11,16 +11,21 @@ interface NewAgendamentoCreateDTO {
 }
 
 export interface SchedulesRepositoryPort {
-    create(newRoad: NewAgendamentoCreateDTO): Promise<Schedule>;
+	getAll(): Promise<Schedule[]>;
+    create(schedule: ScheduleRepositoryCreateDTO): Promise<Schedule>;
 }
 
 @Injectable()
 export default class SchedulesRepository implements SchedulesRepositoryPort {
     constructor(private readonly database: Database) {}
 
-    public async create(newAgendamento: NewAgendamentoCreateDTO): Promise<any> {
+	public async getAll(): Promise<Schedule[]> {
+		return await this.database.schedule.findMany()
+	}
+
+    public async create(schedule: ScheduleRepositoryCreateDTO): Promise<any> {
         try {
-            const { userId, kart_id, road_id, starts_at, ends_at } = newAgendamento;
+            const { userId, kart_id, road_id, starts_at, ends_at } = schedule;
 
             return await this.database.schedule.create({
                 data: {
