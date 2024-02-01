@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole } from "@prisma/client";
+import { KartStatus, PrismaClient, UserRole } from "@prisma/client";
 import { Bcrypt } from "../src/Utils/Bcrypt";
 import * as jwt from "jsonwebtoken";
 import { randomUUID } from "node:crypto";
@@ -45,6 +45,61 @@ const seedDatabase = async () => {
 					email: "affiliate@gmail.com",
 					jwt_token: jwt.sign({ role_token: role_token_affiliate }, process.env.JWT_SECRET),
 					password: await Bcrypt.hash("affiliateTEST@123")
+				},
+			]
+		});
+
+		await prisma.kart.createMany({
+			data: [
+				{
+					name: "KART ONE",
+					status: KartStatus.AVAILABLE,
+					brand: "Brand One",
+					model: "Model One",
+					power: 100,
+					tire_brand: 'Tire Brand One'
+				},
+				{
+					name: "KART TWO",
+					status: KartStatus.AVAILABLE,
+					brand: "Brand TWO",
+					model: "Model TWO",
+					power: 200,
+					tire_brand: 'Tire Brand TWO'
+				},
+				{
+					name: "KART THREE",
+					status: KartStatus.AVAILABLE,
+					brand: "Brand THREE",
+					model: "Model THREE",
+					power: 300,
+					tire_brand: 'Tire Brand THREE'
+				},
+			]
+		});
+
+		await prisma.road.createMany({
+			data: [
+				{
+					name: "ROAD ONE",
+					kilometers: 10,
+					quantity_boxes: 100,
+					quantity_places: 1000,
+					address: "ADDRESS ONE"
+				},
+				{
+					name: "ROAD TWO",
+					kilometers: 20,
+					quantity_boxes: 200,
+					quantity_places: 2000,
+					address: "ADDRESS TWO"
+				},
+				{
+					name: "ROAD THREE",
+					kilometers: 30,
+					quantity_boxes: 300,
+					quantity_places: 3000,
+					address: "ADDRESS THREE"
 				},
 			]
 		});

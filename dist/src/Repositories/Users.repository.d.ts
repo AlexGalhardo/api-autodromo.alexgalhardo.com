@@ -1,6 +1,6 @@
 import { Database } from "src/Utils/Database";
 import { User, UserRole } from "@prisma/client";
-interface newUserCreateDTO {
+interface UserRepositoryCreateDTO {
     name: string;
     role: UserRole;
     role_token: string;
@@ -11,13 +11,11 @@ interface newUserCreateDTO {
 export interface UsersRepositoryPort {
     getAll(): Promise<User[]>;
     getByRoleToken(roleToken: string): Promise<User>;
-    findById(userId: string): Promise<boolean>;
-    findByEmail(email: string): Promise<boolean>;
     getByEmail(email: string): Promise<User>;
-    getById(userId: string): Promise<User>;
-    create(newUser: newUserCreateDTO): Promise<User>;
-    deleteById(userId: string): Promise<User>;
-    logout(userId: string): Promise<void>;
+    getById(id: string): Promise<User>;
+    create(user: UserRepositoryCreateDTO): Promise<User>;
+    delete(id: string): Promise<User>;
+    logout(id: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 export default class UsersRepository implements UsersRepositoryPort {
@@ -25,13 +23,11 @@ export default class UsersRepository implements UsersRepositoryPort {
     constructor(database: Database);
     getAll(): Promise<User[]>;
     getByRoleToken(roleToken: string): Promise<User>;
-    findById(userId: string): Promise<boolean>;
-    findByEmail(email: string): Promise<boolean>;
     getByEmail(email: string): Promise<User>;
-    getById(userId: string): Promise<User>;
-    create(newUser: newUserCreateDTO): Promise<User>;
-    deleteById(id: string): Promise<User>;
-    logout(userId: string): Promise<void>;
+    getById(id: string): Promise<User>;
+    create({ name, role, role_token, email, password, jwt_token }: UserRepositoryCreateDTO): Promise<User>;
+    delete(id: string): Promise<User>;
+    logout(id: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 export {};

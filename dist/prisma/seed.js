@@ -45,6 +45,59 @@ const seedDatabase = async () => {
                 },
             ]
         });
+        await exports.prisma.kart.createMany({
+            data: [
+                {
+                    name: "KART ONE",
+                    status: client_1.KartStatus.AVAILABLE,
+                    brand: "Brand One",
+                    model: "Model One",
+                    power: 100,
+                    tire_brand: 'Tire Brand One'
+                },
+                {
+                    name: "KART TWO",
+                    status: client_1.KartStatus.AVAILABLE,
+                    brand: "Brand TWO",
+                    model: "Model TWO",
+                    power: 200,
+                    tire_brand: 'Tire Brand TWO'
+                },
+                {
+                    name: "KART THREE",
+                    status: client_1.KartStatus.AVAILABLE,
+                    brand: "Brand THREE",
+                    model: "Model THREE",
+                    power: 300,
+                    tire_brand: 'Tire Brand THREE'
+                },
+            ]
+        });
+        await exports.prisma.road.createMany({
+            data: [
+                {
+                    name: "ROAD ONE",
+                    kilometers: 10,
+                    quantity_boxes: 100,
+                    quantity_places: 1000,
+                    address: "ADDRESS ONE"
+                },
+                {
+                    name: "ROAD TWO",
+                    kilometers: 20,
+                    quantity_boxes: 200,
+                    quantity_places: 2000,
+                    address: "ADDRESS TWO"
+                },
+                {
+                    name: "ROAD THREE",
+                    kilometers: 30,
+                    quantity_boxes: 300,
+                    quantity_places: 3000,
+                    address: "ADDRESS THREE"
+                },
+            ]
+        });
         console.log("Seed completed successfully.");
     }
     catch (error) {

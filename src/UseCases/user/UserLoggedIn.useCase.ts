@@ -11,7 +11,7 @@ export default class UserLoggedInUseCase implements UserLoggedInUseCasePort {
     constructor(private readonly usersRepository: UsersRepositoryPort) {}
 
     async execute(userId: string) {
-        if (userId && (await this.usersRepository.findById(userId))) {
+        if (userId && (await this.usersRepository.getById(userId))) {
             const userFound = await this.usersRepository.getById(userId);
             return { success: true, data: userFound };
         }

@@ -110,7 +110,7 @@ model Race {
 }
 
 enum RaceStatus {
-  CREATED
+  SCHEDULED
   FINISHED
   ABORTED
 }
@@ -146,19 +146,15 @@ model Notification {
   id                String           @id @default(auto()) @map("_id") @db.ObjectId
   type              NotificationType
   message           String           @db.ObjectId
-  send_to_users_ids User[]
+  send_to_users_ids String[]
 
   created_at DateTime @default(now())
+  User       User[]
 
   @@map("notifications")
 }
 
 enum NotificationType {
-  RACE_CREATED
+  RACE_STARTED
   RACE_ACCIDENT
-  RACE_CANCELLED
-  MAINTENANCE_CREATED
-  MAINTENANCE_FINISHED
-  SCHEDULE_CREATED
-  SCHEDULE_CANCELLED
 }

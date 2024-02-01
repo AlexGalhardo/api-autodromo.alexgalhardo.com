@@ -39,7 +39,7 @@ export default class UserCreateUseCase implements UserCreateUseCasePort {
 
             if (role && !Validator.user.roleIsValid(role)) throw new Error(ErrorsMessages.INVALID_USER_ROLE);
 
-            const emailAlreadyRegistered = await this.usersRepository.findByEmail(email);
+            const emailAlreadyRegistered = await this.usersRepository.getByEmail(email);
 
             if (!emailAlreadyRegistered) {
                 const role_token = randomUUID();

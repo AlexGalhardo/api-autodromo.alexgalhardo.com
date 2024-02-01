@@ -2,3 +2,4 @@
 node_modules/
 src/Repositories/Jsons/Stripe/*
 dist/
+data/

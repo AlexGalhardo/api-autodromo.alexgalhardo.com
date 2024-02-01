@@ -88,7 +88,7 @@ export default class RacesRepository implements RacesRepositoryPort {
                     starts_at,
                     ends_at: null,
                     had_an_schedule_during_this_period,
-                    status: RaceStatus.CREATED,
+                    status: RaceStatus.SCHEDULED,
                 },
                 include: {
                     user: {
@@ -167,7 +167,7 @@ export default class RacesRepository implements RacesRepositoryPort {
         return (await this.database.race.findFirst({
             where: {
                 road_id: pistaId,
-                status: RaceStatus.CREATED,
+                status: RaceStatus.SCHEDULED,
                 ends_at: null,
                 starts_at: {
                     gte: startsAtMinus60Minutes,

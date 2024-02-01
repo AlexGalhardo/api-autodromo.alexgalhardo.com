@@ -11,6 +11,8 @@ import { MaintenanceModule } from "./Modules/Maintenance.module";
 import { ValidateJWTTokenRoleAffiliate } from "./MIddlewares/ValidateJWTTokenRoleAffiliate.middleware";
 import { ValidateJWTTokenRoleManager } from "./MIddlewares/ValidateJWTTokenRoleManager.middleware";
 import { ValidateJWTTokenRoleManagerOrAffiliate } from "./MIddlewares/ValidateJWTTokenRoleManagerOrAffiliate.middleware";
+import ValidateEvent from "./MIddlewares/ValidateEvent.middleware";
+import { NotificationModule } from "./Modules/Notification.module";
 
 @Module({
     imports: [
@@ -21,6 +23,7 @@ import { ValidateJWTTokenRoleManagerOrAffiliate } from "./MIddlewares/ValidateJW
         ScheduleModule,
         RaceModule,
         MaintenanceModule,
+		NotificationModule,
         ConfigModule.forRoot({ isGlobal: true }),
     ],
     controllers: [],
@@ -43,6 +46,14 @@ export class AppModule implements NestModule {
                 { path: "/user/:user_id", method: RequestMethod.DELETE },
             )
 
+			.apply(ValidateEvent)
+            .forRoutes(
+				{ path: "/race", method: RequestMethod.POST },
+				{ path: "/race/ends-at", method: RequestMethod.PATCH },
+                { path: "/race/status", method: RequestMethod.PATCH },
+				{ path: "/notification", method: RequestMethod.POST }
+			)
+
             .apply(ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: RequestMethod.POST })
 
@@ -52,10 +63,8 @@ export class AppModule implements NestModule {
             .apply(ValidateJWTTokenRoleIsValid)
             .forRoutes(
                 { path: "/user/check-logged-in", method: RequestMethod.POST },
-                { path: "/race", method: RequestMethod.POST },
                 { path: "/race/history", method: RequestMethod.GET },
-                { path: "/race/ends-at", method: RequestMethod.PATCH },
-                { path: "/race/status", method: RequestMethod.PATCH },
+				{ path: "/notification/history", method: RequestMethod.GET }
             );
     }
 }

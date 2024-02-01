@@ -52,13 +52,14 @@ import RaceGetAllUseCase from "src/UseCases/race/RaceGetAll.useCase";
         },
         {
             provide: "RaceCreateUseCasePort",
-            inject: ["RacesRepositoryPort", "KartsRepositoryPort", "RoadsRepositoryPort"],
+            inject: ["UsersRepositoryPort", "RacesRepositoryPort", "KartsRepositoryPort", "RoadsRepositoryPort"],
             useFactory: (
+				usersRepository: UsersRepositoryPort,
                 racesRepository: RacesRepositoryPort,
                 kartsRepository: KartsRepositoryPort,
                 roadsRepository: RoadsRepositoryPort,
             ) => {
-                return new RaceCreateUseCase(racesRepository, kartsRepository, roadsRepository);
+                return new RaceCreateUseCase(usersRepository, racesRepository, kartsRepository, roadsRepository);
             },
         },
         {

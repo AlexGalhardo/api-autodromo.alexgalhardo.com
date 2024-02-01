@@ -66,7 +66,7 @@ export default class RaceController implements RaceControllerPort {
         @Res() response: Response,
     ): Promise<Response<RaceControllerResponse>> {
         try {
-            const { success, data } = await this.raceCreateUseCase.execute(response.locals.userId, raceCreatePayload);
+            const { success, data } = await this.raceCreateUseCase.execute(raceCreatePayload);
             if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
         } catch (error) {
             return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });

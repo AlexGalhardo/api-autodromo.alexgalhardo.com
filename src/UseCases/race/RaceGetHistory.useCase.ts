@@ -20,7 +20,7 @@ export default class RaceGetHistoryUseCase implements RaceGetHistoryUseCasePort 
 
     async execute(userId: string): Promise<RaceGetHistoryUseCaseResponse> {
         try {
-            const userExists = await this.usersRepository.findById(userId);
+            const userExists = await this.usersRepository.getById(userId);
 
             if (!userExists) throw new Error(ErrorsMessages.USER_NOT_FOUND);
 

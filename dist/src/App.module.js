@@ -20,17 +20,21 @@ const Maintenance_module_1 = require("./Modules/Maintenance.module");
 const ValidateJWTTokenRoleAffiliate_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleAffiliate.middleware");
 const ValidateJWTTokenRoleManager_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleManager.middleware");
 const ValidateJWTTokenRoleManagerOrAffiliate_middleware_1 = require("./MIddlewares/ValidateJWTTokenRoleManagerOrAffiliate.middleware");
+const ValidateEvent_middleware_1 = require("./MIddlewares/ValidateEvent.middleware");
+const Notification_module_1 = require("./Modules/Notification.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(ValidateJWTTokenRoleManager_middleware_1.ValidateJWTTokenRoleManager)
             .forRoutes({ path: "/user", method: common_1.RequestMethod.POST }, { path: "/kart", method: common_1.RequestMethod.POST }, { path: "/road", method: common_1.RequestMethod.POST }, { path: "/race/all", method: common_1.RequestMethod.GET }, { path: "/user/all", method: common_1.RequestMethod.GET }, { path: "/kart/all", method: common_1.RequestMethod.GET }, { path: "/road/all", method: common_1.RequestMethod.GET }, { path: "/maintenance/all", method: common_1.RequestMethod.GET }, { path: "/notification/all", method: common_1.RequestMethod.GET }, { path: "/user/:user_id", method: common_1.RequestMethod.DELETE })
+            .apply(ValidateEvent_middleware_1.default)
+            .forRoutes({ path: "/race", method: common_1.RequestMethod.POST }, { path: "/race/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/race/status", method: common_1.RequestMethod.PATCH }, { path: "/notification", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleAffiliate_middleware_1.ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: common_1.RequestMethod.POST })
             .apply(ValidateJWTTokenRoleManagerOrAffiliate_middleware_1.ValidateJWTTokenRoleManagerOrAffiliate)
             .forRoutes({ path: "/schedule/all", method: common_1.RequestMethod.GET })
             .apply(ValidateJWTTokenRoleIsValid_middleware_1.ValidateJWTTokenRoleIsValid)
-            .forRoutes({ path: "/user/check-logged-in", method: common_1.RequestMethod.POST }, { path: "/race", method: common_1.RequestMethod.POST }, { path: "/race/history", method: common_1.RequestMethod.GET }, { path: "/race/ends-at", method: common_1.RequestMethod.PATCH }, { path: "/race/status", method: common_1.RequestMethod.PATCH });
+            .forRoutes({ path: "/user/check-logged-in", method: common_1.RequestMethod.POST }, { path: "/race/history", method: common_1.RequestMethod.GET }, { path: "/notification/history", method: common_1.RequestMethod.GET });
     }
 };
 exports.AppModule = AppModule;
@@ -44,6 +48,7 @@ exports.AppModule = AppModule = __decorate([
             Schedule_module_1.ScheduleModule,
             Race_module_1.RaceModule,
             Maintenance_module_1.MaintenanceModule,
+            Notification_module_1.NotificationModule,
             config_1.ConfigModule.forRoot({ isGlobal: true }),
         ],
         controllers: [],

@@ -16,7 +16,7 @@ export default class UserDeleteUseCase implements UserDeleteUseCasePort {
 
     async execute(userId: string): Promise<UserDeleteUseCaseResponse> {
         try {
-            const userDeleted = await this.usersRepository.deleteById(userId);
+            const userDeleted = await this.usersRepository.delete(userId);
             return { success: true, message: "User Deleted!", data: userDeleted };
         } catch (error) {
             throw new Error(error.message);

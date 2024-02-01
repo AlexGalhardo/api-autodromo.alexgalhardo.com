@@ -15,9 +15,15 @@ export enum ErrorsMessages {
 
     JWT_TOKEN_IS_INVALID = "JWT Token is INVALID",
 
+	INVALID_NOTIFICATION_TYPE = "Invalid notification type",
+
     USER_ROLE_MUST_BE_AFFILIATE_OR_MANAGER = "User role must be affiliate or manager",
 
     ROLE_TOKEN_NOT_FOUND_IN_JWT = "Role token not found in JWT",
+
+	MISSING_HEADER_AUTHORIZATION_BEARER_EVENT_TOKEN = "Missing event token",
+
+	EVENT_TOKEN_IS_INVALID = "Event token is invalid",
 
     USER_ROLE_MUST_BE_MANAGER = "User role must be manager",
 

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Database } from "src/Utils/Database";
 import { User, UserRole } from "@prisma/client";
 
-interface newUserCreateDTO {
+interface UserRepositoryCreateDTO {
     name: string;
     role: UserRole;
     role_token: string;
@@ -14,13 +14,11 @@ interface newUserCreateDTO {
 export interface UsersRepositoryPort {
     getAll(): Promise<User[]>;
     getByRoleToken(roleToken: string): Promise<User>;
-    findById(userId: string): Promise<boolean>;
-    findByEmail(email: string): Promise<boolean>;
     getByEmail(email: string): Promise<User>;
-    getById(userId: string): Promise<User>;
-    create(newUser: newUserCreateDTO): Promise<User>;
-    deleteById(userId: string): Promise<User>;
-    logout(userId: string): Promise<void>;
+    getById(id: string): Promise<User>;
+    create(user: UserRepositoryCreateDTO): Promise<User>;
+    delete(id: string): Promise<User>;
+    logout(id: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;
 }
 
@@ -44,26 +42,6 @@ export default class UsersRepository implements UsersRepositoryPort {
         });
     }
 
-    public async findById(userId: string): Promise<boolean> {
-        return (await this.database.user.findUnique({
-            where: {
-                id: userId,
-            },
-        }))
-            ? true
-            : false;
-    }
-
-    public async findByEmail(email: string): Promise<boolean> {
-        return (await this.database.user.findUnique({
-            where: {
-                email,
-            },
-        }))
-            ? true
-            : false;
-    }
-
     public async getByEmail(email: string): Promise<User> {
         try {
             return await this.database.user.findUnique({
@@ -76,11 +54,11 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async getById(userId: string): Promise<User> {
+    public async getById(id: string): Promise<User> {
         try {
             return await this.database.user.findUnique({
                 where: {
-                    id: userId,
+                    id,
                 },
             });
         } catch (error) {
@@ -88,16 +66,16 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async create(newUser: newUserCreateDTO): Promise<User> {
+    public async create({ name, role, role_token, email, password, jwt_token }: UserRepositoryCreateDTO): Promise<User> {
         try {
             return await this.database.user.create({
                 data: {
-                    name: newUser.name,
-                    role: newUser.role,
-                    role_token: newUser.role_token,
-                    email: newUser.email,
-                    password: newUser.password,
-                    jwt_token: newUser.jwt_token,
+                    name,
+                    role,
+                    role_token,
+                    email,
+                    password,
+                    jwt_token
                 },
             });
         } catch (error) {
@@ -105,7 +83,7 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async deleteById(id: string): Promise<User> {
+    public async delete(id: string): Promise<User> {
         return await this.database.user.delete({
             where: {
                 id,
@@ -113,10 +91,10 @@ export default class UsersRepository implements UsersRepositoryPort {
         });
     }
 
-    public async logout(userId: string): Promise<void> {
+    public async logout(id: string): Promise<void> {
         await this.database.user.update({
             where: {
-                id: userId,
+                id
             },
             data: {
                 jwt_token: null,

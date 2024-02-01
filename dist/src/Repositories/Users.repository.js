@@ -30,24 +30,6 @@ let UsersRepository = class UsersRepository {
             },
         });
     }
-    async findById(userId) {
-        return (await this.database.user.findUnique({
-            where: {
-                id: userId,
-            },
-        }))
-            ? true
-            : false;
-    }
-    async findByEmail(email) {
-        return (await this.database.user.findUnique({
-            where: {
-                email,
-            },
-        }))
-            ? true
-            : false;
-    }
     async getByEmail(email) {
         try {
             return await this.database.user.findUnique({
@@ -60,11 +42,11 @@ let UsersRepository = class UsersRepository {
             throw new Error(error);
         }
     }
-    async getById(userId) {
+    async getById(id) {
         try {
             return await this.database.user.findUnique({
                 where: {
-                    id: userId,
+                    id,
                 },
             });
         }
@@ -72,16 +54,16 @@ let UsersRepository = class UsersRepository {
             throw new Error(error);
         }
     }
-    async create(newUser) {
+    async create({ name, role, role_token, email, password, jwt_token }) {
         try {
             return await this.database.user.create({
                 data: {
-                    name: newUser.name,
-                    role: newUser.role,
-                    role_token: newUser.role_token,
-                    email: newUser.email,
-                    password: newUser.password,
-                    jwt_token: newUser.jwt_token,
+                    name,
+                    role,
+                    role_token,
+                    email,
+                    password,
+                    jwt_token
                 },
             });
         }
@@ -89,17 +71,17 @@ let UsersRepository = class UsersRepository {
             throw new Error(error);
         }
     }
-    async deleteById(id) {
+    async delete(id) {
         return await this.database.user.delete({
             where: {
                 id,
             },
         });
     }
-    async logout(userId) {
+    async logout(id) {
         await this.database.user.update({
             where: {
-                id: userId,
+                id
             },
             data: {
                 jwt_token: null,

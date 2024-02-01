@@ -27,7 +27,7 @@ export default class RaceUpdateStatusUseCase implements RaceUpdateStatusUseCaseP
 
             if (!corrida) throw new Error(ErrorsMessages.CORRIDA_NOT_FOUND);
 
-            if (corrida.status !== RaceStatus.CREATED) throw new Error(ErrorsMessages.CAN_NOT_UPDATE_CORRIDA_STATUS);
+            if (corrida.status !== RaceStatus.SCHEDULED) throw new Error(ErrorsMessages.CAN_NOT_UPDATE_CORRIDA_STATUS);
 
             const raceUpdatedStatus = await this.racesRepository.updateStatus(id, status);
 
