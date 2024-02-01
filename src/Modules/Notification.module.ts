@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import NotificationController from "src/Controllers/NotificationController";
 import NotificationsRepository, { NotificationsRepositoryPort } from "src/Repositories/Notifications.repository";
+import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import UsersRepository, { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import NotificationCreateUseCase from "src/UseCases/notification/NotificationCreate.useCase";
 import NotificationGetAllUseCase from "src/UseCases/notification/NotificationGetAll.useCase";
@@ -37,15 +38,19 @@ import { Database } from "src/Utils/Database";
             inject: ["UsersRepositoryPort", "NotificationsRepositoryPort"],
             useFactory: (
                 notificationsRepository: NotificationsRepositoryPort,
-				usersRepository: UsersRepositoryPort
+                usersRepository: UsersRepositoryPort,
+				racesRepository: RacesRepositoryPort
             ) => {
-                return new NotificationCreateUseCase(notificationsRepository, usersRepository);
+                return new NotificationCreateUseCase(notificationsRepository, usersRepository, racesRepository);
             },
         },
         {
             provide: "NotificationGetHistoryUseCasePort",
             inject: ["NotificationsRepositoryPort", "UsersRepositoryPort"],
-            useFactory: (notificationsRepository: NotificationsRepositoryPort, usersRepository: UsersRepositoryPort) => {
+            useFactory: (
+                notificationsRepository: NotificationsRepositoryPort,
+                usersRepository: UsersRepositoryPort,
+            ) => {
                 return new NotificationGetHistoryUseCase(notificationsRepository, usersRepository);
             },
         },

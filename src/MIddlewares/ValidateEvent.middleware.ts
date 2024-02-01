@@ -18,12 +18,12 @@ export default class ValidateEvent implements NestMiddleware {
 
             const tokenEvent = request.headers.authorization.split(" ")[1];
 
-            if(tokenEvent !== "EVENT")
-				return response
-					.status(HttpStatus.BAD_REQUEST)
-					.json({ success: false, message: ErrorsMessages.EVENT_TOKEN_IS_INVALID });
+            if (tokenEvent !== "EVENT")
+                return response
+                    .status(HttpStatus.BAD_REQUEST)
+                    .json({ success: false, message: ErrorsMessages.EVENT_TOKEN_IS_INVALID });
 
-			next()
+            next();
         } catch (error) {
             return response
                 .status(HttpStatus.BAD_REQUEST)

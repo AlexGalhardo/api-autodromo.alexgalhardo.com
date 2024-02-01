@@ -5,6 +5,7 @@ import { Database } from "src/Utils/Database";
 interface NotificationCreateRepositoryDTO {
     type: NotificationType;
     message: string;
+    race_id: string;
     send_to_users_ids: string[];
 }
 
@@ -26,22 +27,23 @@ export default class NotificationsRepository implements NotificationsRepositoryP
         return await this.database.notification.findMany({
             where: {
                 send_to_users_ids: {
-					has: userId
-				}
-            }
+                    has: userId,
+                },
+            },
         });
     }
 
     public async create(notification: NotificationCreateRepositoryDTO): Promise<Notification> {
         try {
-            const { type, message, send_to_users_ids } = notification;
+            const { type, message, race_id, send_to_users_ids } = notification;
 
             return await this.database.notification.create({
                 data: {
                     type,
                     message,
+                    race_id,
                     send_to_users_ids,
-                }
+                },
             });
         } catch (error) {
             throw new Error(error);

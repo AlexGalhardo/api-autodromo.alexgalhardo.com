@@ -1,7 +1,10 @@
 import { Controller, Res, HttpStatus, Inject, Get, Post, Body } from "@nestjs/common";
 import { Notification } from "@prisma/client";
 import { Response } from "express";
-import { NotificationCreateDTO, NotificationCreateUseCasePort } from "src/UseCases/notification/NotificationCreate.useCase";
+import {
+    NotificationCreateDTO,
+    NotificationCreateUseCasePort,
+} from "src/UseCases/notification/NotificationCreate.useCase";
 import { RaceGetAllUseCasePort } from "src/UseCases/race/RaceGetAll.useCase";
 import { RaceGetHistoryUseCasePort } from "src/UseCases/race/RaceGetHistory.useCase";
 
@@ -14,7 +17,10 @@ interface NotificationControllerResponse {
 interface NotificationControllerPort {
     history(response: Response): Promise<Response<NotificationControllerResponse>>;
     all(response: Response): Promise<Response<NotificationControllerResponse>>;
-    create(notificationCreatePayload: NotificationCreateDTO, response: Response): Promise<Response<NotificationControllerResponse>>;
+    create(
+        notificationCreatePayload: NotificationCreateDTO,
+        response: Response,
+    ): Promise<Response<NotificationControllerResponse>>;
 }
 
 @Controller("notification")
@@ -24,7 +30,8 @@ export default class NotificationController implements NotificationControllerPor
         private readonly notificationGetHistoryUseCase: RaceGetHistoryUseCasePort,
         @Inject("NotificationGetAllUseCasePort")
         private readonly notificationGetAllUseCase: RaceGetAllUseCasePort,
-        @Inject("NotificationCreateUseCasePort") private readonly notificationCreateUseCase: NotificationCreateUseCasePort
+        @Inject("NotificationCreateUseCasePort")
+        private readonly notificationCreateUseCase: NotificationCreateUseCasePort,
     ) {}
 
     @Get("/history")

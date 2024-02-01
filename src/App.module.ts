@@ -23,7 +23,7 @@ import { NotificationModule } from "./Modules/Notification.module";
         ScheduleModule,
         RaceModule,
         MaintenanceModule,
-		NotificationModule,
+        NotificationModule,
         ConfigModule.forRoot({ isGlobal: true }),
     ],
     controllers: [],
@@ -46,13 +46,13 @@ export class AppModule implements NestModule {
                 { path: "/user/:user_id", method: RequestMethod.DELETE },
             )
 
-			.apply(ValidateEvent)
+            .apply(ValidateEvent)
             .forRoutes(
-				{ path: "/race", method: RequestMethod.POST },
-				{ path: "/race/ends-at", method: RequestMethod.PATCH },
+                { path: "/race", method: RequestMethod.POST },
+                { path: "/race/ends-at", method: RequestMethod.PATCH },
                 { path: "/race/status", method: RequestMethod.PATCH },
-				{ path: "/notification", method: RequestMethod.POST }
-			)
+                { path: "/notification", method: RequestMethod.POST },
+            )
 
             .apply(ValidateJWTTokenRoleAffiliate)
             .forRoutes({ path: "/schedule", method: RequestMethod.POST })
@@ -64,7 +64,7 @@ export class AppModule implements NestModule {
             .forRoutes(
                 { path: "/user/check-logged-in", method: RequestMethod.POST },
                 { path: "/race/history", method: RequestMethod.GET },
-				{ path: "/notification/history", method: RequestMethod.GET }
+                { path: "/notification/history", method: RequestMethod.GET },
             );
     }
 }

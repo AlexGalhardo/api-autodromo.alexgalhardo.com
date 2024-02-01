@@ -54,7 +54,7 @@ let UsersRepository = class UsersRepository {
             throw new Error(error);
         }
     }
-    async create({ name, role, role_token, email, password, jwt_token }) {
+    async create({ name, role, role_token, email, password, jwt_token, }) {
         try {
             return await this.database.user.create({
                 data: {
@@ -63,7 +63,7 @@ let UsersRepository = class UsersRepository {
                     role_token,
                     email,
                     password,
-                    jwt_token
+                    jwt_token,
                 },
             });
         }
@@ -81,7 +81,7 @@ let UsersRepository = class UsersRepository {
     async logout(id) {
         await this.database.user.update({
             where: {
-                id
+                id,
             },
             data: {
                 jwt_token: null,

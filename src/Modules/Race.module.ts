@@ -54,7 +54,7 @@ import RaceGetAllUseCase from "src/UseCases/race/RaceGetAll.useCase";
             provide: "RaceCreateUseCasePort",
             inject: ["UsersRepositoryPort", "RacesRepositoryPort", "KartsRepositoryPort", "RoadsRepositoryPort"],
             useFactory: (
-				usersRepository: UsersRepositoryPort,
+                usersRepository: UsersRepositoryPort,
                 racesRepository: RacesRepositoryPort,
                 kartsRepository: KartsRepositoryPort,
                 roadsRepository: RoadsRepositoryPort,

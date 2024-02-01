@@ -28,7 +28,7 @@ export default class RaceUpdateEndsAtUseCase implements RaceUpdateEndsAtUseCaseP
 
             const corrida = await this.racesRepository.getById(id);
 
-            if (!corrida) throw new Error(ErrorsMessages.CORRIDA_NOT_FOUND);
+            if (!corrida) throw new Error(ErrorsMessages.RACE_NOT_FOUND);
 
             if (ends_at.getTime() <= corrida.starts_at.getTime())
                 throw new Error(ErrorsMessages.ENDS_AT_MUST_BE_GREATER_THAN_REGISTERED_STARTS_AT);

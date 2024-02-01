@@ -66,7 +66,14 @@ export default class UsersRepository implements UsersRepositoryPort {
         }
     }
 
-    public async create({ name, role, role_token, email, password, jwt_token }: UserRepositoryCreateDTO): Promise<User> {
+    public async create({
+        name,
+        role,
+        role_token,
+        email,
+        password,
+        jwt_token,
+    }: UserRepositoryCreateDTO): Promise<User> {
         try {
             return await this.database.user.create({
                 data: {
@@ -75,7 +82,7 @@ export default class UsersRepository implements UsersRepositoryPort {
                     role_token,
                     email,
                     password,
-                    jwt_token
+                    jwt_token,
                 },
             });
         } catch (error) {
@@ -94,7 +101,7 @@ export default class UsersRepository implements UsersRepositoryPort {
     public async logout(id: string): Promise<void> {
         await this.database.user.update({
             where: {
-                id
+                id,
             },
             data: {
                 jwt_token: null,

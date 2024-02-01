@@ -8,7 +8,7 @@ var ErrorsMessages;
     ErrorsMessages["USER_ROLE_IS_NOT_MANAGER"] = "User role is not MANAGER";
     ErrorsMessages["USER_ROLE_IS_NOT_AFFILIATE"] = "User role is not AFFILIATE";
     ErrorsMessages["INVALID_KART_STATUS"] = "Invalid Kart Status";
-    ErrorsMessages["CORRIDA_NOT_FOUND"] = "Race not found";
+    ErrorsMessages["RACE_NOT_FOUND"] = "Race not found";
     ErrorsMessages["PROCESSING_ERROR"] = "PROCESSING_ERROR";
     ErrorsMessages["JWT_TOKEN_IS_INVALID"] = "JWT Token is INVALID";
     ErrorsMessages["INVALID_NOTIFICATION_TYPE"] = "Invalid notification type";

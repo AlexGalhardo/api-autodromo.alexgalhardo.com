@@ -20,8 +20,6 @@ model User {
 
   races          Race[]
   schedules      Schedule[]
-  notification   Notification? @relation(fields: [notificationId], references: [id], onDelete: Restrict)
-  notificationId String?       @db.ObjectId
 
   @@map("users")
 }
@@ -146,10 +144,9 @@ model Notification {
   id                String           @id @default(auto()) @map("_id") @db.ObjectId
   type              NotificationType
   message           String           @db.ObjectId
+  race_id           String           @db.ObjectId
   send_to_users_ids String[]
-
-  created_at DateTime @default(now())
-  User       User[]
+  created_at        DateTime         @default(now())
 
   @@map("notifications")
 }

@@ -25,7 +25,7 @@ export default class UsersRepository implements UsersRepositoryPort {
     getByRoleToken(roleToken: string): Promise<User>;
     getByEmail(email: string): Promise<User>;
     getById(id: string): Promise<User>;
-    create({ name, role, role_token, email, password, jwt_token }: UserRepositoryCreateDTO): Promise<User>;
+    create({ name, role, role_token, email, password, jwt_token, }: UserRepositoryCreateDTO): Promise<User>;
     delete(id: string): Promise<User>;
     logout(id: string): Promise<void>;
     updateJwtToken(id: string, jwt_token: string): Promise<User>;

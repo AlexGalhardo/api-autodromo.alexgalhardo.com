@@ -4,7 +4,7 @@ export declare enum ErrorsMessages {
     USER_ROLE_IS_NOT_MANAGER = "User role is not MANAGER",
     USER_ROLE_IS_NOT_AFFILIATE = "User role is not AFFILIATE",
     INVALID_KART_STATUS = "Invalid Kart Status",
-    CORRIDA_NOT_FOUND = "Race not found",
+    RACE_NOT_FOUND = "Race not found",
     PROCESSING_ERROR = "PROCESSING_ERROR",
     JWT_TOKEN_IS_INVALID = "JWT Token is INVALID",
     INVALID_NOTIFICATION_TYPE = "Invalid notification type",
