@@ -39,7 +39,7 @@ import { Database } from "src/Utils/Database";
             useFactory: (
                 notificationsRepository: NotificationsRepositoryPort,
                 usersRepository: UsersRepositoryPort,
-				racesRepository: RacesRepositoryPort
+                racesRepository: RacesRepositoryPort,
             ) => {
                 return new NotificationCreateUseCase(notificationsRepository, usersRepository, racesRepository);
             },

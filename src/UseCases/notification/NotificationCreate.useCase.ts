@@ -12,7 +12,7 @@ interface NotificationCreateUseCaseResponse {
 export interface NotificationCreateDTO {
     type: NotificationType;
     message: string;
-	race_id: string;
+    race_id: string;
     send_to_users_ids: string[];
 }
 
@@ -24,7 +24,7 @@ export default class NotificationCreateUseCase implements NotificationCreateUseC
     constructor(
         private readonly notificationsRepository: NotificationsRepositoryPort,
         private readonly usersRepository: UsersRepositoryPort,
-		private readonly racesRepository: RacesRepositoryPort,
+        private readonly racesRepository: RacesRepositoryPort,
     ) {}
 
     async execute(notificationCreatePayload: NotificationCreateDTO): Promise<NotificationCreateUseCaseResponse> {
@@ -38,12 +38,12 @@ export default class NotificationCreateUseCase implements NotificationCreateUseC
                 if (!(await this.usersRepository.getById(userId))) throw new Error(`User ID ${userId} not found`);
             });
 
-			if(!(await this.racesRepository.getById(race_id))) throw new Error(ErrorsMessages.RACE_NOT_FOUND);
+            if (!(await this.racesRepository.getById(race_id))) throw new Error(ErrorsMessages.RACE_NOT_FOUND);
 
             const notificationCreated = await this.notificationsRepository.create({
                 type,
                 message,
-				race_id,
+                race_id,
                 send_to_users_ids,
             });
 

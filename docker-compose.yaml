@@ -1,20 +1,21 @@
 version: '3'
 
 services:
-#   api_autodromo:
-#     depends_on:
-#       - mongodb_autodromo
-#     restart: always
-#     build: .
-#     env_file:
-#       - .env
-#     ports:
-#       - '${PORT}:${PORT}'
-#     environment:
-#       DATABASE_URL: DATABASE_URL
-#     volumes:
-#       - .:/usr/src/app
-#       - /usr/src/app/node_modules
+  api_autodromo:
+    depends_on:
+      - mongo
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      DATABASE_URL: DATABASE_URL
+    volumes:
+      - .:/usr/src/app
 
   mongo:
     container_name: mongo

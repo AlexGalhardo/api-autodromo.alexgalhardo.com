@@ -4,7 +4,7 @@
 
 ## Introduction
 
-* A project
+* A tech challenge project to create a full stack web app simulating a real-life racetrack system.
 
 ## Tools and Services Used
 
@@ -14,7 +14,7 @@
 * Code Editor: [VSCode](https://code.visualstudio.com/)
 * Deploy: <https://render.com/>
 
-## FrontEnd: <https://github.com/AlexGalhardo/nerdapi.com>
+## FrontEnd Code: <https://github.com/AlexGalhardo/autodromo.alexgalhardo.com>
 
 ## Development Setup Local
 
@@ -23,7 +23,7 @@
 <!---->
 
 ```
-git clone git@github.com:AlexGalhardo/api-autodromo.alexgalhardo.com
+git clone https://github.com/AlexGalhardo/api-autodromo.alexgalhardo.com
 ```
 
 * Enter repository
