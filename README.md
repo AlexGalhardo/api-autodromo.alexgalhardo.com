@@ -11,8 +11,15 @@
 * [Linux Mint XFCE 21.04](https://linuxmint.com/)
 * [Git for control version](https://git-scm.com/)
 * [NodeJS v20](https://nodejs.org/en)
+* [NestJs](https://nestjs.com/)
 * Code Editor: [VSCode](https://code.visualstudio.com/)
 * Deploy: <https://render.com/>
+
+## Features
+
+* CRUD
+* Authentication & Authorization
+* Notifications Events using Publisher/Subscriber Pattern
 
 ## FrontEnd Code: <https://github.com/AlexGalhardo/autodromo.alexgalhardo.com>
 
