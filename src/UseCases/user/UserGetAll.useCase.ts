@@ -4,7 +4,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface UserGetAllUseCaseResponse {
     success: boolean;
-    data?: typeof User[];
+    data?: (typeof User)[];
 }
 
 export interface UserGetAllUseCasePort {

@@ -5,7 +5,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface NotificationGetHistoryUseCaseResponse {
     success: boolean;
-    data?: typeof Notification[];
+    data?: (typeof Notification)[];
 }
 
 export interface NotificationGetHistoryUseCasePort {

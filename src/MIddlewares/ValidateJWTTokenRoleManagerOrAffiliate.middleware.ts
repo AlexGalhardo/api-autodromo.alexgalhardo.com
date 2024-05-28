@@ -8,7 +8,7 @@ import AbstractValidateJWTTokenRole from "./AbstractValidateJWTTokenRole";
 export class ValidateJWTTokenRoleManagerOrAffiliate extends AbstractValidateJWTTokenRole implements NestMiddleware {
     async use(request: Request, response: Response, next: NextFunction) {
         try {
-			const userFound = (await this.verifyJwtTokenRole(request, response)) as any;
+            const userFound = (await this.verifyJwtTokenRole(request, response)) as any;
 
             if (!userFound || (userFound.role !== UserRole.AFFILIATE && userFound.role !== UserRole.MANAGER)) {
                 return response

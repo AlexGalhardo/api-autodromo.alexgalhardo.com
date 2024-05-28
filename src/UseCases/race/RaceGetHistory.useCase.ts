@@ -5,7 +5,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RaceGetHistoryUseCaseResponse {
     success: boolean;
-    data?: typeof Race[];
+    data?: (typeof Race)[];
 }
 
 export interface RaceGetHistoryUseCasePort {

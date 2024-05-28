@@ -6,7 +6,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface NotificationCreateUseCaseResponse {
     success: boolean;
-	data?: typeof Notification;
+    data?: typeof Notification;
 }
 
 export interface NotificationCreateDTO {

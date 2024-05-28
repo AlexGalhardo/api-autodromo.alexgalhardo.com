@@ -1,11 +1,11 @@
 {
 	"name": "api-autodromo.alexgalhardo.com",
 	"scripts": {
-		"build": "bun @nestjs/cli build",
-		"start": "bun nest start",
 		"dev": "bun nest start --watch",
+		"start": "bun nest start",
+		"build": "bun nest build",
 		"start:debug": "bun nest start --debug --watch",
-		"start:prod": "bun dist/src/main",
+		"start:prod": "npx @nestjs/cli build && bun run dist/main.js",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"husky": "husky install"
 	},
@@ -27,15 +27,9 @@
 		"@nestjs/schematics": "^10.1.1",
 		"@types/bcrypt": "^5.0.2",
 		"@types/express": "^4.17.21",
-		"@types/jest": "^29.5.12",
 		"@types/jsonwebtoken": "^9.0.6",
 		"husky": "^9.0.11",
 		"prettier": "^3.2.5",
-		"supertest": "^7.0.0",
-		"ts-jest": "^29.1.4",
-		"ts-loader": "^9.5.1",
-		"ts-node": "^10.9.2",
-		"tsconfig-paths": "^4.2.0",
 		"typescript": "^5.4.5"
 	}
 }

@@ -5,34 +5,34 @@ import { MaintenanceCreateUseCasePort } from "src/UseCases/maintenance/Maintenan
 import { Maintenance } from "src/config/mongoose";
 
 interface MaintenanceControllerResponse {
-	success: boolean;
-	data?: typeof Maintenance;
-	message?: string;
+    success: boolean;
+    data?: typeof Maintenance;
+    message?: string;
 }
 
 interface MaintenanceControllerPort {
-	create(
-		maintenanceCreatePayload: MaintenanceCreateDTO,
-		response: Response,
-	): Promise<Response<MaintenanceControllerResponse>>;
+    create(
+        maintenanceCreatePayload: MaintenanceCreateDTO,
+        response: Response,
+    ): Promise<Response<MaintenanceControllerResponse>>;
 }
 
 @Controller("maintenance")
 export default class MaintenanceController implements MaintenanceControllerPort {
-	constructor(
-		@Inject("MaintenanceCreateUseCasePort") private readonly maintenanceCreateUseCase: MaintenanceCreateUseCasePort,
-	) { }
+    constructor(
+        @Inject("MaintenanceCreateUseCasePort") private readonly maintenanceCreateUseCase: MaintenanceCreateUseCasePort,
+    ) {}
 
-	@Post("/")
-	async create(
-		@Body() maintenanceCreatePayload: MaintenanceCreateDTO,
-		@Res() response: Response,
-	): Promise<Response<MaintenanceControllerResponse>> {
-		try {
-			const { success, data } = await this.maintenanceCreateUseCase.execute(maintenanceCreatePayload);
-			if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
-		} catch (error) {
-			return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
-		}
-	}
+    @Post("/")
+    async create(
+        @Body() maintenanceCreatePayload: MaintenanceCreateDTO,
+        @Res() response: Response,
+    ): Promise<Response<MaintenanceControllerResponse>> {
+        try {
+            const { success, data } = await this.maintenanceCreateUseCase.execute(maintenanceCreatePayload);
+            if (success === true) return response.status(HttpStatus.OK).json({ success: true, data });
+        } catch (error) {
+            return response.status(HttpStatus.BAD_REQUEST).json({ success: false, message: error.message });
+        }
+    }
 }

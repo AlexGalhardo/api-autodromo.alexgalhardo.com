@@ -5,7 +5,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface KartGetAllUseCaseResponse {
     success: boolean;
-    data?: typeof Kart[];
+    data?: (typeof Kart)[];
 }
 
 export interface KartGetAllUseCasePort {

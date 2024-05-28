@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run format
+bun format
 
-# npm t
-
-# npm run build
+bun run build
