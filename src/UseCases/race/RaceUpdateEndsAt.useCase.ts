@@ -1,11 +1,11 @@
-import { Race } from "@prisma/client";
+import { Race } from "src/config/mongoose";
 import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import Validator from "src/Utils/Validator";
 
 interface RaceUpdateEndsAtUseCaseResponse {
     success: boolean;
-    data?: Race;
+    data?: typeof Race;
 }
 
 export interface RaceUpdateEndsAtDTO {

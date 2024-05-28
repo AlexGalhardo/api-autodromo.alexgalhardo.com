@@ -1,12 +1,12 @@
 POST http://localhost:4000/kart HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiYjg5YjVmYzQtOWJjYy00NmMwLTk2OTEtNmU5NWRkZTYyMDc2IiwiaWF0IjoxNzA2Mzc2MDI4fQ.tcctiEI_IB3t99yy063KOQ6qeaS-4HxmZMa4coVW6CQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiZDRmM2YzZDktNTdmMS00NjcxLWE4ZDQtOTBhZjQ2NjIzYzRiIiwiaWF0IjoxNzE2OTIzNzgxfQ.s0LA6iL9ZC9k-hkJP0hkeqrEYVpN31O8cPNeE42KWfg
 
 {
 	"status": "AVAILABLE",
-	"name": "Kart One",
+	"name": "Kart Five",
 	"brand": "Ford",
 	"model": "HB20",
-	"power": 200,
+	"power": 500,
 	"tire_brand": "Sutran"
 }

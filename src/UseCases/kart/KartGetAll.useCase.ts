@@ -1,11 +1,11 @@
-import { Kart, UserRole } from "@prisma/client";
+import { Kart, UserRole } from "src/config/mongoose";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface KartGetAllUseCaseResponse {
     success: boolean;
-    data?: Kart[];
+    data?: typeof Kart[];
 }
 
 export interface KartGetAllUseCasePort {

@@ -1,31 +1,16 @@
-version: '3'
-
 services:
-  api_autodromo:
-    depends_on:
-      - mongo
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      - '${PORT}:${PORT}'
+  mongodb:
+    container_name: autodromo-mongodb
+    image: mongo
     environment:
-      DATABASE_URL: DATABASE_URL
-    volumes:
-      - .:/usr/src/app
-
-  mongo:
-    container_name: mongo
-    image: mongo:4
-    command: --replSet rs0
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: autodromo-mongodb
     ports:
-      - '27017:27017'
-      - '28017:28017'
-    volumes:
-      - ./data/mongo:/data/db
+      - 27017:27017
+    networks:
+      - network
 
-volumes:
-  mongodata:
+networks:
+    network:
+        driver: bridge

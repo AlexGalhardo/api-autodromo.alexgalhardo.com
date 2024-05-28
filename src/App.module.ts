@@ -34,7 +34,7 @@ export class AppModule implements NestModule {
         consumer
             .apply(ValidateJWTTokenRoleManager)
             .forRoutes(
-                { path: "/user", method: RequestMethod.POST },
+                // { path: "/user", method: RequestMethod.POST },
                 { path: "/kart", method: RequestMethod.POST },
                 { path: "/road", method: RequestMethod.POST },
                 { path: "/race/all", method: RequestMethod.GET },

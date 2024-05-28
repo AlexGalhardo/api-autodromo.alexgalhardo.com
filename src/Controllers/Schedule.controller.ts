@@ -1,12 +1,12 @@
 import { Controller, Res, HttpStatus, Inject, Post, Get, Body } from "@nestjs/common";
-import { Schedule } from "@prisma/client";
 import { Response } from "express";
 import { ScheduleCreateDTO, ScheduleCreateUseCasePort } from "src/UseCases/schedule/ScheduleCreate.useCase";
 import { ScheduleGetAllUseCasePort } from "src/UseCases/schedule/ScheduleGetAll.useCase";
+import { Schedule } from "src/config/mongoose";
 
 interface ScheduleControllerResponse {
     success: boolean;
-    data?: Schedule;
+    data?: typeof Schedule;
     message?: string;
 }
 

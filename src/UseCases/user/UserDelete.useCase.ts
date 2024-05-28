@@ -1,10 +1,10 @@
-import { User } from "@prisma/client";
+import { User } from "src/config/mongoose";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 
 interface UserDeleteUseCaseResponse {
     success: boolean;
     message: "User Deleted!";
-    data: User;
+    data: typeof User;
 }
 
 export interface UserDeleteUseCasePort {

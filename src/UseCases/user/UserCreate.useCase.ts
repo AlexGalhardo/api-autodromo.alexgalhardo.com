@@ -5,11 +5,11 @@ import { Bcrypt } from "src/Utils/Bcrypt";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 import Validator from "src/Utils/Validator";
 import * as jwt from "jsonwebtoken";
-import { User, UserRole } from "@prisma/client";
+import { User, UserRole } from "src/config/mongoose";
 
 interface UserCreateUseCaseResponse {
     success: boolean;
-    data?: User;
+    data?: typeof User;
 }
 
 export interface UserCreateDTO {

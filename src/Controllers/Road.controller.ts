@@ -1,12 +1,12 @@
 import { Controller, Res, HttpStatus, Inject, Get, Post, Body } from "@nestjs/common";
-import { Road } from "@prisma/client";
 import { Response } from "express";
 import { RoadCreateDTO, RoadCreateUseCasePort } from "src/UseCases/road/RoadCreate.useCase";
 import { RoadGetAllUseCasePort } from "src/UseCases/road/RoadGetAll.useCase";
+import { Road } from "src/config/mongoose";
 
 interface RoadControllerResponse {
     success: boolean;
-    data?: Road;
+    data?: typeof Road;
     message?: string;
 }
 

@@ -1,4 +1,4 @@
-import { Notification, NotificationType } from "@prisma/client";
+import { Notification, NotificationType } from "src/config/mongoose";
 import { NotificationsRepositoryPort } from "src/Repositories/Notifications.repository";
 import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
@@ -6,7 +6,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface NotificationCreateUseCaseResponse {
     success: boolean;
-    data?: Notification;
+	data?: typeof Notification;
 }
 
 export interface NotificationCreateDTO {

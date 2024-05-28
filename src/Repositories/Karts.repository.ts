@@ -1,93 +1,95 @@
 import { Injectable } from "@nestjs/common";
-import { Kart, KartStatus } from "@prisma/client";
 import { Database } from "src/Utils/Database";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
+import { Kart, KartStatus, Maintenance, Race, Schedule } from "src/config/mongoose";
 
 interface KartRepositoryCreateDTO {
-    status: KartStatus;
-    name: string;
-    brand: string;
-    model: string;
-    power: number;
-    tire_brand: string;
+	status: KartStatus;
+	name: string;
+	brand: string;
+	model: string;
+	power: number;
+	tire_brand: string;
 }
 
 export interface KartsRepositoryPort {
-    getAll(): Promise<Kart[]>;
-    getById(id: string): Promise<Kart>;
-    findByName(name: string): Promise<boolean>;
-    isAvailable(kartId: string, starts_at: Date, ends_at: Date): Promise<boolean>;
-    create(newKart: KartRepositoryCreateDTO): Promise<Kart>;
+	getAll();
+	getById(id: string);
+	findByName(name: string): Promise<boolean>;
+	isAvailable(kartId: string, starts_at: Date, ends_at: Date): Promise<boolean>;
+	create(newKart: KartRepositoryCreateDTO);
 }
 
 @Injectable()
 export default class KartsRepository implements KartsRepositoryPort {
-    constructor(private readonly database: Database) {}
+	constructor(private readonly database: Database) { }
 
-    public async getAll(): Promise<Kart[]> {
-        return await this.database.kart.findMany();
-    }
+	public async getAll() {
+		try {
+			return await Kart.find().exec();
+		} catch (error) {
+			throw new Error(error.message);
+		}
+	}
 
-    public async getById(id: string): Promise<Kart> {
-        return await this.database.kart.findUnique({
-            where: {
-                id,
-            },
-        });
-    }
+	public async getById(id: string) {
+		try {
+			return await Kart.findById(id).exec();
+		} catch (error) {
+			throw new Error(error.message);
+		}
+	}
 
-    public async findByName(name: string): Promise<boolean> {
-        return (await this.database.kart.findUnique({
-            where: {
-                name,
-            },
-        }))
-            ? true
-            : false;
-    }
+	public async findByName(name: string): Promise<boolean> {
+		try {
+			const kart = await Kart.findOne({ name }).exec();
+			return !!kart;
+		} catch (error) {
+			throw new Error(error.message);
+		}
+	}
 
-    public async isAvailable(kartId: string, startsAt: Date, endsAt: Date): Promise<boolean> {
-        const kart = await this.database.kart.findUnique({
-            where: { id: kartId },
-        });
+	public async isAvailable(kartId: string, startsAt: Date, endsAt: Date): Promise<boolean> {
+		try {
+			const kart = await Kart.findById(kartId).exec();
+			if (!kart) throw new Error(ErrorsMessages.KART_NOT_FOUND);
 
-        if (!kart) throw new Error(ErrorsMessages.KART_NOT_FOUND);
+			if (kart.status !== KartStatus.AVAILABLE) return false;
 
-        if (kart && kart.status !== KartStatus.AVAILABLE) return false;
+			const conditions = {
+				kart_id: kartId,
+				starts_at: { $lte: endsAt },
+				ends_at: { $gte: startsAt },
+			};
 
-        const entitiesToCheck = ["maintenance", "race", "schedule"];
+			const maintenance = await Maintenance.findOne(conditions).exec();
+			const race = await Race.findOne(conditions).exec();
+			const schedule = await Schedule.findOne(conditions).exec();
 
-        for (const entity of entitiesToCheck) {
-            const isEntityAvailable = await this.database[entity].findFirst({
-                where: {
-                    kart_id: kartId,
-                    starts_at: { lte: endsAt },
-                    ends_at: { gte: startsAt },
-                },
-            });
+			if (maintenance || race || schedule) return false;
 
-            if (isEntityAvailable) return false;
-        }
+			return true;
+		} catch (error) {
+			throw new Error(error.message);
+		}
+	}
 
-        return true;
-    }
+	public async create(newKart: KartRepositoryCreateDTO) {
+		try {
+			const { status, name, brand, model, power, tire_brand } = newKart;
 
-    public async create(newKart: KartRepositoryCreateDTO): Promise<Kart> {
-        try {
-            const { name, brand, model, power, tire_brand } = newKart;
+			const kart = new Kart({
+				status,
+				name,
+				brand,
+				model,
+				power,
+				tire_brand,
+			});
 
-            return await this.database.kart.create({
-                data: {
-                    status: KartStatus.AVAILABLE,
-                    name,
-                    brand,
-                    model,
-                    power,
-                    tire_brand,
-                },
-            });
-        } catch (error) {
-            throw new Error(error);
-        }
-    }
+			return await kart.save();
+		} catch (error) {
+			throw new Error(error.message);
+		}
+	}
 }

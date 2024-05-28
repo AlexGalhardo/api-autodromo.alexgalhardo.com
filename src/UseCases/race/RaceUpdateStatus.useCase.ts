@@ -1,10 +1,10 @@
-import { Race, RaceStatus } from "@prisma/client";
+import { Race, RaceStatus } from "src/config/mongoose";
 import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RaceUpdateStatusUseCaseResponse {
     success: boolean;
-    data?: Race;
+    data?: typeof Race;
 }
 
 export interface RaceUpdateEndsAtDTO {

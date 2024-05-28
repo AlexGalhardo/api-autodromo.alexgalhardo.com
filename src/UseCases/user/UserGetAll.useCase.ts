@@ -1,10 +1,10 @@
-import { User, UserRole } from "@prisma/client";
+import { User, UserRole } from "src/config/mongoose";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface UserGetAllUseCaseResponse {
     success: boolean;
-    data?: User[];
+    data?: typeof User[];
 }
 
 export interface UserGetAllUseCasePort {

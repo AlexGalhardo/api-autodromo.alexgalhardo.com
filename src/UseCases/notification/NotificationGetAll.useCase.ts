@@ -1,11 +1,11 @@
-import { Notification, UserRole } from "@prisma/client";
+import { Notification, UserRole } from "src/config/mongoose";
 import { NotificationsRepositoryPort } from "src/Repositories/Notifications.repository";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface NotificationGetAllUseCaseResponse {
     success: boolean;
-    data?: Notification[];
+    data?: typeof Notification[];
 }
 
 export interface NotificationGetAllUseCasePort {

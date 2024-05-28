@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable, NestMiddleware } from "@nestjs/common";
 import { Request, Response, NextFunction } from "express";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
-import { User, UserRole } from "@prisma/client";
+import { UserRole } from "src/config/mongoose";
 import AbstractValidateJWTTokenRole from "./AbstractValidateJWTTokenRole";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ValidateJWTTokenRoleManager extends AbstractValidateJWTTokenRole im
 
     async use(request: Request, response: Response, next: NextFunction) {
         try {
-            const userFound = (await this.verifyJwtTokenRole(request, response)) as User;
+            const userFound = (await this.verifyJwtTokenRole(request, response)) as any;
 
             if (userFound && userFound.role !== UserRole.MANAGER) {
                 return response

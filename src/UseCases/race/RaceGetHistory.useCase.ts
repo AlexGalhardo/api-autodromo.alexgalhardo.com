@@ -1,11 +1,11 @@
-import { Race } from "@prisma/client";
+import { Race } from "src/config/mongoose";
 import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RaceGetHistoryUseCaseResponse {
     success: boolean;
-    data?: Race[];
+    data?: typeof Race[];
 }
 
 export interface RaceGetHistoryUseCasePort {

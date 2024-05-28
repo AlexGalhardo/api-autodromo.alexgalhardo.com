@@ -1,11 +1,11 @@
-import { Kart, KartStatus } from "@prisma/client";
+import { Kart, KartStatus } from "src/config/mongoose";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import Validator from "src/Utils/Validator";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface KartCreateUseCaseResponse {
     success: boolean;
-    data?: Kart;
+    data?: typeof Kart;
 }
 
 export interface KartCreateDTO {
