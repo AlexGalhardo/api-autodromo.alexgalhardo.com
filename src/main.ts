@@ -4,14 +4,14 @@ import "dotenv/config";
 import connectAndSeedToMongoDB from "./config/mongoose";
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
-	app.enableCors();
+    const app = await NestFactory.create(AppModule);
+    app.enableCors();
 
-	connectAndSeedToMongoDB().catch((err) => console.log(err));
+    connectAndSeedToMongoDB().catch((err) => console.log(err));
 
-	await app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-		console.log(`\n\napi-autodromo.alexgalhardo.com running on http://localhost:${process.env.PORT || 3000}`);
-	});
+    await app.listen(process.env.PORT || 3000, "0.0.0.0", () => {
+        console.log(`\n\napi-autodromo.alexgalhardo.com running on http://localhost:${process.env.PORT || 3000}`);
+    });
 }
 
 bootstrap();

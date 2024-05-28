@@ -1,3 +1,3 @@
-GET http://localhost:4000/corrida/history HTTP/1.1
+GET http://localhost:4000/corrida/history
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiYTkyYTQwZTItN2RkNy00M2VkLTk0OTItZGQ5NzZmOTM5NmIxIiwiaWF0IjoxNzA2Mzg3NDgyfQ.BzJX6AtaC7AurIyFWHs20AQ2Uye8gkLJ_KZv_H8gjPs

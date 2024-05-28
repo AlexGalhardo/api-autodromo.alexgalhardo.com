@@ -1,0 +1,4 @@
+# GET http://localhost:4000/kart/all
+GET https://api-autodromo.alexgalhardo.com/kart/all
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlX3Rva2VuIjoiOTI4MjYwMGMtM2ZlOS00M2E3LTg2NWYtNGM2NzQ0MWZhMjA1IiwiaWF0IjoxNzE2OTI4NzIxLCJleHAiOjE3MTY5MzIzMjF9.lPwsxv2bIwHHs3qpzL50-hG7w-HyjS4DIKUy5hq9J-w
