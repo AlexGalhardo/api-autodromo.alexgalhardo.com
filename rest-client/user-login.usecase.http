@@ -1,7 +1,8 @@
-POST http://localhost:4000/user/login HTTP/1.1
+POST https://api-autodromo.alexgalhardo.com/user/login
+# POST http://localhost:4000/user/login
 content-type: application/json
 
 {
-	"email": "common@gmail.com",
-	"password": "commonTEST@123"
+    "email": "common@gmail.com",
+    "password": "commonTEST@123"
 }

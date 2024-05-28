@@ -5,7 +5,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface ScheduleGetAllUseCaseResponse {
     success: boolean;
-    data?: typeof Schedule[];
+    data?: (typeof Schedule)[];
 }
 
 export interface ScheduleGetAllUseCasePort {

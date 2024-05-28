@@ -5,7 +5,7 @@ import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RoadGetAllUseCaseResponse {
     success: boolean;
-    data?: typeof Road[];
+    data?: (typeof Road)[];
 }
 
 export interface RoadGetAllUseCasePort {
