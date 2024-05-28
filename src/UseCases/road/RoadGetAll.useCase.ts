@@ -1,11 +1,11 @@
-import { Road, UserRole } from "@prisma/client";
+import { Road, UserRole } from "src/config/mongoose";
 import { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RoadGetAllUseCaseResponse {
     success: boolean;
-    data?: Road[];
+    data?: typeof Road[];
 }
 
 export interface RoadGetAllUseCasePort {

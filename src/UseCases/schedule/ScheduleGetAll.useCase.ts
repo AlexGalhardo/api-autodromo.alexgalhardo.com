@@ -1,11 +1,11 @@
-import { Schedule, UserRole } from "@prisma/client";
+import { Schedule, UserRole } from "src/config/mongoose";
 import { SchedulesRepositoryPort } from "src/Repositories/Schedules.repository";
 import { UsersRepositoryPort } from "src/Repositories/Users.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface ScheduleGetAllUseCaseResponse {
     success: boolean;
-    data?: Schedule[];
+    data?: typeof Schedule[];
 }
 
 export interface ScheduleGetAllUseCasePort {

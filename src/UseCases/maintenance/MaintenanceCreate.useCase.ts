@@ -1,4 +1,4 @@
-import { Maintenance } from "@prisma/client";
+import { Maintenance } from "src/config/mongoose";
 import { RacesRepositoryPort } from "src/Repositories/Races.repository";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import { MaintenanceCreateDTO, maintenancesRepositoryPort } from "src/Repositories/Maintenances.repository";
@@ -7,7 +7,7 @@ import Validator from "src/Utils/Validator";
 
 interface MaintenanceCreateUseCaseResponse {
     success: boolean;
-    data?: Maintenance;
+    data?: typeof Maintenance;
 }
 
 export interface MaintenanceCreateUseCasePort {

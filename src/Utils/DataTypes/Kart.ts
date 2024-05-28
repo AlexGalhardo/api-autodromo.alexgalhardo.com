@@ -1,4 +1,4 @@
-import { KartStatus } from "@prisma/client";
+import { KartStatus } from "src/config/mongoose";
 
 export default class Kart {
     public statusIsValid(status: string): boolean {

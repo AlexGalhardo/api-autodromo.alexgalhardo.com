@@ -1,10 +1,10 @@
-import { Road } from "@prisma/client";
+import { Road } from "src/config/mongoose";
 import { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
 import { ErrorsMessages } from "src/Utils/ErrorsMessages";
 
 interface RoadCreateUseCaseResponse {
     success: boolean;
-    data?: Road;
+    data?: typeof Road;
 }
 
 export interface RoadCreateDTO {

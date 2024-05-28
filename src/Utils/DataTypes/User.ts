@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { UserRole } from "src/config/mongoose";
 
 export default class User {
     public roleIsValid(role: string): boolean {

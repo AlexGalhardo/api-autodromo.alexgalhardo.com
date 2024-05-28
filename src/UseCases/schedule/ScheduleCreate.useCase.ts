@@ -1,4 +1,4 @@
-import { Schedule } from "@prisma/client";
+import { Schedule } from "src/config/mongoose";
 import { SchedulesRepositoryPort } from "src/Repositories/Schedules.repository";
 import { KartsRepositoryPort } from "src/Repositories/Karts.repository";
 import { RoadsRepositoryPort } from "src/Repositories/Roads.repository";
@@ -7,7 +7,7 @@ import Validator from "src/Utils/Validator";
 
 interface ScheduleCreateUseCaseResponse {
     success: boolean;
-    data?: Schedule;
+    data?: typeof Schedule;
 }
 
 export interface ScheduleCreateDTO {
